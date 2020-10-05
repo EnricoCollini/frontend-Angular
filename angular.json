@@ -24,7 +24,9 @@
             ],
             "styles": [
               "/home/enrico/anguglar-workspace/laapp/node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
