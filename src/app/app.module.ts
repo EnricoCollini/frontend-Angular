@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule, routingComponents } from './/app-routing.module';
 import { AreaNaturaleService } from './area-naturale.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { AreaNaturaleService } from './area-naturale.service';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [AreaNaturaleService],
