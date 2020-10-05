@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AreaNaturaleService } from '../area-naturale.service';
 
 @Component({
   selector: 'app-aree-naturali-list',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AreeNaturaliListComponent implements OnInit {
 
-  constructor() { }
+  public areeNaturali = [];
+  constructor(private _areaNaturaleService: AreaNaturaleService) { }
 
   ngOnInit() {
+    this.areeNaturali = this._areaNaturaleService.getAreeNaturali();
   }
 
 }

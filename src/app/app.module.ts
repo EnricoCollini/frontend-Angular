@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule, routingComponents } from './/app-routing.module';
+import { AreaNaturaleService } from './area-naturale.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { AppRoutingModule, routingComponents } from './/app-routing.module';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AreaNaturaleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
