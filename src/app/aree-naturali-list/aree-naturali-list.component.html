@@ -1,13 +1,50 @@
-<p>
-  aree-naturali-list works!
-</p>
-<div class="row align-items-center justify-content-center">
-<div class="card d-flex justify-content-center" style="width: 18rem;" *ngFor= "let areaNaturale of areeNaturali">  
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{areaNaturale.name}}</h5>
-    <p class="card-text">{{areaNaturale.description}} Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Heading Row -->
+  <div class="row align-items-center my-5">
+    <div class="col-lg-7">
+      <img class="img-fluid rounded mb-4 mb-lg-0" src="https://it.agriturismo.net/images/navigazione/regione/toscanaMobile.jpg" alt="">
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-5">
+      <h1 class="font-weight-light">Aree Naturali Della Toscana</h1>
+      <p>In questa pagina troverai le aree naturali selezionate dalla Regione Toscana.</p>
+      <!-- <a class="btn btn-primary" href="#">Call to Action!</a> -->
+    </div>
+    <!-- /.col-md-4 -->
   </div>
-</div>
+  <!-- /.row -->
+
+  <!-- Call to Action Well -->
+  <div class="card text-white bg-secondary my-5 py-4 text-center">
+    <div class="card-body">
+      <p class="text-white m-0">“La verde Maremma! <br>
+        Un deserto di bellezza colmo di sole – anche se un velo <br>
+        Sopra si distende di malinconica tristezza; <br>
+        Orma d’uomo non calpesta il regno della solitudine <br>
+        Il deserto in fiore risplende invano”. <br>
+        <b>Oriana Fallaci</b></p>
+    </div>
+  </div>
+
+  <!-- Content Row -->
+  <div class="row justify-content-md-center" >
+
+    <div class="col-md-4 mb-5" *ngFor= "let areaNaturale of areeNaturali;let i=index">
+      <div class="card h-100"  *ngIf="i<3">
+        <div class="card-body">
+          <h2 class="card-title">{{areaNaturale.name}}</h2>
+          <p class="card-text">{{areaNaturale.description}}</p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary btn-sm">More Info</a>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+  <!-- /.row -->
+
 </div>
