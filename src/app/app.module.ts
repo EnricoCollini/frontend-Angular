@@ -5,12 +5,14 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule, routingComponents } from './/app-routing.module';
 import { AreaNaturaleService } from './area-naturale.service';
 import {HttpClientModule} from '@angular/common/http';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    routingComponents
+    routingComponents,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,14 @@ import { RicercaComponent } from './ricerca/ricerca.component';
 
 const routes: Routes = [
   {path: 'areenaturali', component: AreeNaturaliListComponent},
-  {path: 'ricerca', component: RicercaComponent}
+  {path: 'ricerca', component: RicercaComponent},
+  {
+    path: '',
+    redirectTo: 'areenaturali',
+    pathMatch: 'full'
+  }
 ];
+
 
 @NgModule({
   imports: [
