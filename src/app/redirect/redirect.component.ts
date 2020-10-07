@@ -38,6 +38,13 @@ export class RedirectComponent implements OnInit {
       this.initializion();
       this.struttureRicettive = data
       console.log(this.struttureRicettive.length);
+      for (let index = 0; index < this.struttureRicettive.length; index++) {
+        if(this.struttureRicettive[index].name == this.name){
+          console.log(this.name);
+          this.router.navigate(['/detailStrut/', this.struttureRicettive[index].latitude] ,{ queryParams: this.struttureRicettive[index]});
+        }
+        
+      }
     });
 
 

@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-naturale-scheda.component';
 import { MappaComponent } from './mappa/mappa.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RedirectComponent } from './redirect/redirect.component';
     FooterComponent,
     AreaNaturaleSchedaComponent,
     MappaComponent,
-    RedirectComponent
+    RedirectComponent,
+    StrutturaRicettivaSchedaComponent
   ],
   imports: [
     BrowserModule,

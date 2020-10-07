@@ -18,7 +18,16 @@ export class RicercaComponent implements OnInit {
   public map: L.Map;
   public zoom: number;
   public  greenIcon = L.icon({
-    iconUrl:  "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",
+    iconUrl:  "https://pngimage.net/wp-content/uploads/2018/06/flat-tree-png-2.png",
+    
+    iconSize:     [38, 38], // size of the icon
+    
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+   
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
+  public  struttIcon = L.icon({
+    iconUrl:  "https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/house-icon.png",
     
     iconSize:     [38, 38], // size of the icon
     
@@ -38,11 +47,14 @@ export class RicercaComponent implements OnInit {
     this._areaNaturaleService.getAreeNaturaliFromDB()
       .subscribe(data => {
         this.areeNaturali = data;
-        this.createStruttureRicettiveMarkers();
+        this.createAreeNaturaliMarkers();
       });
 
     this._struttureRicettiveService.getStruttureRicettiveFromDB()
-      .subscribe(data=> this.struttureRicettive = data);
+      .subscribe(data=> {
+        this.struttureRicettive = data
+        this.createStruttureRicettiveMarkers();
+      });
 
     
     //L.marker([43, 11], {icon: this.greenIcon}).bindPopup('<b>Hello!!</b>').addTo(this.map);
@@ -55,11 +67,24 @@ export class RicercaComponent implements OnInit {
     }).addTo(this.map);
   }
 
-  createStruttureRicettiveMarkers(){
+  createAreeNaturaliMarkers(){
     this.markers = [];
     for (let index = 0; index < this.areeNaturali.length; index++) {
       let popup = this.createPopup(this.areeNaturali[index].name, this.areeNaturali[index]); 
       let markerTmp = L.marker([this.areeNaturali[index].latitude, this.areeNaturali[index].longitude], {icon: this.greenIcon}).bindPopup(popup);
+      this.markers.push(markerTmp);
+    }
+    console.log(this.markers.length);
+    for (let index = 0; index < this.markers.length; index++) {
+      this.markers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+  }
+  createStruttureRicettiveMarkers(){
+    this.markers = [];
+    for (let index = 0; index < this.struttureRicettive.length; index++) {
+      let popup = this.createPopup(this.struttureRicettive[index].name, this.struttureRicettive[index]); 
+      let markerTmp = L.marker([this.struttureRicettive[index].latitude, this.struttureRicettive[index].longitude], {icon: this.struttIcon}).bindPopup(popup);
       this.markers.push(markerTmp);
     }
     console.log(this.markers.length);
