@@ -8,6 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FooterComponent } from './footer/footer.component';
 import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-naturale-scheda.component';
 import { MappaComponent } from './mappa/mappa.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MappaComponent } from './mappa/mappa.component';
     routingComponents,
     FooterComponent,
     AreaNaturaleSchedaComponent,
-    MappaComponent
+    MappaComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,
