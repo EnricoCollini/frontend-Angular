@@ -38,7 +38,7 @@
           <p class="card-text">{{areaNaturale.description}}</p>
         </div>
         <div class="card-footer">
-          <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          <a class="btn btn-primary btn-sm" [routerLink]='["/detail/",areaNaturale.latitude]'  [queryParams]="areaNaturale">More Info</a>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
 import { AreeNaturaliListComponent } from './aree-naturali-list/aree-naturali-list.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
+import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-naturale-scheda.component';
 
 const routes: Routes = [
   {path: 'areenaturali', component: AreeNaturaliListComponent},
@@ -11,7 +12,8 @@ const routes: Routes = [
     path: '',
     redirectTo: 'areenaturali',
     pathMatch: 'full'
-  }
+  },
+  { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
 ];
 
 

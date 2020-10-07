@@ -6,13 +6,17 @@ import { AppRoutingModule, routingComponents } from './/app-routing.module';
 import { AreaNaturaleService } from './area-naturale.service';
 import {HttpClientModule} from '@angular/common/http';
 import { FooterComponent } from './footer/footer.component';
+import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-naturale-scheda.component';
+import { MappaComponent } from './mappa/mappa.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     routingComponents,
-    FooterComponent
+    FooterComponent,
+    AreaNaturaleSchedaComponent,
+    MappaComponent
   ],
   imports: [
     BrowserModule,
