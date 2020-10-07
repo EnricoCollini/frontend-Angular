@@ -9,6 +9,8 @@ import * as L from 'leaflet';
 export class MappaComponent implements OnInit {
   @Input() center: [0,0];
   @Input() name: "Hello";
+  public popup: string;
+
 
 
   public map: L.Map;
@@ -23,11 +25,23 @@ export class MappaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+
+    this.popup = ""
+    + ' <div class="card"> ' 
+    +  '<div class="card-body">'
+    +  '<h5 class="card-subtitle">'+ this.name +'</h5> <br>'
+    + '<a class="card-link" href="https://www.google.it/maps/?q='+ this.center+  '" target="_blank">Indicazioni</a>'
+    + '</div> '
+    + '</div> ';
+
     this.map = L.map('map').setView(this.center, 16);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-    L.marker(this.center, {icon: this.greenIcon}).bindPopup(this.name).addTo(this.map);
+    L.marker(this.center, {icon: this.greenIcon})
+    .bindPopup(this.popup)
+    .addTo(this.map);
   }
 
 }
