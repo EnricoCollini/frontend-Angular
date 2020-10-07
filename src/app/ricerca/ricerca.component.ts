@@ -11,9 +11,13 @@ import { StruttureRicettiveService } from '../strutture-ricettive.service';
 
 export class RicercaComponent implements OnInit {
 
+  dropDownOpen = false;
+
   public areeNaturali = [];
   public struttureRicettive = [];
   public markers = [];
+  public areeNaturaliMarkers = [];
+  public struttureMarkers = [];
 
   public map: L.Map;
   public zoom: number;
@@ -68,28 +72,28 @@ export class RicercaComponent implements OnInit {
   }
 
   createAreeNaturaliMarkers(){
-    this.markers = [];
+    this.areeNaturaliMarkers = [];
     for (let index = 0; index < this.areeNaturali.length; index++) {
       let popup = this.createPopup(this.areeNaturali[index].name, this.areeNaturali[index]); 
       let markerTmp = L.marker([this.areeNaturali[index].latitude, this.areeNaturali[index].longitude], {icon: this.greenIcon}).bindPopup(popup);
-      this.markers.push(markerTmp);
+      this.areeNaturaliMarkers.push(markerTmp);
     }
-    console.log(this.markers.length);
-    for (let index = 0; index < this.markers.length; index++) {
-      this.markers[index].addTo(this.map);
+    console.log(this.areeNaturaliMarkers.length);
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.areeNaturaliMarkers[index].addTo(this.map);
       console.log("markerAggiunto")
     }
   }
   createStruttureRicettiveMarkers(){
-    this.markers = [];
+    this.struttureMarkers = [];
     for (let index = 0; index < this.struttureRicettive.length; index++) {
       let popup = this.createPopup(this.struttureRicettive[index].name, this.struttureRicettive[index]); 
       let markerTmp = L.marker([this.struttureRicettive[index].latitude, this.struttureRicettive[index].longitude], {icon: this.struttIcon}).bindPopup(popup);
-      this.markers.push(markerTmp);
+      this.struttureMarkers.push(markerTmp);
     }
-    console.log(this.markers.length);
-    for (let index = 0; index < this.markers.length; index++) {
-      this.markers[index].addTo(this.map);
+    console.log(this.struttureMarkers.length);
+    for (let index = 0; index < this.struttureMarkers.length; index++) {
+      this.struttureMarkers[index].addTo(this.map);
       console.log("markerAggiunto")
     }
   }
@@ -109,6 +113,48 @@ export class RicercaComponent implements OnInit {
               + '</div> '
             + '</div> '
     return(popup);
+  }
+
+  toggleDropdown(){
+    this.dropDownOpen = true;
+  }
+
+  showOnlyAreeNaturali(){
+    for (let index = 0; index < this.struttureMarkers.length; index++) {
+      this.map.removeLayer(this.struttureMarkers[index]);
+    }
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.areeNaturaliMarkers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+  }
+
+  showOnlyStrutture(){
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.map.removeLayer(this.areeNaturaliMarkers[index]);
+    }
+    for (let index = 0; index < this.struttureMarkers.length; index++) {
+      this.struttureMarkers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+  }
+
+  showAll(){
+    for (let index = 0; index < this.struttureMarkers.length; index++) {
+      this.map.removeLayer(this.struttureMarkers[index]);
+    }
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.map.removeLayer(this.areeNaturaliMarkers[index]);
+    }
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.areeNaturaliMarkers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+    for (let index = 0; index < this.struttureMarkers.length; index++) {
+      this.struttureMarkers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+
   }
 
 }
