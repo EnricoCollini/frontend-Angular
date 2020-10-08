@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaNaturaleService } from '../area-naturale.service';
+import { RistoriService } from '../ristori.service';
 import { StruttureRicettiveService } from '../strutture-ricettive.service';
 
 @Component({
@@ -11,11 +12,13 @@ import { StruttureRicettiveService } from '../strutture-ricettive.service';
 export class RedirectComponent implements OnInit {
   public areeNaturali = [];
   public struttureRicettive = [];
+  public ristori = [];
   public name = "";
 
   constructor(private route: ActivatedRoute,
     private _struttureRicettiveService: StruttureRicettiveService,
     private _areaNaturaleService: AreaNaturaleService,
+    private _ristoriService : RistoriService,
     private router: Router) { }
 
   ngOnInit() {
@@ -28,6 +31,18 @@ export class RedirectComponent implements OnInit {
         if(this.areeNaturali[index].name == this.name){
           console.log(this.name);
           this.router.navigate(['/detail/', this.areeNaturali[index].latitude] ,{ queryParams: this.areeNaturali[index]});
+        }
+        
+      }
+    });
+
+    this._ristoriService.getRistoriFromDB()
+    .subscribe(data=>{
+      this.initializion();
+      this.ristori = data;
+      for (let index = 0; index < this.ristori.length; index++) {
+        if(this.ristori[index].name == this.name){
+          this.router.navigate(['/detailRisto/', this.ristori[index].latitude], {queryParams: this.ristori[index]});
         }
         
       }

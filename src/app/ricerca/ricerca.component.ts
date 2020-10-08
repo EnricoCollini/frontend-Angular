@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { AreaNaturaleService } from '../area-naturale.service';
+import { RistoriService } from '../ristori.service';
 import { StruttureRicettiveService } from '../strutture-ricettive.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class RicercaComponent implements OnInit {
 
   public areeNaturali = [];
   public struttureRicettive = [];
-  public markers = [];
+  public ristori = [];
+  public ristoriMarkers = [];
   public areeNaturaliMarkers = [];
   public struttureMarkers = [];
 
@@ -39,14 +41,30 @@ export class RicercaComponent implements OnInit {
    
     popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
   });
+  public  ristoIcon = L.icon({
+    iconUrl:  "https://www.flaticon.com/svg/static/icons/svg/227/227326.svg",
+    
+    iconSize:     [38, 38], // size of the icon
+    
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+   
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
 
 
   constructor(private _struttureRicettiveService: StruttureRicettiveService,
-    private _areaNaturaleService: AreaNaturaleService) {}
+    private _areaNaturaleService: AreaNaturaleService,
+    private _ristoriService: RistoriService) {}
 
   ngOnInit() {
 
     this.mapInit();
+
+    this._ristoriService.getRistoriFromDB()
+      .subscribe(data =>{
+        this.ristori = data;
+        this.createRistoriMarkers();
+      });
 
     this._areaNaturaleService.getAreeNaturaliFromDB()
       .subscribe(data => {
@@ -84,6 +102,21 @@ export class RicercaComponent implements OnInit {
       console.log("markerAggiunto")
     }
   }
+
+  createRistoriMarkers(){
+    this.ristoriMarkers = [];
+    for (let index = 0; index < this.ristori.length; index++) {
+      let popup = this.createPopup(this.ristori[index].name, this.ristori[index]); 
+      let markerTmp = L.marker([this.ristori[index].latitude, this.ristori[index].longitude], {icon: this.ristoIcon}).bindPopup(popup);
+      this.ristoriMarkers.push(markerTmp);
+    }
+    for (let index = 0; index < this.ristoriMarkers.length; index++) {
+      this.ristoriMarkers[index].addTo(this.map);
+    }
+  }
+
+
+
   createStruttureRicettiveMarkers(){
     this.struttureMarkers = [];
     for (let index = 0; index < this.struttureRicettive.length; index++) {
@@ -133,8 +166,25 @@ export class RicercaComponent implements OnInit {
     for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
       this.map.removeLayer(this.areeNaturaliMarkers[index]);
     }
+    for (let index = 0; index < this.ristoriMarkers.length; index++) {
+      this.map.removeLayer(this.ristoriMarkers[index]);
+      
+    }
     for (let index = 0; index < this.struttureMarkers.length; index++) {
       this.struttureMarkers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+  }
+
+  showOnlyRistori(){
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.map.removeLayer(this.areeNaturaliMarkers[index]);
+    }
+    for (let index = 0; index < this.struttureMarkers.length; index++) {
+      this.map.removeLayer(this.struttureMarkers[index]);
+    }
+    for (let index = 0; index < this.ristoriMarkers.length; index++) {
+      this.ristoriMarkers[index].addTo(this.map);
       console.log("markerAggiunto")
     }
   }
@@ -146,12 +196,19 @@ export class RicercaComponent implements OnInit {
     for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
       this.map.removeLayer(this.areeNaturaliMarkers[index]);
     }
+    for (let index = 0; index < this.ristoriMarkers.length; index++) {
+      this.map.removeLayer(this.ristoriMarkers[index]);
+    }
     for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
       this.areeNaturaliMarkers[index].addTo(this.map);
       console.log("markerAggiunto")
     }
     for (let index = 0; index < this.struttureMarkers.length; index++) {
       this.struttureMarkers[index].addTo(this.map);
+      console.log("markerAggiunto")
+    }
+    for (let index = 0; index < this.ristoriMarkers.length; index++) {
+      this.ristoriMarkers[index].addTo(this.map);
       console.log("markerAggiunto")
     }
 

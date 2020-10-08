@@ -10,6 +10,7 @@ import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-natural
 import { MappaComponent } from './mappa/mappa.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
+import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/
     AreaNaturaleSchedaComponent,
     MappaComponent,
     RedirectComponent,
-    StrutturaRicettivaSchedaComponent
+    StrutturaRicettivaSchedaComponent,
+    RistoroSchedaComponent
   ],
   imports: [
     BrowserModule,
