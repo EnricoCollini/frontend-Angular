@@ -9,7 +9,7 @@ import * as L from 'leaflet';
 export class MappaComponent implements OnInit {
   @Input() center: [0,0];
   @Input() name: "Hello";
-  @Input() iti;
+  @Input() iti = '{"type": "Feature","geometry": {"type": "Point", "coordinates": this.center;},"properties": {"name": " "}  }';
   public popup: string;
 
 
@@ -43,6 +43,8 @@ export class MappaComponent implements OnInit {
     L.marker(this.center, {icon: this.greenIcon})
     .bindPopup(this.popup)
     .addTo(this.map);
+    console.log(this.iti);
+    L.geoJSON(JSON.parse(this.iti)).addTo(this.map);
   }
 
 }
