@@ -9,6 +9,7 @@ import * as L from 'leaflet';
 export class MappaComponent implements OnInit {
   @Input() center: [0,0];
   @Input() name: "Hello";
+  @Input() iti;
   public popup: string;
 
 

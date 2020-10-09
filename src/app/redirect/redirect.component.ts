@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaNaturaleService } from '../area-naturale.service';
+import { ItinerarioService } from '../itinerario.service';
 import { RistoriService } from '../ristori.service';
 import { StruttureRicettiveService } from '../strutture-ricettive.service';
 
@@ -13,12 +14,14 @@ export class RedirectComponent implements OnInit {
   public areeNaturali = [];
   public struttureRicettive = [];
   public ristori = [];
+  public itinerari = [];
   public name = "";
 
   constructor(private route: ActivatedRoute,
     private _struttureRicettiveService: StruttureRicettiveService,
     private _areaNaturaleService: AreaNaturaleService,
     private _ristoriService : RistoriService,
+    private _itinerariService: ItinerarioService,
     private router: Router) { }
 
   ngOnInit() {
@@ -31,6 +34,20 @@ export class RedirectComponent implements OnInit {
         if(this.areeNaturali[index].name == this.name){
           console.log(this.name);
           this.router.navigate(['/detail/', this.areeNaturali[index].latitude] ,{ queryParams: this.areeNaturali[index]});
+        }
+        
+      }
+    });
+
+    this._itinerariService.getItinerariFromDB()
+    .subscribe(data => {
+      this.initializion();
+      this.itinerari = data;
+      console.log(this.itinerari.length);
+      for (let index = 0; index < this.itinerari.length; index++) {
+        if(this.itinerari[index].name == this.name){
+          console.log(this.name);
+          this.router.navigate(['/detailIti/', this.itinerari[index].startlatitude] ,{ queryParams: this.itinerari[index]});
         }
         
       }

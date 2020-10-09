@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="jumbotron" style="margin-top: 10px;">
+    <h1 class="display-4">{{name}}</h1>
+    <p class="lead">{{description}}</p>
+    <hr class="my-4">
+    <p>{{endcity}} - {{endprovince}}</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="#" role="button">
+        &#8592;  Torna alla Home
+      </a>
+    </p>
+    <app-mappa [center]='[endlatitude, endlongitude]' [name]='name' [iti]='track'></app-mappa>
+  </div>
+  </div>

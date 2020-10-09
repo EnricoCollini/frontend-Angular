@@ -7,6 +7,7 @@ import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-natural
 import { RedirectComponent } from './redirect/redirect.component';
 import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
 import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
+import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda.component';
 
 const routes: Routes = [
   {path: 'areenaturali', component: AreeNaturaliListComponent},
@@ -19,6 +20,8 @@ const routes: Routes = [
   { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },
   { path: 'detailRisto/:lat', component: RistoroSchedaComponent},
+  { path: 'detailIti/:lat', component: ItinerarioSchedaComponent},
+  
   {path: 'redirect/:nome', component: RedirectComponent}
 ];
 
