@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -15,14 +16,20 @@ export class ItinerarioSchedaComponent implements OnInit {
   private  startprovince: string;
   private  endcity: string;
   private  endprovince: string;
+private  track: string;
+  private obj = {a: 123, b: "4 5 6"};
+  private data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.obj));
+  private link = "data:'" + this.data;
+  private sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(this.link);
 
 	private startlatitude: number; 
   private  startlongitude: number;
   private  endlatitude: number;
   private  endlongitude: number;
-  private  track: string;
   
-  constructor(private route: ActivatedRoute) { }
+  
+  constructor(private route: ActivatedRoute,
+    private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
     this.route.queryParams
@@ -45,7 +52,14 @@ export class ItinerarioSchedaComponent implements OnInit {
         this.track = params.track;
         console.log(this.track);
         console.log(this.name)
+        this.data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.track));
+        this.link = "data:'" + this.data;
+        this.sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(this.link);
       })
   }
+
+  sanitize(){
+    return this.sanitizer.bypassSecurityTrustUrl(this.link);
+}
 
 }

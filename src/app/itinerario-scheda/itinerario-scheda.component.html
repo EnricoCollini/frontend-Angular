@@ -5,10 +5,13 @@
     <hr class="my-4">
     <p>{{endcity}} - {{endprovince}}</p>
     <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">
+      <a class="btn btn-primary btn-lg" href="#" role="button" style="margin-right: 5px;">
         &#8592;  Torna alla Home
+     
       </a>
+      <a  class="btn btn-primary btn-lg" [href]="sanitize()"  role="button" download="itinerario.json">download JSON</a>
     </p>
     <app-mappa [center]='[endlatitude, endlongitude]' [name]='name' [iti]='track'></app-mappa>
+    
   </div>
   </div>

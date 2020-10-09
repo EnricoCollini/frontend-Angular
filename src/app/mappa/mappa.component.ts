@@ -9,7 +9,7 @@ import * as L from 'leaflet';
 export class MappaComponent implements OnInit {
   @Input() center: [0,0];
   @Input() name: "Hello";
-  @Input() iti = '{"type": "Feature","geometry": {"type": "Point", "coordinates": this.center;},"properties": {"name": " "}  }';
+  @Input() iti;
   public popup: string;
 
 
