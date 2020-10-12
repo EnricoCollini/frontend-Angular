@@ -1,5 +1,6 @@
 import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import * as L from 'leaflet';
 import { stringify } from 'querystring';
 import { ItineraryMakerService } from '../itinerary-maker.service';
@@ -15,6 +16,7 @@ export class ItineraryMakerComponent implements OnInit {
   public itinerariopresente = false;
   public partenzaTitle= "Select a point on the map";
   public assignedpartenza = false;
+  public itinerJdownload = [];
   public assignedarrivo = false;
   public arrivo :L.Marker;
   public arrivoTitle="Select a point on the map";
@@ -59,7 +61,8 @@ export class ItineraryMakerComponent implements OnInit {
   public numero = 0;
   public tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
 
-  constructor(private _itinerarymakerservice: ItineraryMakerService) {}
+  constructor(private _itinerarymakerservice: ItineraryMakerService,
+    private sanitizer:DomSanitizer) {}
 
   ngOnInit() {
     this.punti = [];
@@ -133,6 +136,7 @@ export class ItineraryMakerComponent implements OnInit {
       this.partenzaTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
       this.punti.splice(check,1);
       this.puntiIntermediLats.splice(check,1);
+      this.itinerJdownload.splice(check,1);
       this.puntiIntermedi.splice(check,1);
     }
     }
@@ -163,6 +167,7 @@ export class ItineraryMakerComponent implements OnInit {
       this.assignedarrivo = true;
       this.arrivoTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
       this.punti.splice(check,1);
+      this.itinerJdownload.splice(check,1);
       this.puntiIntermediLats.splice(check,1);
       this.puntiIntermedi.splice(check,1);
     }
@@ -196,6 +201,7 @@ export class ItineraryMakerComponent implements OnInit {
         else{
           this.map.removeLayer(this.puntiIntermedi[check]);
           this.punti.splice(check,1);
+          this.itinerJdownload.splice(check,1);
           this.puntiIntermediLats.splice(check,1);
           this.puntiIntermedi.splice(check,1);
           let tmp = "Punto Intermedio: " + this.newMarker.getLatLng().lat + "," + this.newMarker.getLatLng().lng;
@@ -233,6 +239,7 @@ export class ItineraryMakerComponent implements OnInit {
           .subscribe(data => {
             this.itiner = data;
             this.itinerJ= JSON.stringify(this.itiner);
+            this.itinerJdownload.push(this.itinerJ);
             this.itinerario.push(L.geoJSON(JSON.parse(this.itinerJ)));
             this.itinerario[this.itinerario.length-1].addTo(this.map);
             this.itinerariopresente = true;
@@ -259,6 +266,7 @@ export class ItineraryMakerComponent implements OnInit {
         .subscribe(data => {
           this.itiner = data;
           this.itinerJ= JSON.stringify(this.itiner);
+          this.itinerJdownload.push(this.itinerJ);
           this.itinerario.push(L.geoJSON(JSON.parse(this.itinerJ)));
           this.itinerario[this.itinerario.length-1].addTo(this.map);
           this.itinerariopresente = true;
@@ -270,8 +278,16 @@ export class ItineraryMakerComponent implements OnInit {
   elimina(check: number){
     this.map.removeLayer(this.puntiIntermedi[check]);
     this.punti.splice(check,1);
+    this.itinerJdownload.splice(check,1);
     this.puntiIntermediLats.splice(check,1);
     this.puntiIntermedi.splice(check,1);
+  }
+
+  
+  sanitize(){
+    let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.itinerJdownload));
+    let link = "data:'" + data;
+    return this.sanitizer.bypassSecurityTrustUrl(link);
   }
 
   
