@@ -13,6 +13,7 @@ import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/
 import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
 import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda.component';
 import { ItineraryMakerComponent } from './itinerary-maker/itinerary-maker.component';
+import { MakerComponent } from './maker/maker.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ItineraryMakerComponent } from './itinerary-maker/itinerary-maker.compo
     StrutturaRicettivaSchedaComponent,
     RistoroSchedaComponent,
     ItinerarioSchedaComponent,
-    ItineraryMakerComponent
+    ItineraryMakerComponent,
+    MakerComponent
   ],
   imports: [
     BrowserModule,

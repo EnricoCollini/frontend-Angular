@@ -12,6 +12,7 @@ import { ItineraryMakerService } from '../itinerary-maker.service';
 })
 export class ItineraryMakerComponent implements OnInit {
   @Input() markers: L.Marker;
+  @Input() marks: L.Marker[];
   public partenza: L.Marker;
   public itinerariopresente = false;
   public partenzaTitle= "Select a point on the map";
@@ -107,6 +108,7 @@ export class ItineraryMakerComponent implements OnInit {
 
     });
     //this.getRoute(11.1,43.1,11.5,43.5);
+
   }
 
   selPartenza(){
@@ -288,6 +290,13 @@ export class ItineraryMakerComponent implements OnInit {
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.itinerJdownload));
     let link = "data:'" + data;
     return this.sanitizer.bypassSecurityTrustUrl(link);
+  }
+
+  loadMarks(){
+    for (let index = 0; index < this.marks.length; index++) {
+      this.marks[index].addTo(this.map);
+      console.log("loaded"); 
+     }
   }
 
   

@@ -9,6 +9,7 @@ import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/
 import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
 import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda.component';
 import { ItineraryMakerComponent } from './itinerary-maker/itinerary-maker.component';
+import { MakerComponent } from './maker/maker.component';
 
 const routes: Routes = [
   {
@@ -18,12 +19,13 @@ const routes: Routes = [
   },
   {path: 'areenaturali', component: AreeNaturaliListComponent},
   {path: 'ricerca', component: RicercaComponent},
-  {path: 'itinerarymaker', component: ItineraryMakerComponent},
+  {path: 'itinerarymaker', component: MakerComponent},
   
   { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },
   { path: 'detailRisto/:lat', component: RistoroSchedaComponent},
   { path: 'detailIti/:lat', component: ItinerarioSchedaComponent},
+  
   
   {path: 'redirect/:nome', component: RedirectComponent}
 ];
