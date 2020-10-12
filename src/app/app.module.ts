@@ -12,6 +12,7 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
 import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
 import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda.component';
+import { ItineraryMakerComponent } from './itinerary-maker/itinerary-maker.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda
     RedirectComponent,
     StrutturaRicettivaSchedaComponent,
     RistoroSchedaComponent,
-    ItinerarioSchedaComponent
+    ItinerarioSchedaComponent,
+    ItineraryMakerComponent
   ],
   imports: [
     BrowserModule,

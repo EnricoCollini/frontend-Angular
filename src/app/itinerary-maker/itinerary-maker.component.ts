@@ -1,0 +1,281 @@
+import { CompileShallowModuleMetadata } from '@angular/compiler';
+import { Component, Input, OnInit } from '@angular/core';
+import * as L from 'leaflet';
+import { stringify } from 'querystring';
+import { ItineraryMakerService } from '../itinerary-maker.service';
+
+@Component({
+  selector: 'app-itinerary-maker',
+  templateUrl: './itinerary-maker.component.html',
+  styleUrls: ['./itinerary-maker.component.css']
+})
+export class ItineraryMakerComponent implements OnInit {
+  @Input() markers: L.Marker;
+  public partenza: L.Marker;
+  public itinerariopresente = false;
+  public partenzaTitle= "Select a point on the map";
+  public assignedpartenza = false;
+  public assignedarrivo = false;
+  public arrivo :L.Marker;
+  public arrivoTitle="Select a point on the map";
+  public puntiIntermedi : L.Marker[];
+  public puntiIntermediLats =[];
+  public punti: String[];
+
+  public newMarker: L.Marker;
+  public assigned = false;
+
+  public itinerario = [];
+  public  greenIcon = L.icon({
+    iconUrl:  "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",  
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
+  public  intIcon = L.icon({
+    iconUrl:  "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-vector-flag-icon-png-image_762945.jpg",  
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
+  public  startIcon = L.icon({
+    iconUrl:  "https://image.shutterstock.com/image-vector/start-icon-symbol-flat-vector-260nw-270857945.jpg",  
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
+  public  endIcon = L.icon({
+    iconUrl:  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTU5GDZLT6b6IZq1JqxcLgSmqc3cHLafYVSnA&usqp=CAU",  
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
+  public itinerarioJ;
+  public itiner;
+  public itinerJ;
+  public center = L.latLng(43.5,11.5);
+  public map: L.Map;
+  public zoom = 15;
+  public numero = 0;
+  public tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+
+  constructor(private _itinerarymakerservice: ItineraryMakerService) {}
+
+  ngOnInit() {
+    this.punti = [];
+    this.puntiIntermedi = [];
+    this.map = L.map('map').setView(this.center, this.zoom);
+    this.tile.addTo(this.map);
+    
+    this.map.on("click", e => {
+      console.log(e.latlng); // get the coordinates
+      if(this.assigned == true){
+        this.map.removeLayer(this.newMarker);
+      }
+      let tmp = L.marker(e.latlng ,  {icon: this.greenIcon} );
+      this.newMarker= tmp;
+      this.newMarker.bindPopup('<button class="partenza">Seleziona Partenza</button><br><button class="arrivo">Seleziona Arrivo</button><br><button class="intermedio">Aggiungi Punto Intermedio</button>')
+      .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+       .querySelector(".partenza  ")
+       .addEventListener("click", e => {
+         this.selPartenza();
+       });
+       })
+       .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+       .querySelector(".intermedio  ")
+       .addEventListener("click", e => {
+         this.addPuntoIntermedio();
+       });
+       })
+       .on("popupopen",  (b) => {
+        var popUp = b.target.getPopup()
+        popUp.getElement()
+       .querySelector(".arrivo  ")
+       .addEventListener("click", e => {
+         this.selArrivo();
+       });
+       })        
+      this.newMarker.addTo(this.map);
+      this.assigned = true;
+
+    });
+    //this.getRoute(11.1,43.1,11.5,43.5);
+  }
+
+  selPartenza(){
+    if(this.assignedpartenza == true){
+      this.map.removeLayer(this.partenza);
+    }
+    console.log(this.newMarker.getLatLng().lat);
+    let check = -1;
+    if(typeof(this.puntiIntermediLats)!=undefined){
+      for (let index = 0; index < this.puntiIntermediLats.length; index++) {
+        if(this.puntiIntermediLats[index]==this.newMarker.getLatLng().lat){
+          check = index;
+        }
+      }
+    }
+    if(check==-1){
+      this.partenza =new L.Marker(this.newMarker.getLatLng(),{icon: this.startIcon});
+      this.partenza.addTo(this.map);
+      this.assignedpartenza = true;
+      this.partenzaTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
+    }
+    else{
+      this.map.removeLayer(this.puntiIntermedi[check]);
+      this.partenza =new L.Marker(this.newMarker.getLatLng(),{icon: this.startIcon});
+      this.partenza.addTo(this.map);
+      this.assignedpartenza = true;
+      this.partenzaTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
+      this.punti.splice(check,1);
+      this.puntiIntermediLats.splice(check,1);
+      this.puntiIntermedi.splice(check,1);
+    }
+    }
+
+  selArrivo(){
+    if(this.assignedarrivo == true){
+      this.map.removeLayer(this.arrivo);
+    }
+    console.log(this.newMarker.getLatLng().lat);
+    let check = -1;
+    if(typeof(this.puntiIntermediLats)!=undefined){
+      for (let index = 0; index < this.puntiIntermediLats.length; index++) {
+        if(this.puntiIntermediLats[index]==this.newMarker.getLatLng().lat){
+          check = index;
+        }
+      }
+    }
+    if(check==-1){
+      this.arrivo =new L.Marker(this.newMarker.getLatLng(),{icon: this.endIcon});
+      this.arrivo.addTo(this.map);
+      this.assignedarrivo = true;
+      this.arrivoTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
+    }
+    else{
+      this.map.removeLayer(this.puntiIntermedi[check]);
+      this.arrivo =new L.Marker(this.newMarker.getLatLng(),{icon: this.endIcon});
+      this.arrivo.addTo(this.map);
+      this.assignedarrivo = true;
+      this.arrivoTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
+      this.punti.splice(check,1);
+      this.puntiIntermediLats.splice(check,1);
+      this.puntiIntermedi.splice(check,1);
+    }
+  }
+
+  addPuntoIntermedio(){
+    if(this.assignedpartenza == false){
+      alert("Selezionare prima Partenza");
+    }else{
+      if(this.assignedarrivo == false){
+        alert("Selezionare prima Arrivo");
+      }else{
+        let check = -1;
+        if(typeof(this.puntiIntermediLats)!=undefined){
+          for (let index = 0; index < this.puntiIntermediLats.length; index++) {
+            if(this.puntiIntermediLats[index]==this.newMarker.getLatLng().lat){
+              check = index;
+            }
+          }
+        }
+        if(check==-1){
+          let tmp = "Punto Intermedio: " + this.newMarker.getLatLng().lat + "," + this.newMarker.getLatLng().lng;
+          let tmpLat = this.newMarker.getLatLng().lat;
+          let tmpMarker = new L.Marker(this.newMarker.getLatLng(),{icon: this.intIcon})
+          this.puntiIntermedi.push(tmpMarker);
+          this.punti.push(tmp);
+          this.puntiIntermediLats.push(tmpLat);
+          this.puntiIntermedi[this.puntiIntermedi.length - 1].addTo(this.map); 
+        
+        }
+        else{
+          this.map.removeLayer(this.puntiIntermedi[check]);
+          this.punti.splice(check,1);
+          this.puntiIntermediLats.splice(check,1);
+          this.puntiIntermedi.splice(check,1);
+          let tmp = "Punto Intermedio: " + this.newMarker.getLatLng().lat + "," + this.newMarker.getLatLng().lng;
+          let tmpLat = this.newMarker.getLatLng().lat;
+          let tmpMarker = new L.Marker(this.newMarker.getLatLng(),{icon: this.intIcon})
+          this.puntiIntermedi.push(tmpMarker);
+          this.punti.push(tmp);
+          this.puntiIntermediLats.push(tmpLat);
+          this.puntiIntermedi[this.puntiIntermedi.length - 1].addTo(this.map); 
+        }
+        console.log("ok"); 
+      }
+    }
+
+  }
+
+
+  
+
+  getRoute(){
+    if(!this.itinerariopresente){
+      let markers = [];
+       markers.push(this.partenza);
+      for (let index = 0; index < this.puntiIntermedi.length; index++) {
+        markers.push(this.puntiIntermedi[index]);
+      }
+      markers.push(this.arrivo);
+      for (let i = 0; i < markers.length-1; i++) {
+        let j = i +1
+        let startLat = markers[i].getLatLng().lat;
+        let startLon = markers[i].getLatLng().lng;
+        let endLat = markers[j].getLatLng().lat;
+        let endLon = markers[j].getLatLng().lng;
+        this._itinerarymakerservice.getItinerario(startLon, startLat,endLon , endLat )
+          .subscribe(data => {
+            this.itiner = data;
+            this.itinerJ= JSON.stringify(this.itiner);
+            this.itinerario.push(L.geoJSON(JSON.parse(this.itinerJ)));
+            this.itinerario[this.itinerario.length-1].addTo(this.map);
+            this.itinerariopresente = true;
+          });
+      }
+
+    }else{
+      for (let index = 0; index < this.itinerario.length; index++) {
+        this.map.removeLayer(this.itinerario[index]);  
+      }
+      let markers = [];
+      markers.push(this.partenza);
+      for (let index = 0; index < this.puntiIntermedi.length; index++) {
+        markers.push(this.puntiIntermedi[index]);
+      }
+      markers.push(this.arrivo);
+      for (let i = 0; i < markers.length-1; i++) {
+        let j = i +1
+        let startLat = markers[i].getLatLng().lat;
+        let startLon = markers[i].getLatLng().lng;
+        let endLat = markers[j].getLatLng().lat;
+        let endLon = markers[j].getLatLng().lng;
+        this._itinerarymakerservice.getItinerario(startLon, startLat,endLon , endLat )
+        .subscribe(data => {
+          this.itiner = data;
+          this.itinerJ= JSON.stringify(this.itiner);
+          this.itinerario.push(L.geoJSON(JSON.parse(this.itinerJ)));
+          this.itinerario[this.itinerario.length-1].addTo(this.map);
+          this.itinerariopresente = true;
+        });
+      }  
+    }    
+  }
+
+  elimina(check: number){
+    this.map.removeLayer(this.puntiIntermedi[check]);
+    this.punti.splice(check,1);
+    this.puntiIntermediLats.splice(check,1);
+    this.puntiIntermedi.splice(check,1);
+  }
+
+  
+  
+
+
+}

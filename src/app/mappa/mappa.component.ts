@@ -11,9 +11,6 @@ export class MappaComponent implements OnInit {
   @Input() name: "Hello";
   @Input() iti;
   public popup: string;
-
-
-
   public map: L.Map;
   public zoom: number;
   public  greenIcon = L.icon({

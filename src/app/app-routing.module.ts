@@ -8,15 +8,18 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
 import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
 import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda.component';
+import { ItineraryMakerComponent } from './itinerary-maker/itinerary-maker.component';
 
 const routes: Routes = [
-  {path: 'areenaturali', component: AreeNaturaliListComponent},
-  {path: 'ricerca', component: RicercaComponent},
   {
     path: '',
     redirectTo: 'areenaturali',
     pathMatch: 'full'
   },
+  {path: 'areenaturali', component: AreeNaturaliListComponent},
+  {path: 'ricerca', component: RicercaComponent},
+  {path: 'itinerarymaker', component: ItineraryMakerComponent},
+  
   { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },
   { path: 'detailRisto/:lat', component: RistoroSchedaComponent},
@@ -36,4 +39,5 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents = [AreeNaturaliListComponent,
-                                  RicercaComponent]
+                                  RicercaComponent,
+                                ItineraryMakerComponent]
