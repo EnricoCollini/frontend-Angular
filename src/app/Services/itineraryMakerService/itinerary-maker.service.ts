@@ -1,15 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
+import { openroute } from 'src/environments/openrouteenv';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItineraryMakerService {
-  protected _token = "5b3ce3597851110001cf62484048962837b0430e9245b2df426f8106";
 
-  public  greenIcon = L.icon({
-    iconUrl:  "https://pngimage.net/wp-content/uploads/2018/06/flat-tree-png-2.png", 
+  protected _token = openroute.openRouteServices.key;
+
+
+  public  mapsIcon = L.icon({    
+    iconUrl:  "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg", 
     iconSize:     [38, 38], // size of the icon
     iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
     popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
@@ -36,12 +39,13 @@ export class ItineraryMakerService {
   constructor(private http: HttpClient) {   }
 
   getItinerario(startLat: number, startLon: number, endLat: number, endLon: number){
+    console.log(this._token);
     let urlString = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=" +  this._token + "&start=" + startLat + "," + startLon + "&end=" + endLat + "," + endLon;
     return this.http.get(urlString);
   }
 
   getMapsIcon(){
-    return(this.greenIcon);
+    return(this.mapsIcon);
   }
 
   getIntIcon(){

@@ -11,40 +11,42 @@ import { ItineraryMakerService } from '../../Services/itineraryMakerService/itin
   styleUrls: ['./itinerary-maker.component.css']
 })
 export class ItineraryMakerComponent implements OnInit {
-  @Input() markers: L.Marker;
-  @Input() marks: L.Marker[];
-  public partenza: L.Marker;
-  public itinerariopresente = false;
-  public partenzaTitle= "Select a point on the map";
-  public assignedpartenza = false;
-  public itinerJdownload = [];
-  public assignedarrivo = false;
-  public arrivo :L.Marker;
-  public arrivoTitle="Select a point on the map";
-  public puntiIntermedi : L.Marker[];
-  public puntiIntermediLats =[];
-  public punti: String[];
 
-  public newMarker: L.Marker;
-  public assigned = false;
-
-  public itinerario = [];
-
+  public map: L.Map;
+  public center = L.latLng(43.5,11.5);
+  public zoom = 15;
+  public tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
   public  greenIcon :L.Icon;
   public  intIcon : L.Icon;
   public  startIcon : L.Icon;
   public  endIcon : L.Icon;
+  @Input() marks: L.Marker[]; // i marker preloaded
 
-  public itinerarioJ;
-  public itiner;
+  public newMarker: L.Marker;
+  public assigned = false;
+
+  public partenza: L.Marker;
+  public assignedpartenza = false;
+  public partenzaTitle= "Select a point on the map";
+
+  public arrivo :L.Marker;
+  public assignedarrivo = false;
+  public arrivoTitle="Select a point on the map";
+
+  public puntiIntermedi= [];
+  public puntiIntermediLats =[];
+  public punti = [];
+
+  public itinerario = []; //contiene l'insieme degli itinerari tra i points
+  public itinerariopresente = false;
+  public itinerarioJ; // J -> la version geoJSON
+  public itinerJdownload = [];
+  public itiner; // variabili di appoggio per elaborazione dati
   public itinerJ;
-  public center = L.latLng(43.5,11.5);
-  public map: L.Map;
-  public zoom = 15;
-  public numero = 0;
-  public tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
-
-  constructor(private _itinerarymakerservice: ItineraryMakerService,
+  @Input() markers: L.Marker; //markers complessivi per itinerario
+ 
+  constructor(
+    private _itinerarymakerservice: ItineraryMakerService,
     private sanitizer:DomSanitizer) {}
 
   ngOnInit() {
@@ -52,12 +54,10 @@ export class ItineraryMakerComponent implements OnInit {
     this.intIcon = this._itinerarymakerservice.getIntIcon();
     this.startIcon = this._itinerarymakerservice.getStartIcon();
     this.endIcon = this._itinerarymakerservice.getFinishIcon();
-
-    this.punti = [];
-    this.puntiIntermedi = [];
     this.map = L.map('map').setView(this.center, this.zoom);
     this.tile.addTo(this.map);
     
+    //evento per aggiungere markers sulla mappa al click
     this.map.on("click", <LeafletMouseEvent>(e) => {
       if(this.assigned == true){
         this.map.removeLayer(this.newMarker);
@@ -68,33 +68,22 @@ export class ItineraryMakerComponent implements OnInit {
       .on("popupopen",  (a) => {
         var popUp = a.target.getPopup()
         popUp.getElement()
-       .querySelector(".partenza  ")
-       .addEventListener("click", e => {
-         this.selPartenza();
-       });
-       })
-       .on("popupopen",  (a) => {
+        .querySelector(".partenza  ")
+        .addEventListener("click", e => {this.selPartenza();}); })
+      .on("popupopen",  (a) => {
         var popUp = a.target.getPopup()
         popUp.getElement()
-       .querySelector(".intermedio  ")
-       .addEventListener("click", e => {
-         this.addPuntoIntermedio();
-       });
-       })
-       .on("popupopen",  (b) => {
+        .querySelector(".intermedio  ")
+        .addEventListener("click", e => {this.addPuntoIntermedio();}); })
+      .on("popupopen",  (b) => {
         var popUp = b.target.getPopup()
         popUp.getElement()
-       .querySelector(".arrivo  ")
-       .addEventListener("click", e => {
-         this.selArrivo();
-       });
-       })        
+        .querySelector(".arrivo  ")
+        .addEventListener("click", e => {this.selArrivo();}); });        
+      
       this.newMarker.addTo(this.map);
       this.assigned = true;
-
     });
-
-
   }
 
   selPartenza(){
@@ -127,7 +116,7 @@ export class ItineraryMakerComponent implements OnInit {
       this.itinerJdownload.splice(check,1);
       this.puntiIntermedi.splice(check,1);
     }
-    }
+  }
 
   selArrivo(){
     if(this.assignedarrivo == true){
@@ -179,7 +168,9 @@ export class ItineraryMakerComponent implements OnInit {
         if(check==-1){
           let tmp = "Punto Intermedio: " + this.newMarker.getLatLng().lat + "," + this.newMarker.getLatLng().lng;
           let tmpLat = this.newMarker.getLatLng().lat;
-          let tmpMarker = new L.Marker(this.newMarker.getLatLng(),{icon: this.intIcon})
+          console.log(tmpLat);
+          let tmpMarker = new L.Marker(this.newMarker.getLatLng(),{icon: this.intIcon});
+          
           this.puntiIntermedi.push(tmpMarker);
           this.punti.push(tmp);
           this.puntiIntermediLats.push(tmpLat);
@@ -203,11 +194,7 @@ export class ItineraryMakerComponent implements OnInit {
         console.log("ok"); 
       }
     }
-
   }
-
-
-  
 
   getRoute(){
     if(!this.itinerariopresente){
@@ -233,7 +220,6 @@ export class ItineraryMakerComponent implements OnInit {
             this.itinerariopresente = true;
           });
       }
-
     }else{
       for (let index = 0; index < this.itinerario.length; index++) {
         this.map.removeLayer(this.itinerario[index]);  
@@ -271,7 +257,6 @@ export class ItineraryMakerComponent implements OnInit {
     this.puntiIntermedi.splice(check,1);
   }
 
-  
   sanitize(){
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.itinerJdownload));
     let link = "data:'" + data;
@@ -284,5 +269,4 @@ export class ItineraryMakerComponent implements OnInit {
       console.log("loaded"); 
      }
   }
-
 }
