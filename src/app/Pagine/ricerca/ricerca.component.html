@@ -1,7 +1,9 @@
 <div class="container">
 
-    <form #searchForm="ngForm" (ngSubmit)="submitSearch(searchForm.form);">
-        <input type="text" class="form-control" name="search" ngModel>
+    <form #searchForm="ngForm" style="margin: 2px;" (ngSubmit)="submitSearch(searchForm.form);">
+        <label>
+            <input placeholder="Via, Città, ..." type="text" class="form-control" name="search" ngModel style="width: min-content;">
+        </label>
         <button class="btn btn-primary" type="submit" >Submit</button>
     </form>
 
