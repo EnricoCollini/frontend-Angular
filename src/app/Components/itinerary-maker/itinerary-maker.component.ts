@@ -106,15 +106,11 @@ export class ItineraryMakerComponent implements OnInit {
       this.partenzaTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
     }
     else{
-      this.map.removeLayer(this.puntiIntermedi[check]);
       this.partenza =new L.Marker(this.newMarker.getLatLng(),{icon: this.startIcon});
       this.partenza.addTo(this.map);
       this.assignedpartenza = true;
       this.partenzaTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
-      this.punti.splice(check,1);
-      this.puntiIntermediLats.splice(check,1);
-      this.itinerJdownload.splice(check,1);
-      this.puntiIntermedi.splice(check,1);
+      this.elimina(check);
     }
   }
 
@@ -138,15 +134,11 @@ export class ItineraryMakerComponent implements OnInit {
       this.arrivoTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
     }
     else{
-      this.map.removeLayer(this.puntiIntermedi[check]);
       this.arrivo =new L.Marker(this.newMarker.getLatLng(),{icon: this.endIcon});
       this.arrivo.addTo(this.map);
       this.assignedarrivo = true;
       this.arrivoTitle = "Selected: " + this.newMarker.getLatLng().lat + "," +this.newMarker.getLatLng().lng; 
-      this.punti.splice(check,1);
-      this.itinerJdownload.splice(check,1);
-      this.puntiIntermediLats.splice(check,1);
-      this.puntiIntermedi.splice(check,1);
+      this.elimina(check);
     }
   }
 
@@ -178,11 +170,7 @@ export class ItineraryMakerComponent implements OnInit {
         
         }
         else{
-          this.map.removeLayer(this.puntiIntermedi[check]);
-          this.punti.splice(check,1);
-          this.itinerJdownload.splice(check,1);
-          this.puntiIntermediLats.splice(check,1);
-          this.puntiIntermedi.splice(check,1);
+          this.elimina(check);
           let tmp = "Punto Intermedio: " + this.newMarker.getLatLng().lat + "," + this.newMarker.getLatLng().lng;
           let tmpLat = this.newMarker.getLatLng().lat;
           let tmpMarker = new L.Marker(this.newMarker.getLatLng(),{icon: this.intIcon})
