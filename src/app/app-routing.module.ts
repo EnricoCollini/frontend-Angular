@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
-import { AreeNaturaliListComponent } from './aree-naturali-list/aree-naturali-list.component';
-import { RicercaComponent } from './ricerca/ricerca.component';
-import { AreaNaturaleSchedaComponent } from './area-naturale-scheda/area-naturale-scheda.component';
+import { AreeNaturaliListComponent } from './Pagine/aree-naturali-list/aree-naturali-list.component';
+import { RicercaComponent } from './Pagine/ricerca/ricerca.component';
+import { AreaNaturaleSchedaComponent } from './Components/area-naturale-scheda/area-naturale-scheda.component';
 import { RedirectComponent } from './redirect/redirect.component';
-import { StrutturaRicettivaSchedaComponent } from './struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
-import { RistoroSchedaComponent } from './ristoro-scheda/ristoro-scheda.component';
-import { ItinerarioSchedaComponent } from './itinerario-scheda/itinerario-scheda.component';
-import { ItineraryMakerComponent } from './itinerary-maker/itinerary-maker.component';
-import { MakerComponent } from './maker/maker.component';
+import { StrutturaRicettivaSchedaComponent } from './Components/struttura-ricettiva-scheda/struttura-ricettiva-scheda.component';
+import { RistoroSchedaComponent } from './Components/ristoro-scheda/ristoro-scheda.component';
+import { ItinerarioSchedaComponent } from './Components/itinerario-scheda/itinerario-scheda.component';
+import { ItineraryMakerComponent } from './Components/itinerary-maker/itinerary-maker.component';
+import { MakerComponent } from './Pagine/maker/maker.component';
 
 const routes: Routes = [
   {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AreaNaturaleService } from '../area-naturale.service';
-import { IAreaNaturale } from '../areanturale';
+import { AreaNaturaleService } from '../../Services/areaNaturaleService/area-naturale.service';
+import { IAreaNaturale } from '../../Services/areaNaturaleService/areanturale';
 
 @Component({
   selector: 'app-aree-naturali-list',
@@ -13,7 +13,6 @@ export class AreeNaturaliListComponent implements OnInit {
   constructor(private _areaNaturaleService: AreaNaturaleService) { }
 
   ngOnInit() {
-    //this.areeNaturali = this._areaNaturaleService.getAreeNaturali();
     this._areaNaturaleService.getAreeNaturaliFromDB()
       .subscribe(data => this.areeNaturali = data);
 

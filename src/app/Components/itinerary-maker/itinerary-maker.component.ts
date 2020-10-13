@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as L from 'leaflet';
 import { stringify } from 'querystring';
-import { ItineraryMakerService } from '../itinerary-maker.service';
+import { ItineraryMakerService } from '../../Services/itineraryMakerService/itinerary-maker.service';
 
 @Component({
   selector: 'app-itinerary-maker',
@@ -29,30 +29,12 @@ export class ItineraryMakerComponent implements OnInit {
   public assigned = false;
 
   public itinerario = [];
-  public  greenIcon = L.icon({
-    iconUrl:  "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",  
-    iconSize:     [38, 38], // size of the icon
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-  public  intIcon = L.icon({
-    iconUrl:  "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-vector-flag-icon-png-image_762945.jpg",  
-    iconSize:     [38, 38], // size of the icon
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-  public  startIcon = L.icon({
-    iconUrl:  "https://image.shutterstock.com/image-vector/start-icon-symbol-flat-vector-260nw-270857945.jpg",  
-    iconSize:     [38, 38], // size of the icon
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-  public  endIcon = L.icon({
-    iconUrl:  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTU5GDZLT6b6IZq1JqxcLgSmqc3cHLafYVSnA&usqp=CAU",  
-    iconSize:     [38, 38], // size of the icon
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
+
+  public  greenIcon :L.Icon;
+  public  intIcon : L.Icon;
+  public  startIcon : L.Icon;
+  public  endIcon : L.Icon;
+
   public itinerarioJ;
   public itiner;
   public itinerJ;
@@ -66,13 +48,17 @@ export class ItineraryMakerComponent implements OnInit {
     private sanitizer:DomSanitizer) {}
 
   ngOnInit() {
+    this.greenIcon = this._itinerarymakerservice.getMapsIcon();
+    this.intIcon = this._itinerarymakerservice.getIntIcon();
+    this.startIcon = this._itinerarymakerservice.getStartIcon();
+    this.endIcon = this._itinerarymakerservice.getFinishIcon();
+
     this.punti = [];
     this.puntiIntermedi = [];
     this.map = L.map('map').setView(this.center, this.zoom);
     this.tile.addTo(this.map);
     
-    this.map.on("click", e => {
-      console.log(e.latlng); // get the coordinates
+    this.map.on("click", <LeafletMouseEvent>(e) => {
       if(this.assigned == true){
         this.map.removeLayer(this.newMarker);
       }
@@ -107,7 +93,7 @@ export class ItineraryMakerComponent implements OnInit {
       this.assigned = true;
 
     });
-    //this.getRoute(11.1,43.1,11.5,43.5);
+
 
   }
 
@@ -298,9 +284,5 @@ export class ItineraryMakerComponent implements OnInit {
       console.log("loaded"); 
      }
   }
-
-  
-  
-
 
 }

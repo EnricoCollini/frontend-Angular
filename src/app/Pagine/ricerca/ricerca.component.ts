@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnDestroy, AfterViewChecked, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
-import { AreaNaturaleService } from '../area-naturale.service';
-import { ItinerarioService } from '../itinerario.service';
-import { RistoriService } from '../ristori.service';
-import { StruttureRicettiveService } from '../strutture-ricettive.service';
+import { MapElementsService } from 'src/app/Services/mapElementsService/map-elements.service';
+import { AreaNaturaleService } from '../../Services/areaNaturaleService/area-naturale.service';
+import { ItinerarioService } from '../../Services/itineraryService/itinerario.service';
+import { RistoriService } from '../../Services/ristoroService/ristori.service';
+import { StruttureRicettiveService } from '../../Services/struttureRicettiveService/strutture-ricettive.service';
 
 @Component({
   selector: 'app-ricerca',
@@ -12,69 +13,41 @@ import { StruttureRicettiveService } from '../strutture-ricettive.service';
 })
 
 export class RicercaComponent implements OnInit {
-
-  dropDownOpen = false;
+  public map: L.Map;
+  public zoom: number;
+  public  greenIcon : L.Icon;
+  public  itiIcon : L.Icon;
+  public  struttIcon : L.Icon;
+  public  ristoIcon : L.Icon;
 
   public areeNaturali = [];
   public struttureRicettive = [];
   public ristori = [];
   public itinerari = [];
 
-  public ristoriMarkers = [];
   public areeNaturaliMarkers = [];
+  public ristoriMarkers = [];
   public struttureMarkers = [];
   public itinerariMarkers = [];
 
-  public map: L.Map;
-  public zoom: number;
-  public  greenIcon = L.icon({
-    iconUrl:  "https://pngimage.net/wp-content/uploads/2018/06/flat-tree-png-2.png",
-    
-    iconSize:     [38, 38], // size of the icon
-    
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-   
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-
-  public  itiIcon = L.icon({
-    iconUrl:  "https://image.flaticon.com/icons/png/512/1072/1072374.png",
-    
-    iconSize:     [38, 38], // size of the icon
-    
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-   
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-
-  public  struttIcon = L.icon({
-    iconUrl:  "https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/house-icon.png",
-    
-    iconSize:     [38, 38], // size of the icon
-    
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-   
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-  public  ristoIcon = L.icon({
-    iconUrl:  "https://www.flaticon.com/svg/static/icons/svg/227/227326.svg",
-    
-    iconSize:     [38, 38], // size of the icon
-    
-    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
-   
-    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
-  });
-
-
-  constructor(private _struttureRicettiveService: StruttureRicettiveService,
+  constructor(
+    private _struttureRicettiveService: StruttureRicettiveService,
     private _areaNaturaleService: AreaNaturaleService,
     private _ristoriService: RistoriService,
-    private _itinerariService: ItinerarioService) {}
+    private _itinerariService: ItinerarioService,
+    private _mapElementsService: MapElementsService) {}
+
 
   ngOnInit() {
 
-    this.mapInit();
+    this.map = L.map('map').setView([43, 12], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+    this.greenIcon = this._mapElementsService.getAreeIcon();
+    this.itiIcon = this._mapElementsService.getItinIcon();
+    this.ristoIcon = this._mapElementsService.getRistoIcon();
+    this.struttIcon = this._mapElementsService.getStruttIcon();
 
     this._itinerariService.getItinerariFromDB()
       .subscribe(data =>{
@@ -99,54 +72,37 @@ export class RicercaComponent implements OnInit {
         this.struttureRicettive = data
         this.createStruttureRicettiveMarkers();
       }); 
-
-    
-    //L.marker([43, 11], {icon: this.greenIcon}).bindPopup('<b>Hello!!</b>').addTo(this.map);
-  }
-
-  mapInit(){
-    this.map = L.map('map').setView([43, 12], 8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
   }
 
   createAreeNaturaliMarkers(){
     this.areeNaturaliMarkers = [];
     for (let index = 0; index < this.areeNaturali.length; index++) {
-      let popup = this.createPopup(this.areeNaturali[index].name, this.areeNaturali[index]); 
+      let popup = this._mapElementsService.getPopup(this.areeNaturali[index].name); 
       let markerTmp = L.marker([this.areeNaturali[index].latitude, this.areeNaturali[index].longitude], {icon: this.greenIcon}).bindPopup(popup);
       this.areeNaturaliMarkers.push(markerTmp);
     }
-    console.log(this.areeNaturaliMarkers.length);
     for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
       this.areeNaturaliMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
   }
+
 
   createItinerariMarkers(){
     this.itinerariMarkers = [];
     for (let index = 0; index < this.itinerari.length; index++) {
-      let popup = this.createPopup(this.itinerari[index].name, this.itinerari[index]); 
+      let popup = this._mapElementsService.getPopup(this.itinerari[index].name); 
       let markerTmp = L.marker([this.itinerari[index].startlatitude, this.itinerari[index].endlongitude], {icon: this.itiIcon}).bindPopup(popup);
       this.itinerariMarkers.push(markerTmp);
-
     }
-    console.log(this.itinerariMarkers.length);
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
       this.itinerariMarkers[index].addTo(this.map);
-      console.log("itinerario marker aggiunto", this.itinerari[index].name);
-      console.log(this.itinerari[index].startlatitude);
-      console.log(this.itinerari[index].startlongitude);
-
     }
   }
 
   createRistoriMarkers(){
     this.ristoriMarkers = [];
     for (let index = 0; index < this.ristori.length; index++) {
-      let popup = this.createPopup(this.ristori[index].name, this.ristori[index]); 
+      let popup = this._mapElementsService.getPopup(this.ristori[index].name); 
       let markerTmp = L.marker([this.ristori[index].latitude, this.ristori[index].longitude], {icon: this.ristoIcon}).bindPopup(popup);
       this.ristoriMarkers.push(markerTmp);
     }
@@ -155,42 +111,18 @@ export class RicercaComponent implements OnInit {
     }
   }
 
-
-
   createStruttureRicettiveMarkers(){
     this.struttureMarkers = [];
     for (let index = 0; index < this.struttureRicettive.length; index++) {
-      let popup = this.createPopup(this.struttureRicettive[index].name, this.struttureRicettive[index]); 
+      let popup = this._mapElementsService.getPopup(this.struttureRicettive[index].name);
       let markerTmp = L.marker([this.struttureRicettive[index].latitude, this.struttureRicettive[index].longitude], {icon: this.struttIcon}).bindPopup(popup);
       this.struttureMarkers.push(markerTmp);
     }
-    console.log(this.struttureMarkers.length);
     for (let index = 0; index < this.struttureMarkers.length; index++) {
       this.struttureMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
   }
 
-  createPopup(nome, areaNaturale){
-    //split('hello').join('hi')
-    let stringa = JSON.stringify(areaNaturale).split("{").join("");
-    let strin = stringa.split('"').join('');
-    let stri = strin.split(' ').join('%20');
-    let str = stri.split(",").join("&");
-    console.log(str);
-    //let link = '[routerLink]="["/detail/",' + areaNaturale.latitude + ']"  [queryParams]="'+ areaNaturale+ '"';
-    let popup =' <div class="card"> ' 
-              +  '<div class="card-body">'
-                +  '<h5 class="card-subtitle">'+ nome +'</h5> <br>'
-                + '<a class="card-link" href="http://localhost:4200/redirect/' +areaNaturale.name + '">View More</a>'
-              + '</div> '
-            + '</div> '
-    return(popup);
-  }
-
-  toggleDropdown(){
-    this.dropDownOpen = true;
-  }
 
   showOnlyAreeNaturali(){
     for (let index = 0; index < this.struttureMarkers.length; index++) {
@@ -198,15 +130,12 @@ export class RicercaComponent implements OnInit {
     }
     for (let index = 0; index < this.ristoriMarkers.length; index++) {
       this.map.removeLayer(this.ristoriMarkers[index]);
-      
     }
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
       this.map.removeLayer(this.itinerariMarkers[index]);
-      
     }
     for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
       this.areeNaturaliMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
   }
 
@@ -216,15 +145,12 @@ export class RicercaComponent implements OnInit {
     }
     for (let index = 0; index < this.ristoriMarkers.length; index++) {
       this.map.removeLayer(this.ristoriMarkers[index]);
-      
     }
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.map.removeLayer(this.itinerariMarkers[index]);
-      
+      this.map.removeLayer(this.itinerariMarkers[index]);  
     }
     for (let index = 0; index < this.struttureMarkers.length; index++) {
       this.struttureMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
   }
 
@@ -237,11 +163,9 @@ export class RicercaComponent implements OnInit {
     }
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
       this.map.removeLayer(this.itinerariMarkers[index]);
-      
     }
     for (let index = 0; index < this.ristoriMarkers.length; index++) {
       this.ristoriMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
   }
 
@@ -254,11 +178,9 @@ export class RicercaComponent implements OnInit {
     }
     for (let index = 0; index < this.ristoriMarkers.length; index++) {
       this.map.removeLayer(this.ristoriMarkers[index]);
-      
     }
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
       this.itinerariMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
   }
 
@@ -274,30 +196,19 @@ export class RicercaComponent implements OnInit {
     }
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
       this.map.removeLayer(this.itinerariMarkers[index]);
-      
     }
     for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
       this.areeNaturaliMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
     for (let index = 0; index < this.struttureMarkers.length; index++) {
       this.struttureMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
     for (let index = 0; index < this.ristoriMarkers.length; index++) {
       this.ristoriMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
     for (let index = 0; index < this.itinerariMarkers.length; index++) {
       this.itinerariMarkers[index].addTo(this.map);
-      console.log("markerAggiunto")
     }
-
   }
 
 }
-
-
-
- 
-
