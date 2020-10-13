@@ -184,6 +184,20 @@ export class ItineraryMakerComponent implements OnInit {
     }
   }
 
+  submitSearch(form){
+    let res = form.value;
+    console.log(res.search)
+    this._itinerarymakerservice.getCoordinates(res.search)
+      .subscribe(data => {
+        let coords = data.features[data.features.length -1].geometry.coordinates;
+        let coord = [coords[1], coords[0]];
+        console.log(coord);
+        this.map.setView(coord, 15);
+      }
+    );
+  }
+
+
   getRoute(){
     if(!this.itinerariopresente){
       let markers = [];

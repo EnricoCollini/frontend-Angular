@@ -16,6 +16,7 @@ import { RistoroSchedaComponent } from './Components/ristoro-scheda/ristoro-sche
 import { ItinerarioSchedaComponent } from './Components/itinerario-scheda/itinerario-scheda.component';
 import { ItineraryMakerComponent } from './Components/itinerary-maker/itinerary-maker.component';
 import { MakerComponent } from './Pagine/maker/maker.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MakerComponent } from './Pagine/maker/maker.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule
   ],

@@ -1,4 +1,7 @@
-
+<form #searchForm="ngForm" (ngSubmit)="submitSearch(searchForm.form);">
+    <input type="text" class="form-control" name="search" ngModel>
+    <button class="btn btn-primary" type="submit" >Submit</button>
+</form>
 
 <p>Partenza: {{partenzaTitle}}</p>
 <p *ngFor="let punto of punti; let i = index;">{{punto}} <a class="btn btn-primary btn-lg" style="margin: 5px;" (click)="elimina(i)" role="button">X</a></p>

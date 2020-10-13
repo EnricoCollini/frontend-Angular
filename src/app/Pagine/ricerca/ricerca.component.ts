@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnDestroy, AfterViewChecked, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
+import { ItineraryMakerService } from 'src/app/Services/itineraryMakerService/itinerary-maker.service';
 import { MapElementsService } from 'src/app/Services/mapElementsService/map-elements.service';
 import { AreaNaturaleService } from '../../Services/areaNaturaleService/area-naturale.service';
 import { ItinerarioService } from '../../Services/itineraryService/itinerario.service';
@@ -35,7 +36,8 @@ export class RicercaComponent implements OnInit {
     private _areaNaturaleService: AreaNaturaleService,
     private _ristoriService: RistoriService,
     private _itinerariService: ItinerarioService,
-    private _mapElementsService: MapElementsService) {}
+    private _mapElementsService: MapElementsService,
+    private _itinerariMakerService: ItineraryMakerService) {}
 
 
   ngOnInit() {
@@ -72,6 +74,19 @@ export class RicercaComponent implements OnInit {
         this.struttureRicettive = data
         this.createStruttureRicettiveMarkers();
       }); 
+  }
+
+  submitSearch(form){
+    let res = form.value;
+    console.log(res.search)
+    this._itinerariMakerService.getCoordinates(res.search)
+      .subscribe(data => {
+        let coords = data.features[data.features.length -1].geometry.coordinates;
+        let coord = [coords[1], coords[0]];
+        console.log(coord);
+        this.map.setView(coord, 15);
+      }
+    );
   }
 
   createAreeNaturaliMarkers(){

@@ -44,6 +44,12 @@ export class ItineraryMakerService {
     return this.http.get(urlString);
   }
 
+  getCoordinates(indirizzo: string){
+    console.log(this._token);
+    let urlString = "https://api.openrouteservice.org/geocode/search?api_key="+ this._token + "&text=" + indirizzo;
+    return this.http.get(urlString);
+  }
+
   getMapsIcon(){
     return(this.mapsIcon);
   }
