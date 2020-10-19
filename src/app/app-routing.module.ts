@@ -12,6 +12,10 @@ import { ItineraryMakerComponent } from './Components/itinerary-maker/itinerary-
 import { MakerComponent } from './Pagine/maker/maker.component';
 import { AutenticationComponent } from './Pagine/autentication/autentication.component';
 import { AdminPageComponent } from './Pagine/admin-page/admin-page.component';
+import { AreaNaturaleAddPageComponent } from './Pagine/AddPages/area-naturale-add-page/area-naturale-add-page.component';
+import { RistoroAddPageComponent } from './Pagine/AddPages/ristoro-add-page/ristoro-add-page.component';
+import { ItinerarioAddPageComponent } from './Pagine/AddPages/itinerario-add-page/itinerario-add-page.component';
+import { StrutturaRicettivaAddPageComponent } from './Pagine/AddPages/struttura-ricettiva-add-page/struttura-ricettiva-add-page.component';
 
 const routes: Routes = [
   {
@@ -24,6 +28,11 @@ const routes: Routes = [
   {path: 'itinerarymaker', component: MakerComponent},
   {path: 'login', component: AutenticationComponent},
   {path: 'admin', component: AdminPageComponent},
+
+  {path: 'areenaturaliAdd', component: AreaNaturaleAddPageComponent},
+  {path: 'ristoroAdd', component: RistoroAddPageComponent},
+  {path: 'itineraryAdd', component: ItinerarioAddPageComponent},
+  {path: 'strutturaAdd', component: StrutturaRicettivaAddPageComponent},
   
   { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },

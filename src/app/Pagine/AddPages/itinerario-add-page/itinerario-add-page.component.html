@@ -1,0 +1,42 @@
+<div class="container">
+<h1>Itinerario</h1>
+  <form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
+  <label>Name: 
+      <input placeholder="..." type="text" class="form-control" name="Name" ngModel style="width: min-content;">
+  </label><br>
+  <label>Description: 
+    <input placeholder="..." type="text" class="form-control" name="Description" ngModel style="width: min-content;">
+</label><br>
+<label>startCity:
+  <input placeholder="..." type="text" class="form-control" name="startCity" ngModel style="width: min-content;">
+</label><br>
+<label>startProvince: 
+  <input placeholder="..." type="text" class="form-control" name="startProvince" ngModel style="width: min-content;">
+</label><br>
+<label>endCity:
+  <input placeholder="..." type="text" class="form-control" name="endCity" ngModel style="width: min-content;">
+</label><br>
+<label>endProvince: 
+  <input placeholder="..." type="text" class="form-control" name="endProvince" ngModel style="width: min-content;">
+</label><br>
+<label>startLatitude: 
+  <input placeholder="..." type="text" class="form-control" name="startLatitude" ngModel style="width: min-content;">
+</label><br>
+<label>startLongitude
+  <input placeholder="..." type="text" class="form-control" name="startLongitude" ngModel style="width: min-content;">
+</label><br>
+<label>endLatitude: 
+  <input placeholder="..." type="text" class="form-control" name="endLatitude" ngModel style="width: min-content;">
+</label><br>
+<label>endLongitude
+  <input placeholder="..." type="text" class="form-control" name="endLongitude" ngModel style="width: min-content;">
+</label><br>
+<label>track
+  <input placeholder="..." type="text" class="form-control" name="track" ngModel style="width: min-content;">
+</label><br>
+  <button class="btn btn-primary" type="submit" >Submit</button>
+</form>
+</div>
+
+
+<p style="margin-bottom: 280px;"></p>

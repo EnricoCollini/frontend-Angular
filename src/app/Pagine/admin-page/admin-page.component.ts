@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-page',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   
@@ -15,6 +16,26 @@ export class AdminPageComponent implements OnInit {
 
   public onFloatClick () {
     // do your magic
+  }
+
+  public addArea(){
+    this.router.navigate(['/areenaturaliAdd']);
+
+  }
+
+  public addRisto(){
+    this.router.navigate(['/ristoroAdd']);
+
+  }
+
+  public addStrutt(){
+    this.router.navigate(['/strutturaAdd']);
+
+  }
+
+  public addIti(){
+    this.router.navigate(['/itineraryAdd']);
+
   }
 
 

@@ -28,6 +28,10 @@ import { AreeNaturaliTableComponent } from './Components/aree-naturali-table/are
 import { StruttureRicettiveTableComponent } from './Components/strutture-ricettive-table/strutture-ricettive-table.component';
 import { RistoriTableComponent } from './Components/ristori-table/ristori-table.component';
 import { ItinerariTableComponent } from './Components/itinerari-table/itinerari-table.component';
+import { AreaNaturaleAddPageComponent } from './Pagine/AddPages/area-naturale-add-page/area-naturale-add-page.component';
+import { StrutturaRicettivaAddPageComponent } from './Pagine/AddPages/struttura-ricettiva-add-page/struttura-ricettiva-add-page.component';
+import { RistoroAddPageComponent } from './Pagine/AddPages/ristoro-add-page/ristoro-add-page.component';
+import { ItinerarioAddPageComponent } from './Pagine/AddPages/itinerario-add-page/itinerario-add-page.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQw6Ds-43zwoUPA3It_pnu6Ulk5eDkoh0",
@@ -59,6 +63,10 @@ const firebaseConfig = {
     StruttureRicettiveTableComponent,
     RistoriTableComponent,
     ItinerariTableComponent,
+    AreaNaturaleAddPageComponent,
+    StrutturaRicettivaAddPageComponent,
+    RistoroAddPageComponent,
+    ItinerarioAddPageComponent,
 
   ],
   imports: [
