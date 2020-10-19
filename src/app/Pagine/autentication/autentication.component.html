@@ -16,7 +16,7 @@
         <!--<button (click)="signUp()" class="btn btn-default">Sign Up</button>-->
         <button (click)="signIn()" class="btn btn-default" style="margin-left:5px;">Login</button>
       </div>
-      <button (click)="signOut()" class="btn btn-primary" *ngIf="authenticationService.userData | async">Logout</button>
+      <button (click)="signOut()" class="btn btn-primary" *ngIf="authenticationService.userData | async" style="margin-right: 10px;">Logout</button>
       <button (click)="navToAdminPage()" class="btn btn-primary" *ngIf="authenticationService.userData | async">AdminPage</button>
 
       </div>
