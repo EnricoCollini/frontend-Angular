@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth/auth.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { AuthService } from 'src/app/Services/auth/auth.service';
 })
 export class AutenticationComponent implements OnInit {
 
-  constructor(private authenticationService: AuthService ) { }
+  constructor(private authenticationService: AuthService,
+    private router: Router) { }
 
   email: string;
   password: string;
@@ -34,6 +36,11 @@ export class AutenticationComponent implements OnInit {
 
     async alertMex() {
       alert(this.consoleMessage);
+    }
+
+    navToAdminPage(){
+      this.router.navigate(['/admin']);
+     
     }
 
 

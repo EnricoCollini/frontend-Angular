@@ -11,6 +11,7 @@ import { ItinerarioSchedaComponent } from './Components/itinerario-scheda/itiner
 import { ItineraryMakerComponent } from './Components/itinerary-maker/itinerary-maker.component';
 import { MakerComponent } from './Pagine/maker/maker.component';
 import { AutenticationComponent } from './Pagine/autentication/autentication.component';
+import { AdminPageComponent } from './Pagine/admin-page/admin-page.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'ricerca', component: RicercaComponent},
   {path: 'itinerarymaker', component: MakerComponent},
   {path: 'login', component: AutenticationComponent},
+  {path: 'admin', component: AdminPageComponent},
   
   { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },

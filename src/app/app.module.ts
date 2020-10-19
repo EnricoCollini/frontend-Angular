@@ -23,6 +23,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AutenticationComponent } from './Pagine/autentication/autentication.component';
+import { AdminPageComponent } from './Pagine/admin-page/admin-page.component';
 
 
 const firebaseConfig = {
@@ -50,6 +51,7 @@ const firebaseConfig = {
     ItineraryMakerComponent,
     MakerComponent,
     AutenticationComponent,
+    AdminPageComponent,
 
   ],
   imports: [
