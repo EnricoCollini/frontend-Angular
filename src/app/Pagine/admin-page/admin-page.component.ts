@@ -10,6 +10,12 @@ export class AdminPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  
   }
+
+  public onFloatClick () {
+    // do your magic
+  }
+
 
 }

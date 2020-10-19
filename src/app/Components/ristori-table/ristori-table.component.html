@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Ristori</h1>
+  <table class="table-responsive">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let rist of ristori">
+        <td>{{rist.name}}</td>
+        <td>{{rist.city}}</td>
+        <td><button class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
+      <td><button class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>

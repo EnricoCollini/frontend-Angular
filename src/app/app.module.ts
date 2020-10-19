@@ -24,7 +24,10 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AutenticationComponent } from './Pagine/autentication/autentication.component';
 import { AdminPageComponent } from './Pagine/admin-page/admin-page.component';
-
+import { AreeNaturaliTableComponent } from './Components/aree-naturali-table/aree-naturali-table.component';
+import { StruttureRicettiveTableComponent } from './Components/strutture-ricettive-table/strutture-ricettive-table.component';
+import { RistoriTableComponent } from './Components/ristori-table/ristori-table.component';
+import { ItinerariTableComponent } from './Components/itinerari-table/itinerari-table.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQw6Ds-43zwoUPA3It_pnu6Ulk5eDkoh0",
@@ -52,6 +55,10 @@ const firebaseConfig = {
     MakerComponent,
     AutenticationComponent,
     AdminPageComponent,
+    AreeNaturaliTableComponent,
+    StruttureRicettiveTableComponent,
+    RistoriTableComponent,
+    ItinerariTableComponent,
 
   ],
   imports: [

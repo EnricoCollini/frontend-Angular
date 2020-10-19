@@ -1,3 +1,19 @@
-<p>
-  admin-page works!
-</p>
+<div class="container">
+<app-aree-naturali-table></app-aree-naturali-table>
+<app-strutture-ricettive-table></app-strutture-ricettive-table>
+<app-ristori-table></app-ristori-table>
+<app-itinerari-table></app-itinerari-table>
+
+<div class="float">
+<div class="dropup">
+    <button class="dropbtn">Add</button>
+    <div class="dropup-content">
+    <button type="button" class="btn btn-success" (click)="onClickMe()" style="width: 120px; margin:2px;">AreaNaturale</button><br>
+    <button type="button" class="btn btn-secondary"(click)="onClickMe()" style="margin:2px;">Struttura Ricettiva</button><br>
+    <button type="button" class="btn btn-warning"(click)="onClickMe()" style="width: 120px; margin:2px;">Ristoro</button><br>
+    <button type="button" class="btn btn-primary"(click)="onClickMe()" style="width:120px; margin:2px; background-color: rgb(255, 136, 0);">Itinerario</button>
+    </div>
+  </div>
+</div>
+</div>
+<p style="margin-bottom: 280px;"></p>
