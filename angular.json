@@ -128,5 +128,10 @@
       }
     }
   },
-  "defaultProject": "laapp"
+  "defaultProject": "laapp",
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": true
+    }
+  }
 }

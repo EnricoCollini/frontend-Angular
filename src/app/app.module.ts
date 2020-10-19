@@ -17,6 +17,23 @@ import { ItinerarioSchedaComponent } from './Components/itinerario-scheda/itiner
 import { ItineraryMakerComponent } from './Components/itinerary-maker/itinerary-maker.component';
 import { MakerComponent } from './Pagine/maker/maker.component';
 import { FormsModule } from '@angular/forms';
+// 1. Import the libs you need
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AutenticationComponent } from './Pagine/autentication/autentication.component';
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQw6Ds-43zwoUPA3It_pnu6Ulk5eDkoh0",
+  authDomain: "project-aut.firebaseapp.com",
+  databaseURL: "https://project-aut.firebaseio.com",
+  projectId: "project-aut",
+  storageBucket: "project-aut.appspot.com",
+  messagingSenderId: "729276793248",
+  appId: "1:729276793248:web:22be3038da52bed81f24c5"
+};
 
 @NgModule({
   declarations: [
@@ -31,9 +48,14 @@ import { FormsModule } from '@angular/forms';
     RistoroSchedaComponent,
     ItinerarioSchedaComponent,
     ItineraryMakerComponent,
-    MakerComponent
+    MakerComponent,
+    AutenticationComponent,
+
   ],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,

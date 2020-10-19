@@ -192,7 +192,7 @@ export class ItineraryMakerComponent implements OnInit {
         let coords = data.features[data.features.length -1].geometry.coordinates;
         let coord = [coords[1], coords[0]];
         console.log(coord);
-        this.map.setView(coord, 15);
+        this.map.setView(<L.LatLngTuple>coord, 15);
       }
     );
   }

@@ -10,6 +10,7 @@ import { RistoroSchedaComponent } from './Components/ristoro-scheda/ristoro-sche
 import { ItinerarioSchedaComponent } from './Components/itinerario-scheda/itinerario-scheda.component';
 import { ItineraryMakerComponent } from './Components/itinerary-maker/itinerary-maker.component';
 import { MakerComponent } from './Pagine/maker/maker.component';
+import { AutenticationComponent } from './Pagine/autentication/autentication.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'areenaturali', component: AreeNaturaliListComponent},
   {path: 'ricerca', component: RicercaComponent},
   {path: 'itinerarymaker', component: MakerComponent},
+  {path: 'login', component: AutenticationComponent},
   
   { path: 'detail/:lat', component: AreaNaturaleSchedaComponent },
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },
