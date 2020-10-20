@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AdminPageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router){}
 
   ngOnInit() {
   
@@ -20,7 +21,6 @@ export class AdminPageComponent implements OnInit {
 
   public addArea(){
     this.router.navigate(['/areenaturaliAdd']);
-
   }
 
   public addRisto(){
@@ -37,6 +37,8 @@ export class AdminPageComponent implements OnInit {
     this.router.navigate(['/itineraryAdd']);
 
   }
+
+
 
 
 }

@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>Area Naturale</h1>
+<form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
+  <label>Name: 
+      <input placeholder="{{name}}" type="text" class="form-control" name="Name" ngModel style="width: min-content;">
+  </label><br>
+  <label>Description: 
+    <input placeholder="{{description}}" type="text" class="form-control" name="Description" ngModel style="width: min-content;">
+</label><br>
+<label>City:
+  <input placeholder="{{city}}" type="text" class="form-control" name="City" ngModel style="width: min-content;">
+</label><br>
+<label>Province: 
+  <input placeholder="{{province}}" type="text" class="form-control" name="Province" ngModel style="width: min-content;">
+</label><br>
+<label>Latitude: 
+  <input placeholder="{{latitude}}" type="text" class="form-control" name="Latitude" ngModel style="width: min-content;">
+</label><br>
+<label>Longitude
+  <input placeholder="{{longitude}}" type="text" class="form-control" name="Longitude" ngModel style="width: min-content;">
+</label><br>
+<label>Area Naturale Typology
+  <input placeholder="{{tipology}}" type="text" class="form-control" name="Typology" ngModel style="width: min-content;">
+</label><br>
+  <button class="btn btn-primary" type="submit" >Submit</button>
+</form>
+</div>
+
+
+<p style="margin-bottom: 280px;"></p>

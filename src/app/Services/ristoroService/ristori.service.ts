@@ -20,6 +20,21 @@ export class RistoriService {
     .pipe(catchError(this.errorHandler));
   }
 
+  deleteRistoro(id): Observable<any>{
+    const lid = id;
+    const lurl = ('project/rest/ristoro/delete/id/' + lid);
+    console.log(lurl);
+    return this.http.get(lurl)
+    .pipe(catchError(this.errorHandler));
+  }
+
+
+  postNewRistoro(data): Observable<any>{
+    const body = data;
+    return this.http.post('project/rest/ristoro/create', body)
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse){
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

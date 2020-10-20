@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Struttura Ricettiva</h1>
+<form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
+  <label>Name: 
+      <input placeholder="{{name}}" type="text" class="form-control" name="name" ngModel style="width: min-content;">
+  </label><br>
+  <label>Description: 
+    <input placeholder="{{description}}" type="text" class="form-control" name="description" ngModel style="width: min-content;">
+</label><br>
+<label>startCity:
+  <input placeholder="{{startcity}}" type="text" class="form-control" name="startcity" ngModel style="width: min-content;">
+</label><br>
+<label>startProvince: 
+  <input placeholder="{{startprovince}}" type="text" class="form-control" name="startprovince" ngModel style="width: min-content;">
+</label><br>
+<label>endCity:
+  <input placeholder="{{endcity}}" type="text" class="form-control" name="endcity" ngModel style="width: min-content;">
+</label><br>
+<label>endProvince: 
+  <input placeholder="{{endprovince}}" type="text" class="form-control" name="endprovince" ngModel style="width: min-content;">
+</label><br>
+<label>startLatitude: 
+  <input placeholder="{{startlatitude}}" type="text" class="form-control" name="startlatitude" ngModel style="width: min-content;">
+</label><br>
+<label>startLongitude
+  <input placeholder="{{startlongitude}}" type="text" class="form-control" name="startlongitude" ngModel style="width: min-content;">
+</label><br>
+<label>endLatitude
+  <input placeholder="{{endlatitude}}" type="text" class="form-control" name="endlatitude" ngModel style="width: min-content;">
+</label><br>
+<label>endLongitude
+  <input placeholder="{{endlongitude}}" type="text" class="form-control" name="endlongitude" ngModel style="width: min-content;">
+</label><br>
+<label>track
+  <input placeholder="{{track}}" type="text" class="form-control" name="track" ngModel style="width: min-content;">
+</label><br>
+  <button class="btn btn-primary" type="submit" >Submit</button>
+</form>
+</div>
+
+
+<p style="margin-bottom: 280px;"></p> 

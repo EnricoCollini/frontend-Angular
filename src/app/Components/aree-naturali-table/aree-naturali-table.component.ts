@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
 
 @Component({
@@ -9,11 +10,31 @@ import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-n
 export class AreeNaturaliTableComponent implements OnInit {
   
   public areeNaturali = [];
-  constructor(private _areaNaturaleService: AreaNaturaleService) { }
+  constructor(private _areaNaturaleService: AreaNaturaleService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.getAree();
+  }
+
+  public getAree(){
     this._areaNaturaleService.getAreeNaturaliFromDB()
       .subscribe(data => this.areeNaturali = data);
+  }
+
+  public deleteArea(lid){
+    console.log(lid);
+    this._areaNaturaleService.deleteAreaNaturale(lid)
+    .subscribe(data => {
+      console.log(data);
+      this.getAree();
+    } 
+    )
+  }
+
+  public editArea(id){
+    const route = '/areaEdit/' + id;
+    this.router.navigate([route]);
   }
 
 }

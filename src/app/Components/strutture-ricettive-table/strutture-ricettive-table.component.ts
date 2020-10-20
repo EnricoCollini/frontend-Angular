@@ -12,7 +12,25 @@ export class StruttureRicettiveTableComponent implements OnInit {
   constructor(private _struttureService: StruttureRicettiveService) { }
 
   ngOnInit() {
-    this._struttureService.getStruttureRicettiveFromDB()
-      .subscribe(data => this.strutture = data);
+    this.getStrutture();
   }
+
+  getStrutture(){
+    this._struttureService.getStruttureRicettiveFromDB()
+    .subscribe(data => this.strutture = data);
+  }
+
+  public deleteStruttura(lid){
+    console.log(lid);
+    this._struttureService.deleteStruttura(lid)
+    .subscribe(data => {
+      console.log(data);
+      this.getStrutture();
+    } 
+    )
+  }
+  
+
+  
+
 }

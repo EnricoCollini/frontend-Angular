@@ -90,6 +90,7 @@ export class RicercaComponent implements OnInit {
     );
   }
 
+  
   createAreeNaturaliMarkers(){
     this.areeNaturaliMarkers = [];
     for (let index = 0; index < this.areeNaturali.length; index++) {

@@ -3,8 +3,8 @@
   <table class="table-responsive">
     <thead class="thead-light">
       <tr>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
+        <th scope="col">Itinerario</th>
+        <th scope="col">Città</th>
         <th scope = "col">Edit</th>
         <th scope="col">Delete</th>
       </tr>
@@ -13,8 +13,8 @@
       <tr *ngFor="let itin of itinerari">
         <td>{{itin.name}}</td>
         <td>{{itin.city}}</td>
-        <td><button class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
-      <td><button class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
+        <td><button  [routerLink]='["/itinerarioEdit/"+itin.id]'  [queryParams]="itin"  class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
+      <td><button (click)="deleteItinerario(itin.id)" class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
       </tr>
     </tbody>
   </table>

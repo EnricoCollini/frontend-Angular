@@ -12,8 +12,22 @@ export class RistoriTableComponent implements OnInit {
   constructor(private _ristoriService: RistoriService) { }
 
   ngOnInit() {
+    this.getRistori();
+  }
+
+  getRistori(){
     this._ristoriService.getRistoriFromDB()
-      .subscribe(data => this.ristori = data);
+    .subscribe(data => this.ristori = data);
+  }
+
+  public deleteRistoro(lid){
+    console.log(lid);
+    this._ristoriService.deleteRistoro(lid)
+    .subscribe(data => {
+      console.log(data);
+      this.getRistori();
+    } 
+    )
   }
 
 }

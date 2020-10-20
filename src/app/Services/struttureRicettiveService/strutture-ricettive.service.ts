@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, pipe, throwError } from 'rxjs';
 import {IStrutturaRicettiva} from './strutturaricettiva';
 import { catchError } from 'rxjs/operators';
 
@@ -17,6 +17,21 @@ export class StruttureRicettiveService {
   getStruttureRicettiveFromDB(): Observable<IStrutturaRicettiva[]>{
     return this.http.get<IStrutturaRicettiva[]>('project/rest/strutturaricettiva/strutturericettive')
     .pipe(catchError(this.errorHandler));
+  }
+
+  deleteStruttura(id): Observable<any>{
+    const lid = id;
+    const lurl = ('project/rest/strutturaricettiva/delete/id/' + lid);
+    console.log(lurl);
+    return this.http.get(lurl)
+    .pipe(catchError(this.errorHandler));
+  }
+
+
+  postNewStrutturaRicettiva(data): Observable<any>{
+    const body = data;
+    return this.http.post('project/rest/strutturaricettiva/create',body)
+    pipe(catchError(this.errorHandler));
   }
 
 

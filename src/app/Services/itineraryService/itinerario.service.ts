@@ -18,6 +18,21 @@ export class ItinerarioService {
     .pipe(catchError(this.errorHandler));
   }
 
+  deleteItinerario(id): Observable<any>{
+    const lid = id;
+    const lurl = ('project/rest/itinerario/delete/id/' + lid);
+    console.log(lurl);
+    return this.http.get(lurl)
+    .pipe(catchError(this.errorHandler));
+  }
+
+
+  postNewItinerario(data): Observable<any>{
+    const body = data;
+    return this.http.post('project/rest/itinerario/create', body)
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse){
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

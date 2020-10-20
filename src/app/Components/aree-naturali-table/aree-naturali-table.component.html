@@ -13,8 +13,8 @@
     <tr *ngFor="let area of areeNaturali">
       <td>{{area.name}}</td>
       <td>{{area.city}}</td>
-      <td><button class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
-      <td><button class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
+      <td><button class="btn default" [routerLink]='["/areanaturaleEdit/"+area.id]'  [queryParams]="area" ><img src="../../../assets/images/edit-24px.svg"></button></td>
+      <td><button (click) = "deleteArea(area.id)" class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
     </tr>
   </tbody>
 </table>

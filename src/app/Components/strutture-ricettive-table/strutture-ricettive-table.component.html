@@ -3,8 +3,8 @@
   <table class="table-responsive">
     <thead class="thead-light">
       <tr>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
+        <th scope="col">Struttura</th>
+        <th scope="col">Città</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
       </tr>
@@ -13,8 +13,8 @@
       <tr *ngFor="let strutt of strutture">
         <td>{{strutt.name}}</td>
         <td>{{strutt.city}}</td>
-        <td><button class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
-      <td><button class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
+        <td><button [routerLink]='["/strutturaEdit/"+strutt.id]'  [queryParams]="strutt" class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
+      <td><button (click)="deleteStruttura(strutt.id)" class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
       
       </tr>
     </tbody>

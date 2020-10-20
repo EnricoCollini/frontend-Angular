@@ -12,8 +12,22 @@ export class ItinerariTableComponent implements OnInit {
   constructor(private _itinerariService: ItinerarioService) { }
 
   ngOnInit() {
+    this.getItinerari();
+  }
+
+  getItinerari(){
     this._itinerariService.getItinerariFromDB()
-      .subscribe(data => this.itinerari = data);
+    .subscribe(data => this.itinerari = data);
+  }
+
+  public deleteItinerario(lid){
+    console.log(lid);
+    this._itinerariService.deleteItinerario(lid)
+    .subscribe(data => {
+      console.log(data);
+      this.getItinerari();
+    } 
+    )
   }
 
 }

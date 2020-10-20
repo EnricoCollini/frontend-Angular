@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
 
 @Component({
   selector: 'app-itinerario-add-page',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItinerarioAddPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _itinerarioService: ItinerarioService,
+    private _router: Router) { }
 
   ngOnInit() {
   }
@@ -15,6 +18,14 @@ export class ItinerarioAddPageComponent implements OnInit {
   submitForm(form){
     let res = form.value;
     console.log(res);
+    this._itinerarioService.postNewItinerario(res)
+    .subscribe(data => {
+      if(data == null){
+        window.alert("dati modificati correttamente");
+      }else{
+      window.alert(data);}
+      this._router.navigate(["admin"]);
+    });
   }
 
 }

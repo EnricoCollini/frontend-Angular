@@ -53,20 +53,4 @@ SignUp(email: string, password: string) {
   .signOut();
   }
 
-  getConsoleMessage() {
-    console.log("chiamato");
-    return( this.consoleMessage);
-  }
-
-  setConsoleMessage(mex) {
-    this.consoleMessage = mex;
-    return;
-  }
-   
-
-     
-    
-
-
-
 }
