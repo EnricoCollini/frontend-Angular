@@ -39,7 +39,7 @@ SignUp(email: string, password: string) {
   .auth
   .signInWithEmailAndPassword(email, password)
   .then(res => {
- window.alert('You are successfully logged in');
+ window.alert('You are successfully logged in'+ email + password);
   })
   .catch(err => {
     window.alert('Something is wrong:'+ err.message);

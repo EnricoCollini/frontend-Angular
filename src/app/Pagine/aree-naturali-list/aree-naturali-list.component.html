@@ -1,39 +1,58 @@
-<!-- Page Content -->
 <div class="container">
 
-  <!-- Heading Row -->
-  <div class="row align-items-center my-5">
-    <div class="col-lg-7">
-      <img class="img-fluid rounded mb-4 mb-lg-0" src="https://it.agriturismo.net/images/navigazione/regione/toscanaMobile.jpg" alt="">
-    </div>
-    <!-- /.col-lg-8 -->
-    <div class="col-lg-5">
-      <h1 class="font-weight-light">Aree Naturali Della Toscana</h1>
+  <div class="container2" style="margin-bottom: 40px; margin-top: 20px;">
+    <img src="https://eskipaper.com/images/countryside-wallpaper-8.jpg" alt="Notebook" style="width:100%;">
+    <div class="content">
+      <h1>Aree Naturali Della Toscana</h1>
       <p>In questa pagina troverai le aree naturali selezionate dalla Regione Toscana.</p>
-      <!-- <a class="btn btn-primary" href="#">Call to Action!</a> -->
     </div>
-    <!-- /.col-md-4 -->
   </div>
-  <!-- /.row -->
 
   <!-- Content Row -->
   <div class="row justify-content-md-center" >
-
     <div class="col-md-4 mb-5" *ngFor= "let areaNaturale of areeNaturali;let i=index">
       <div class="card h-100"  *ngIf="i<3">
         <div class="card-body">
           <h2 class="card-title">{{areaNaturale.name}}</h2>
-          <p class="card-text">{{areaNaturale.description}}</p>
+          <p class="card-text scroll">{{areaNaturale.description}}</p>
         </div>
         <div class="card-footer">
           <a class="btn btn-primary btn-sm" [routerLink]='["/detail/",areaNaturale.latitude]'  [queryParams]="areaNaturale">More Info</a>
         </div>
       </div>
-
     </div>
-    
-
   </div>
-  <!-- /.row -->
+
+
+  <div class="card text-center" style="margin-bottom: 160px;">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Per scoprirne altre</h5>
+              <p class="card-text">Visita la sezione ricerca.</p>
+              <a routerLink="/ricerca" class="card-footer text-muted" class="btn btn-primary">Search</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Per creare un itinerario naturalistico</h5>
+              <p class="card-text">Visita la sezione ItineraryMaker</p>
+              <a routerLink="/itinerarymaker" class="btn btn-primary">Create</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div  >
+    </div>
+  </div>
+
+ 
 
 </div>

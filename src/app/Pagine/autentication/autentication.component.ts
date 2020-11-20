@@ -13,6 +13,7 @@ export class AutenticationComponent implements OnInit {
     private router: Router) { }
 
   email: string;
+  mail: string;
   password: string;
   consoleMessage= "";
 
