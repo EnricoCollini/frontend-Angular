@@ -188,7 +188,7 @@ export class ItineraryMakerComponent implements OnInit {
     let res = form.value;
     console.log(res.search)
     this._itinerarymakerservice.getCoordinates(res.search)
-      .subscribe(data => {
+      .subscribe((data: any)  => {
         let coords = data.features[data.features.length -1].geometry.coordinates;
         let coord = [coords[1], coords[0]];
         console.log(coord);

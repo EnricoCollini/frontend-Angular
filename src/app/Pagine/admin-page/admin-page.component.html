@@ -1,8 +1,27 @@
 <div class="container">
-<app-aree-naturali-table></app-aree-naturali-table>
-<app-strutture-ricettive-table></app-strutture-ricettive-table>
-<app-ristori-table></app-ristori-table>
-<app-itinerari-table></app-itinerari-table>
+
+<div class="tab" style="margin-top: 30px;">
+  <button class="tablinks" (click)="openCity(event, 'AreeNaturali')">Aree Naturali</button>
+  <button class="tablinks" (click)="openCity(event, 'StruttureRicettive')">Strutture Ricettive</button>
+  <button class="tablinks" (click)="openCity(event, 'Ristori')">Ristori</button>
+  <button class="tablinks" (click)="openCity(event, 'Itinerari')">Itinerari</button>
+</div>
+
+<div id="AreeNaturali" class="tabcontent">
+  <app-aree-naturali-table></app-aree-naturali-table>
+</div>
+
+<div id="StruttureRicettive" class="tabcontent">
+  <app-strutture-ricettive-table></app-strutture-ricettive-table>
+</div>
+
+<div id="Ristori" class="tabcontent">
+  <app-ristori-table></app-ristori-table>
+</div>
+
+<div id="Itinerari" class="tabcontent">
+  <app-itinerari-table></app-itinerari-table>
+</div>
 
 <div class="float">
 <div class="dropup">
