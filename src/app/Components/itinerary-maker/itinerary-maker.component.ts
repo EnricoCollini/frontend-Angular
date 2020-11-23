@@ -190,6 +190,7 @@ export class ItineraryMakerComponent implements OnInit {
     this._itinerarymakerservice.getCoordinates(res.search)
       .subscribe((data: any)  => {
         let coords = data.features[data.features.length -1].geometry.coordinates;
+
         let coord = [coords[1], coords[0]];
         console.log(coord);
         this.map.setView(<L.LatLngTuple>coord, 15);

@@ -45,6 +45,15 @@ export class MapElementsService {
     popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
   });
 
+  public  puntoIcon = L.icon({
+    iconUrl:  "https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png",
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -38] // point from which the popup should open relative to the iconAnchor
+  });
+
+  
+
   public popup: string;
 
   constructor() { }
@@ -63,6 +72,10 @@ export class MapElementsService {
 
   getStruttIcon(){
     return (this.struttIcon);
+  }
+
+  getPuntoIcon(){
+    return (this.puntoIcon);
   }
 
   getItinIcon(){

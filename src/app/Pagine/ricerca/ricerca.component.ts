@@ -1,3 +1,4 @@
+import { PuntoService } from 'src/app/Services/puntoService/punto.service';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnDestroy, AfterViewChecked, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
 import { ItineraryMakerService } from 'src/app/Services/itineraryMakerService/itinerary-maker.service';
@@ -20,16 +21,25 @@ export class RicercaComponent implements OnInit {
   public  itiIcon : L.Icon;
   public  struttIcon : L.Icon;
   public  ristoIcon : L.Icon;
+  public puntoIcon : L.Icon;
 
   public areeNaturali = [];
   public struttureRicettive = [];
   public ristori = [];
   public itinerari = [];
+  public punti = [];
 
   public areeNaturaliMarkers = [];
   public ristoriMarkers = [];
   public struttureMarkers = [];
   public itinerariMarkers = [];
+  public puntiMarkers = [];
+
+  public ristoriFlag = true;
+  public itinerariFlag = true;
+  public puntiFlag = true;
+  public areeFlag = true;
+  public struttureFlag = true;
 
   constructor(
     private _struttureRicettiveService: StruttureRicettiveService,
@@ -37,7 +47,9 @@ export class RicercaComponent implements OnInit {
     private _ristoriService: RistoriService,
     private _itinerariService: ItinerarioService,
     private _mapElementsService: MapElementsService,
-    private _itinerariMakerService: ItineraryMakerService) {}
+    private _itinerariMakerService: ItineraryMakerService,
+    private _puntoService: PuntoService) {}
+    
 
 
   ngOnInit() {
@@ -50,6 +62,7 @@ export class RicercaComponent implements OnInit {
     this.itiIcon = this._mapElementsService.getItinIcon();
     this.ristoIcon = this._mapElementsService.getRistoIcon();
     this.struttIcon = this._mapElementsService.getStruttIcon();
+    this.puntoIcon = this._mapElementsService.getPuntoIcon();
 
     this._itinerariService.getItinerariFromDB()
       .subscribe(data =>{
@@ -74,6 +87,12 @@ export class RicercaComponent implements OnInit {
         this.struttureRicettive = data
         this.createStruttureRicettiveMarkers();
       }); 
+
+    this._puntoService.getPuntiFromDB()
+    .subscribe(data=> {
+      this.punti = data
+      this.createPuntiMarkers();
+    })
   }
 
   submitSearch(form){
@@ -103,6 +122,17 @@ export class RicercaComponent implements OnInit {
     }
   }
 
+  createPuntiMarkers(){
+    this.puntiMarkers = [];
+    for (let index = 0; index < this.punti.length; index++) {
+      let popup = this._mapElementsService.getPopup(this.punti[index].name); 
+      let markerTmp = L.marker([this.punti[index].latitude, this.punti[index].longitude], {icon: this.puntoIcon}).bindPopup(popup);
+      this.puntiMarkers.push(markerTmp);
+    }
+    for (let index = 0; index < this.puntiMarkers.length; index++) {
+      this.puntiMarkers[index].addTo(this.map);
+    }
+  }
 
   createItinerariMarkers(){
     this.itinerariMarkers = [];
@@ -141,91 +171,61 @@ export class RicercaComponent implements OnInit {
   }
 
 
-  showOnlyAreeNaturali(){
-    for (let index = 0; index < this.struttureMarkers.length; index++) {
-      this.map.removeLayer(this.struttureMarkers[index]);
+  showOnlyMarkers(areeFlag,struttureFlag,itinerariFlag,ristoriFlag,puntiFlag){
+    if(areeFlag){
+      for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+        this.areeNaturaliMarkers[index].addTo(this.map);
+      }
+    }else{
+      for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+        this.map.removeLayer(this.areeNaturaliMarkers[index]);
+      }
     }
-    for (let index = 0; index < this.ristoriMarkers.length; index++) {
-      this.map.removeLayer(this.ristoriMarkers[index]);
-    }
-    for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.map.removeLayer(this.itinerariMarkers[index]);
-    }
-    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
-      this.areeNaturaliMarkers[index].addTo(this.map);
-    }
-  }
 
-  showOnlyStrutture(){
-    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
-      this.map.removeLayer(this.areeNaturaliMarkers[index]);
+    if(struttureFlag){
+      for (let index = 0; index < this.struttureMarkers.length; index++) {
+        this.struttureMarkers[index].addTo(this.map);
+      }
+    }else{
+      for (let index = 0; index < this.struttureMarkers.length; index++) {
+        this.map.removeLayer(this.struttureMarkers[index]);
+      }
     }
-    for (let index = 0; index < this.ristoriMarkers.length; index++) {
-      this.map.removeLayer(this.ristoriMarkers[index]);
-    }
-    for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.map.removeLayer(this.itinerariMarkers[index]);  
-    }
-    for (let index = 0; index < this.struttureMarkers.length; index++) {
-      this.struttureMarkers[index].addTo(this.map);
-    }
-  }
 
-  showOnlyRistori(){
-    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
-      this.map.removeLayer(this.areeNaturaliMarkers[index]);
+    if(itinerariFlag){
+      for (let index = 0; index < this.itinerariMarkers.length; index++) {
+        this.itinerariMarkers[index].addTo(this.map);
+      }
+    }else{
+      for (let index = 0; index < this.itinerariMarkers.length; index++) {
+        this.map.removeLayer(this.itinerariMarkers[index]);
+      }
     }
-    for (let index = 0; index < this.struttureMarkers.length; index++) {
-      this.map.removeLayer(this.struttureMarkers[index]);
-    }
-    for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.map.removeLayer(this.itinerariMarkers[index]);
-    }
-    for (let index = 0; index < this.ristoriMarkers.length; index++) {
-      this.ristoriMarkers[index].addTo(this.map);
-    }
-  }
 
-  showOnlyItinerari(){
-    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
-      this.map.removeLayer(this.areeNaturaliMarkers[index]);
+    if(ristoriFlag){
+      for (let index = 0; index < this.ristoriMarkers.length; index++) {
+        this.ristoriMarkers[index].addTo(this.map);
+      }
+    }else{
+      for (let index = 0; index < this.ristoriMarkers.length; index++) {
+        this.map.removeLayer(this.ristoriMarkers[index]);
+      }
     }
-    for (let index = 0; index < this.struttureMarkers.length; index++) {
-      this.map.removeLayer(this.struttureMarkers[index]);
-    }
-    for (let index = 0; index < this.ristoriMarkers.length; index++) {
-      this.map.removeLayer(this.ristoriMarkers[index]);
-    }
-    for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.itinerariMarkers[index].addTo(this.map);
+
+    if(puntiFlag){
+      for (let index = 0; index < this.puntiMarkers.length; index++) {
+        this.puntiMarkers[index].addTo(this.map);
+      }
+    }else{
+      for (let index = 0; index < this.puntiMarkers.length; index++) {
+        this.map.removeLayer(this.puntiMarkers[index]);
+      }
     }
   }
 
   showAll(){
-    for (let index = 0; index < this.struttureMarkers.length; index++) {
-      this.map.removeLayer(this.struttureMarkers[index]);
-    }
-    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
-      this.map.removeLayer(this.areeNaturaliMarkers[index]);
-    }
-    for (let index = 0; index < this.ristoriMarkers.length; index++) {
-      this.map.removeLayer(this.ristoriMarkers[index]);
-    }
-    for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.map.removeLayer(this.itinerariMarkers[index]);
-    }
-    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
-      this.areeNaturaliMarkers[index].addTo(this.map);
-    }
-    for (let index = 0; index < this.struttureMarkers.length; index++) {
-      this.struttureMarkers[index].addTo(this.map);
-    }
-    for (let index = 0; index < this.ristoriMarkers.length; index++) {
-      this.ristoriMarkers[index].addTo(this.map);
-    }
-    for (let index = 0; index < this.itinerariMarkers.length; index++) {
-      this.itinerariMarkers[index].addTo(this.map);
-    }
+    this.showOnlyMarkers(false,false,false,false,false);
+    this.showOnlyMarkers(true,true,true,true,true);
   }
 
 }

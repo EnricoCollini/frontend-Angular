@@ -35,6 +35,7 @@ import { AreaNaturaleEditPageComponent } from './Pagine/EditPages/area-naturale-
 import { RistoroEditPageComponent } from './Pagine/EditPages/ristoro-edit-page/ristoro-edit-page.component';
 import { ItinerarioEditPageComponent } from './Pagine/EditPages/itinerario-edit-page/itinerario-edit-page.component';
 import { StrutturaRicettivaEditPageComponent } from './Pagine/EditPages/struttura-ricettiva-edit-page/struttura-ricettiva-edit-page.component';
+import { PuntoSchedaComponent } from './Components/punto-scheda/punto-scheda.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQw6Ds-43zwoUPA3It_pnu6Ulk5eDkoh0",
@@ -74,6 +75,7 @@ const firebaseConfig = {
     RistoroEditPageComponent,
     ItinerarioEditPageComponent,
     StrutturaRicettivaEditPageComponent,
+    PuntoSchedaComponent,
 
   ],
   imports: [

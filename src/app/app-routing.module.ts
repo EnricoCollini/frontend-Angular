@@ -1,3 +1,4 @@
+import { PuntoSchedaComponent } from './Components/punto-scheda/punto-scheda.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Routes, RouterModule} from '@angular/router';
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'ristoroEdit/:id', component: RistoroEditPageComponent},
   {path: 'itinerarioEdit/:id', component: ItinerarioEditPageComponent},
   {path: 'strutturaEdit/:id', component: StrutturaRicettivaEditPageComponent},
+  
 
 
   
@@ -49,6 +51,7 @@ const routes: Routes = [
   { path: 'detailStrut/:lat', component: StrutturaRicettivaSchedaComponent },
   { path: 'detailRisto/:lat', component: RistoroSchedaComponent},
   { path: 'detailIti/:lat', component: ItinerarioSchedaComponent},
+  { path: 'detailPunto/:lat', component:PuntoSchedaComponent},
   
   
   {path: 'redirect/:nome', component: RedirectComponent}

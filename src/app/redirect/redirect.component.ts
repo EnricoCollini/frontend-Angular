@@ -1,3 +1,4 @@
+import { PuntoService } from 'src/app/Services/puntoService/punto.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaNaturaleService } from '../Services/areaNaturaleService/area-naturale.service';
@@ -17,6 +18,7 @@ export class RedirectComponent implements OnInit {
   public ristori = [];
   public itinerari = [];
   public name = "";
+  public punti = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -24,9 +26,12 @@ export class RedirectComponent implements OnInit {
     private _areaNaturaleService: AreaNaturaleService,
     private _ristoriService : RistoriService,
     private _itinerariService: ItinerarioService,
+    private _puntoService : PuntoService,
     private router: Router) { }
+    
 
   ngOnInit() {
+
 
     this._areaNaturaleService.getAreeNaturaliFromDB()
       .subscribe(data => {
@@ -40,6 +45,20 @@ export class RedirectComponent implements OnInit {
           }        
         }
       }
+    );
+
+    this._puntoService.getPuntiFromDB()
+    .subscribe(data => {
+      this.initializion();
+      this.punti = data;
+      console.log(this.punti.length);
+      for (let index = 0; index < this.punti.length; index++) {
+        if(this.punti[index].name == this.name){
+          console.log(this.name);
+          this.router.navigate(['/detailPunto/', this.punti[index].latitude] ,{ queryParams: this.punti[index]});
+        }        
+      }
+    }
     );
 
     this._itinerariService.getItinerariFromDB()
