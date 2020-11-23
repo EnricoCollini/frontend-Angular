@@ -122,6 +122,42 @@ export class AreaNaturaleSchedaComponent implements OnInit {
     this.PuntiIds = data;
   })  }
 
+  async showStuff(ristoT, struttT, itiT, puntiT){
+    if(ristoT){
+      this.showRisto();
+    }
+    if(struttT){
+      this.showStrutture();
+    }
+    if(itiT){
+      this.showItinerari();
+    }
+    if(puntiT){
+      this.showPunti();
+    }
+    const result = await this.resolveAfter2Seconds();
+    if(ristoT){
+      this.addMarkers(this.ristori, true, false, false,false);
+    }
+    if(struttT){
+      this.addMarkers(this.Strutture, false, true, false,false);
+    }
+    if(itiT){
+      this.addMarkers(this.Itinerari, false, false, true,false);
+    }
+    if(puntiT){
+      this.addMarkers(this.Punti, false, false, false,true);
+    }
+  }
+
+  resolveAfter2Seconds() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 2000);
+    });
+  }
+
   showRisto(){
     if(!this.ristoCalled){
     if(this.ristoriIds.length>1){
@@ -133,12 +169,10 @@ export class AreaNaturaleSchedaComponent implements OnInit {
         })      
       }
       this.ristoCalled = true;
-      this.addMarkers(this.ristori, true, false, false, false);
       console.log(this.ristori);
     }else{
       window.alert("Non ci sono Ristori Associati");
     }
-    
     }else{
       console.log("chiamato")
     }
@@ -202,7 +236,6 @@ export class AreaNaturaleSchedaComponent implements OnInit {
   }
 
   addMarkers(risorseArray, risorseType, struttType, itiType, pointType){
-    console.log(risorseArray);
     if(risorseType){
       this.thisIcon = this.ristoIcon;
     }
@@ -212,11 +245,12 @@ export class AreaNaturaleSchedaComponent implements OnInit {
     if(itiType){
       this.thisIcon = this.itiIcon
     }
-    else{
+    if(pointType){
       this.thisIcon = this.puntoIcon;
     }
-
+    console.log(risorseArray.length);
     for (let index = 0; index < risorseArray.length; index++) {
+      console.log("vediamo");
       let popup = this._mapElementsService.getPopup(risorseArray[index].name);
       let markerTmp = L.marker([risorseArray[index].latitude, risorseArray[index].longitude], {icon: this.thisIcon}).bindPopup(popup);
       markerTmp.addTo(this.map);

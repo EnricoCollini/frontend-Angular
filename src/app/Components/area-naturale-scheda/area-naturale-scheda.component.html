@@ -30,22 +30,23 @@
       <p *ngFor="let item of itinerari;">{{item.name}}</p>
      
       <p *ngFor="let item of punti;">{{item.name}}</p>
+
     </div>
     
     <div class="card-footer">
       <div class="row justify-content-md-center">
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
           <div class="btn-group mr-2" role="group" aria-label="First group" >
-            <button class="btn btn-primary btn-lg" (click)="showRisto()">Ristori Associati</button>
+            <button class="btn btn-primary btn-lg" (click)="showStuff(true,false,false,false)">Ristori Associati</button>
           </div>
         <div class="btn-group mr-2" role="group" aria-label="Second group">
-          <button  class="btn btn-primary btn-lg" (click)="showStrutture()">Strutture Ricettive Associate</button>
+          <button  class="btn btn-primary btn-lg" (click)="showStuff(false,true,false,false)">Strutture Ricettive Associate</button>
         </div>
         <div class="btn-group mr-2" role="group" aria-label="Third group">
-          <button  class="btn btn-primary btn-lg"  (click)="showItinerari()">Itinerari Associati</button>
+          <button  class="btn btn-primary btn-lg"  (click)="showStuff(false,false,true,false)">Itinerari Associati</button>
         </div>
         <div class="btn-group" role="group" aria-label="Sixth group">
-          <button  class="btn btn-primary btn-lg" (click)="showPunti()">Punti Associati</button>
+          <button  class="btn btn-primary btn-lg" (click)="showStuff(false,false,false,true)">Punti Associati</button>
         </div>
     </div>
     </div>
