@@ -43,6 +43,22 @@ export class AreaNaturaleService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getRistoAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/areanaturale/ristoAssociati/"+id));
+  }
+
+  getItiAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/areanaturale/itiAssociati/"+id));
+  }
+
+  getPuntiAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/areanaturale/puntiAssociati/"+id));
+  }
+
+  getStruttureAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/areanaturale/struttureAssociati/"+id));
+  }
+
   errorHandler(error: HttpErrorResponse){
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

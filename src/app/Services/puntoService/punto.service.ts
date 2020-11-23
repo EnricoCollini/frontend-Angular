@@ -13,9 +13,11 @@ export class PuntoService {
   private _baseUrl = "http://localhost:8080/";
 
   getPuntiFromDB() : Observable<IPunto[]>{
-
     return this.http.get<IPunto[]>("project/rest/puntointeressegenerico/puntiinteressegenerici");
+  }
 
+  getPuntoWithId(id): Observable<IPunto>{
+    return this.http.get<IPunto>('project/rest/puntointeressegenerico/get/id'+id);
   }
 
   postNewPunto(data) : Observable<any>{

@@ -22,9 +22,11 @@ export class MappaComponent implements OnInit {
   ngOnInit() {
     this.map = L.map('map').setView(this.center, 16);
     this.greenIcon = this._mapElementsService.getMapsIcon();
-    this.popup = this._mapElementsService.getPopupNav(this.name, this.center);
+    
     this.tile = this._mapElementsService.getTile();
     this.tile.addTo(this.map);
+
+    this.popup = this._mapElementsService.getPopupNav(this.name, this.center);
 
     L.marker(this.center, {icon: this.greenIcon})
     .bindPopup(this.popup)

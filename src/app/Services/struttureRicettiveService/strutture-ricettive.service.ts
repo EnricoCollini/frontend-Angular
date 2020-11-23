@@ -19,6 +19,10 @@ export class StruttureRicettiveService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getStrutturaWithId(id): Observable<IStrutturaRicettiva>{
+    return this.http.get<IStrutturaRicettiva>('project/rest/strutturaricettiva/get/id/'+ id);
+  }
+
   deleteStruttura(id): Observable<any>{
     const lid = id;
     const lurl = ('project/rest/strutturaricettiva/delete/id/' + lid);

@@ -23,11 +23,11 @@
               "src/assets"
             ],
             "styles": [
-              "/home/andrea/angular ws/laapp/node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "/home/andrea/angular ws/laapp/node_modules/popper.js/dist/umd/popper.min.js",
-              "/home/andrea/angular ws/laapp/node_modules/mapbox-gl/dist/mapbox-gl.css",
-              "/home/andrea/angular ws/laapp/node_modules/leaflet/dist/leaflet.css"
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
@@ -132,7 +132,6 @@
   "cli": {
     "warnings": {
       "typescriptMismatch": true
-    },
-    "analytics": "bca59185-8316-4036-9c26-babcd383d329"
+    }
   }
 }

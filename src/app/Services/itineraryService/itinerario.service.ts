@@ -18,6 +18,10 @@ export class ItinerarioService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getItinerarioWithId(id): Observable<IItinerario>{
+    return this.http.get<IItinerario>('project/rest/itinerario/get/id/'+id);
+  }
+
   deleteItinerario(id): Observable<any>{
     const lid = id;
     const lurl = ('project/rest/itinerario/delete/id/' + lid);

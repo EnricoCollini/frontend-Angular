@@ -20,6 +20,10 @@ export class RistoriService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getRistoroWithId(id): Observable<IRistoro>{
+    return this.http.get<IRistoro>('project/rest/ristoro/get/id/'+id);
+  }
+
   deleteRistoro(id): Observable<any>{
     const lid = id;
     const lurl = ('project/rest/ristoro/delete/id/' + lid);
