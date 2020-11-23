@@ -29,6 +29,10 @@ export class AreaNaturaleService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getAreaNaturaleWithId(id): Observable<IAreaNaturale>{
+    return this.http.get<IAreaNaturale>("project/rest/areanaturale/get/id/"+id);
+  }
+
   postNewAreaNaturale(data): Observable<any>{
     const body = data;
     return this.http.post('project/rest/areanaturale/create', body)

@@ -30,12 +30,28 @@ export class ItinerarioService {
     .pipe(catchError(this.errorHandler));
   }
 
-
   postNewItinerario(data): Observable<any>{
     const body = data;
     return this.http.post('project/rest/itinerario/create', body)
     .pipe(catchError(this.errorHandler));
   }
+
+  getRistoAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/itinerario/ristoriAssociati/"+id));
+  }
+
+  getAreeAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/itinerario/areeAssociate/"+id));
+  }
+
+  getPuntiAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/itinerario/puntiAssociati/"+id));
+  }
+
+  getStruttureAssociati(id): Observable<any>{
+    return this.http.get(("project/rest/itinerario/struttureAssociate/"+id));
+  }
+
 
   errorHandler(error: HttpErrorResponse){
     if (error.error instanceof ErrorEvent) {
