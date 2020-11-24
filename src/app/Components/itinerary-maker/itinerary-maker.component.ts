@@ -2,6 +2,7 @@ import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as L from 'leaflet';
+import * as togpx from 'togpx';
 import { stringify } from 'querystring';
 import { ItineraryMakerService } from '../../Services/itineraryMakerService/itinerary-maker.service';
 
@@ -24,6 +25,7 @@ export class ItineraryMakerComponent implements OnInit {
 
   public newMarker: L.Marker;
   public assigned = false;
+  public gpx;
 
   public partenza: L.Marker;
   public assignedpartenza = false;
@@ -264,6 +266,14 @@ export class ItineraryMakerComponent implements OnInit {
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.itinerJdownload));
     let link = "data:'" + data;
     return this.sanitizer.bypassSecurityTrustUrl(link);
+  }
+
+
+  sanitize2(){
+    this.gpx = togpx(this.itiner);
+    let data2 = "xml/gpx;charset=utf-8," + encodeURIComponent(this.gpx);
+    let link2 = "data:'" + data2;
+    return this.sanitizer.bypassSecurityTrustUrl(link2);
   }
 
   loadMarks(){
