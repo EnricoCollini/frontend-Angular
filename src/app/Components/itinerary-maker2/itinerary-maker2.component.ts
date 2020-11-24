@@ -100,16 +100,25 @@ export class ItineraryMaker2Component implements OnInit {
         popUp.getElement()
         .querySelector(".partenza  ")
         .addEventListener("click", e => {this.selPartenza(-1);}); })
-      .on("popupopen",  (a) => {
-        var popUp = a.target.getPopup()
-        popUp.getElement()
-        .querySelector(".intermedio  ")
-        .addEventListener("click", e => {this.addPuntoIntermedio(-1);}); })
-      .on("popupopen",  (b) => {
-        var popUp = b.target.getPopup()
-        popUp.getElement()
-        .querySelector(".arrivo  ")
-        .addEventListener("click", e => {this.selArrivo(-1);}); });  
+      
+        }else{
+          buttonPop = '<button class="partenza">Seleziona Partenza</button><br><button class="arrivo">Seleziona Arrivo</button><br><button class="intermedio">Aggiungi Punto Intermedio</button>';
+          this.newMarker.bindPopup(buttonPop)
+          .on("popupopen",  (a) => {
+            var popUp = a.target.getPopup()
+            popUp.getElement()
+            .querySelector(".partenza  ")
+            .addEventListener("click", e => {this.selPartenza(-1);}); })
+          .on("popupopen",  (a) => {
+            var popUp = a.target.getPopup()
+            popUp.getElement()
+            .querySelector(".intermedio  ")
+            .addEventListener("click", e => {this.addPuntoIntermedio(-1);}); })
+          .on("popupopen",  (b) => {
+            var popUp = b.target.getPopup()
+            popUp.getElement()
+            .querySelector(".arrivo  ")
+            .addEventListener("click", e => {this.selArrivo(-1);}); });
         }
       }
       this.newMarker.addTo(this.map);
