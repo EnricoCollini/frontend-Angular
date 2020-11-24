@@ -112,6 +112,10 @@ export class ItineraryMaker2Component implements OnInit {
   }
 
   elimina(value, form){
+    for (let index = 0; index < this.itinerario.length; index++) {
+      this.map.removeLayer(this.itinerario[index]);
+    }
+    this.itinerario = [];
     if(value == 999){ //partenza
       this.map.removeLayer(this.partenza);
       this.partenzaPlaceholder =  "SetStart: Via, Città, ...";
@@ -157,6 +161,8 @@ export class ItineraryMaker2Component implements OnInit {
 
 
 getRoute(){
+  this.baseJson = {"type": "FeatureCollection", "features": []};
+  this.features = [];
   if(!this.isItinerarioPresente){
     let markers = [];
     markers.push(this.partenza);
@@ -183,8 +189,6 @@ getRoute(){
       this.baseJson.features = this.features;
     }
   }else{
-    this.baseJson = {"type": "FeatureCollection", "features": []};
-    this.features = [];
     for (let index = 0; index < this.itinerario.length; index++) {
       this.map.removeLayer(this.itinerario[index]);  
     }
