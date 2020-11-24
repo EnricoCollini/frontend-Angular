@@ -5,6 +5,7 @@ import * as L from 'leaflet';
 import * as togpx from 'togpx';
 import { stringify } from 'querystring';
 import { ItineraryMakerService } from '../../Services/itineraryMakerService/itinerary-maker.service';
+import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
 
 @Component({
   selector: 'app-itinerary-maker',

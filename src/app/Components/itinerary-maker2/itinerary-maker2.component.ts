@@ -5,6 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ItineraryMakerService } from 'src/app/Services/itineraryMakerService/itinerary-maker.service';
 import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
 import { MapElementsService } from 'src/app/Services/mapElementsService/map-elements.service';
+import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
+import { IAreaNaturale } from 'src/app/Services/areaNaturaleService/areanturale';
 
 @Component({
   selector: 'app-itinerary-maker2',
@@ -45,12 +47,25 @@ export class ItineraryMaker2Component implements OnInit {
   private assigned = false;
   private newMarker: L.Marker;
 
+  //marker rappresentanti le aree naturali
+  private areeNaturali: IAreaNaturale[] = [];
+  private areeNaturaliMarkers: L.Marker[] = [];
+
 
   constructor( private _mapElementsService: MapElementsService,
     private _itinerarymakerservice: ItineraryMakerService,
-    private sanitizer:DomSanitizer) { }
+    private sanitizer:DomSanitizer,
+    private _areanaturaleservice: AreaNaturaleService) { }
 
   ngOnInit() {
+    //prendiamo i markers delle aree naturali
+    this._areanaturaleservice.getAreeNaturaliFromDB()
+    .subscribe(data =>{
+      this.areeNaturali = data;
+      this.createAreeNaturaliMarkers();
+      
+    })
+
     //creiamo la mappa
     this.map = L.map('map').setView([43, 12], 8);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -75,7 +90,7 @@ export class ItineraryMaker2Component implements OnInit {
         var popUp = b.target.getPopup()
         popUp.getElement()
         .querySelector(".arrivo  ")
-        .addEventListener("click", e => {this.selArrivo();}); });  
+        .addEventListener("click", e => {this.selArrivo(-1);}); });  
       }else{
         if(!this.isPartenzaSet){
           buttonPop ='<button class="partenza">Seleziona Partenza</button>'
@@ -84,24 +99,17 @@ export class ItineraryMaker2Component implements OnInit {
         var popUp = a.target.getPopup()
         popUp.getElement()
         .querySelector(".partenza  ")
-        .addEventListener("click", e => {this.selPartenza();}); })
-        }else{
-          this.newMarker.bindPopup(buttonPop)
-      .on("popupopen",  (a) => {
-        var popUp = a.target.getPopup()
-        popUp.getElement()
-        .querySelector(".partenza  ")
-        .addEventListener("click", e => {this.selPartenza();}); })
+        .addEventListener("click", e => {this.selPartenza(-1);}); })
       .on("popupopen",  (a) => {
         var popUp = a.target.getPopup()
         popUp.getElement()
         .querySelector(".intermedio  ")
-        .addEventListener("click", e => {this.addPuntoIntermedio();}); })
+        .addEventListener("click", e => {this.addPuntoIntermedio(-1);}); })
       .on("popupopen",  (b) => {
         var popUp = b.target.getPopup()
         popUp.getElement()
         .querySelector(".arrivo  ")
-        .addEventListener("click", e => {this.selArrivo();}); });  
+        .addEventListener("click", e => {this.selArrivo(-1);}); });  
         }
       }
       this.newMarker.addTo(this.map);
@@ -109,20 +117,66 @@ export class ItineraryMaker2Component implements OnInit {
     });
 
   }
+
+  createAreeNaturaliMarkers(){
+    this.areeNaturaliMarkers = [];
+    for (let index = 0; index < this.areeNaturali.length; index++) {
+      let name = this.areeNaturali[index].name;
+      let popup =' <div class="card"> ' 
+      +  '<div class="card-body">'
+        +  '<h5 class="card-subtitle">'+ name +'</h5> <br>'
+        + '<a class="card-link" href="http://localhost:4200/redirect/' + name + '">View More</a><br>'
+      + '<button class="partenza">Seleziona Partenza</button><br><button class="arrivo">Seleziona Arrivo</button><br><button class="intermedio">Aggiungi Punto Intermedio</button>'
+      +'</div> '
+    + '</div> ' 
+      let markerTmp = L.marker([this.areeNaturali[index].latitude, this.areeNaturali[index].longitude], {icon: this._mapElementsService.getAreeIcon()}).bindPopup(popup)
+      .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+        .querySelector(".partenza  ")
+        .addEventListener("click", e => {this.selPartenza(index);}); })
+      .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+        .querySelector(".intermedio  ")
+        .addEventListener("click", e => {this.addPuntoIntermedio(index);}); })
+      .on("popupopen",  (b) => {
+        var popUp = b.target.getPopup()
+        popUp.getElement()
+        .querySelector(".arrivo  ")
+        .addEventListener("click", e => {this.selArrivo(index);}); });
+      this.areeNaturaliMarkers.push(markerTmp);
+    }
+    for (let index = 0; index < this.areeNaturaliMarkers.length; index++) {
+      this.areeNaturaliMarkers[index].addTo(this.map);
+    }
+  }
   
-  selPartenza(){
+  selPartenza(indx){
+    if(indx<0){
     console.log("partenza");
     if(this.isPartenzaSet){
       this.map.removeLayer(this.partenza);
     }
-    console.log("arrivo");
     this.isPartenzaSet = true;
     this.partenza =new L.Marker(this.newMarker.getLatLng(),{icon: this.startIcon});
     this.partenza.addTo(this.map);
     this.partenzaPlaceholder = ("Finish at: "+ this.partenza.getLatLng());
+  } else{
+    console.log("partenza");
+    if(this.isPartenzaSet){
+      this.map.removeLayer(this.partenza);
+    }
+    this.isPartenzaSet = true;
+    let pop = this.areeNaturaliMarkers[indx].getPopup()
+    this.partenza =new L.Marker(this.areeNaturaliMarkers[indx].getLatLng(),{icon: this.startIcon}).bindPopup(pop);
+    this.partenza.addTo(this.map);
+    this.partenzaPlaceholder = (this.areeNaturali[indx].name);
+  }
   }
 
-  selArrivo(){
+  selArrivo(indx){
+    if(indx<0){
     if(this.isArrivoSet){
       this.map.removeLayer(this.arrivo);
     }
@@ -131,9 +185,21 @@ export class ItineraryMaker2Component implements OnInit {
     this.arrivo =new L.Marker(this.newMarker.getLatLng(),{icon: this.endIcon});
     this.arrivo.addTo(this.map);
     this.arrivoPlaceholder = ("Start at: "+ this.arrivo.getLatLng());
+  }else{
+    console.log("arrivo");
+    if(this.isArrivoSet){
+      this.map.removeLayer(this.arrivo);
+    }
+    this.isArrivoSet = true;
+    let pop = this.areeNaturaliMarkers[indx].getPopup()
+    this.arrivo =new L.Marker(this.areeNaturaliMarkers[indx].getLatLng(),{icon: this.endIcon}).bindPopup(pop);
+    this.arrivo.addTo(this.map);
+    this.arrivoPlaceholder = (this.areeNaturali[indx].name);
+  }
   }
 
-  addPuntoIntermedio(){
+  addPuntoIntermedio(indx){
+    if(indx<0){
     for (let index = 0; index < this.itinerario.length; index++) {
       this.map.removeLayer(this.itinerario[index]);
     }
@@ -146,9 +212,22 @@ export class ItineraryMaker2Component implements OnInit {
     this.puntiIntermedi[this.count%1000].addTo(this.map);
     this.numberPuntiIntermediSet = this.numberPuntiIntermediSet + 1;
     this.count = this.count +1;
+  }else{
+    for (let index = 0; index < this.itinerario.length; index++) {
+      this.map.removeLayer(this.itinerario[index]);
+    }
+    this.itinerario = [];
+    console.log("punto intermedio")
+    let pop = this.areeNaturaliMarkers[indx].getPopup()
+    let intermedio = new L.Marker(this.areeNaturaliMarkers[indx].getLatLng(),{icon: this.intIcon}).bindPopup(pop);
+    this.puntiIntermediIds.push(this.count);
+    this.puntiIntermedi.push(intermedio);
+    this.placeholders.push(this.areeNaturali[indx].name);
+    this.puntiIntermedi[this.count%1000].addTo(this.map);
+    this.numberPuntiIntermediSet = this.numberPuntiIntermediSet + 1;
+    this.count = this.count +1;
   }
-
-
+  }
   submitSearch(form){
     let res = form.value;
     console.log(res.search)
@@ -185,7 +264,6 @@ export class ItineraryMaker2Component implements OnInit {
       }
     );
   }
-
   submitSearch3(form, elementId){
     console.log(elementId);
     let res = form.value;
@@ -205,7 +283,6 @@ export class ItineraryMaker2Component implements OnInit {
       }
     );
   }
-
   elimina(value, form){
     for (let index = 0; index < this.itinerario.length; index++) {
       this.map.removeLayer(this.itinerario[index]);
@@ -242,9 +319,7 @@ export class ItineraryMaker2Component implements OnInit {
         form.reset();
       }
     }
-
   }
-
   Aggiungi(){
     this.puntiIntermediIds.push(this.count);
     this.puntiIntermedi.push(this.tmpMarker);
@@ -252,10 +327,7 @@ export class ItineraryMaker2Component implements OnInit {
     console.log(this.puntiIntermediIds);
     this.count = this.count + 1;
   }
-
-
-
-getRoute(){
+  getRoute(){
   this.baseJson = {"type": "FeatureCollection", "features": []};
   this.features = [];
   if(!this.isItinerarioPresente){
@@ -313,23 +385,15 @@ getRoute(){
     }  
   }    
   }
-
-
-
   sanitize(){
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.baseJson));
     let link = "data:'" + data;
     return this.sanitizer.bypassSecurityTrustUrl(link);
   }
-
-
   sanitize2(){
     let gpx = togpx(this.baseJson);
     let data2 = "xml/gpx;charset=utf-8," + encodeURIComponent(gpx);
     let link2 = "data:'" + data2;
     return this.sanitizer.bypassSecurityTrustUrl(link2);
   }
-
-
-
 }
