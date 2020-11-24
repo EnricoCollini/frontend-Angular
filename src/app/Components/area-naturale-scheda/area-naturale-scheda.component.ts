@@ -160,7 +160,7 @@ export class AreaNaturaleSchedaComponent implements OnInit {
 
   showRisto(){
     if(!this.ristoCalled){
-    if(this.ristoriIds.length>1){
+    if(this.ristoriIds.length>=1){
       for (let index = 0; index < this.ristoriIds.length; index++) {
         const element = this.ristoriIds[index];
         this._ristoroService.getRistoroWithId(element)
@@ -180,7 +180,7 @@ export class AreaNaturaleSchedaComponent implements OnInit {
 
   showStrutture(){
     if(!this.struttureCalled){
-    if(this.StruttureIds.length>1){
+    if(this.StruttureIds.length>=1){
       for (let index = 0; index < this.StruttureIds.length; index++) {
         const element = this.StruttureIds[index];
         this._strutturaService.getStrutturaWithId(element)
@@ -199,7 +199,7 @@ export class AreaNaturaleSchedaComponent implements OnInit {
 
   showItinerari(){
     if(!this.itinerariCalled){
-    if(this.ItinerariIds.length>0){
+    if(this.ItinerariIds.length>=0){
       for (let index = 0; index < this.ItinerariIds.length; index++) {
         const element = this.ItinerariIds[index];
         this._itinerariService.getItinerarioWithId(element)
@@ -218,7 +218,7 @@ export class AreaNaturaleSchedaComponent implements OnInit {
 
   showPunti(){
     if(!this.puntiCalled){
-    if(this.PuntiIds.length>1){
+    if(this.PuntiIds.length>=1){
       for (let index = 0; index < this.PuntiIds.length; index++) {
         const element = this.PuntiIds[index];
         this._puntiService.getPuntoWithId(element)

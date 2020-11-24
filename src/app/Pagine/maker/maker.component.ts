@@ -76,7 +76,7 @@ export class MakerComponent implements OnInit{
   }
 
   chiama(){
-    document.getElementById('button').click();
+    //document.getElementById('button').click();
   }
 
 
@@ -142,7 +142,7 @@ export class MakerComponent implements OnInit{
 
 
   callChild() {
-    this.childcomp.loadMarks();
+    //this.childcomp.loadMarks();
   }
 
   
