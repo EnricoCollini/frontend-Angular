@@ -12,14 +12,18 @@ import { MapElementsService } from 'src/app/Services/mapElementsService/map-elem
   styleUrls: ['./itinerary-maker2.component.css']
 })
 export class ItineraryMaker2Component implements OnInit {
+
+  //variabili per gestire quando un itinerario è presente o si può creare
   private isItinerarioPresente = false;
   private isPartenzaSet = false;
   private isArrivoSet = false;
   private numberPuntiIntermediSet = 0;
+  //variabili base per la creazione dell'itinerario
   public itinerario = [];
   private baseJson = {"type": "FeatureCollection", "features": []};
   private features = [];
 
+  //variabili per la configurazione della mappa
   public map: L.Map;
   public zoom: number;
   public  startIcon : L.Icon;
@@ -29,20 +33,25 @@ export class ItineraryMaker2Component implements OnInit {
   private arrivo: L.Marker;
   private partenzaPlaceholder = "SetStart: Via, Città, ..."
   private arrivoPlaceholder = "SetFinish: Via, Città, ..."
-
+  //anche dei punti intermedi
   private puntiIntermediIds: number[] = [];
   private tmpMarker: L.Marker;
   private puntiIntermedi: L.Marker[] = [];
   private tmpPlaceholder = "Via, Città, ..."
-
   private placeholders: string[] = [];
   private count = 1000;
+
+  //variabili per la gestione del marker di seleizone sulla mappa
+  private assigned = false;
+  private newMarker: L.Marker;
+
 
   constructor( private _mapElementsService: MapElementsService,
     private _itinerarymakerservice: ItineraryMakerService,
     private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
+    //creiamo la mappa
     this.map = L.map('map').setView([43, 12], 8);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -52,7 +61,93 @@ export class ItineraryMaker2Component implements OnInit {
     this.intIcon = this._itinerarymakerservice.getIntIcon();
     this.tmpMarker = new L.Marker(new L.LatLng(0, 0));
 
+    //evento per aggiungere markers sulla mappa al click
+    this.map.on("click", <LeafletMouseEvent>(e) => {
+      if(this.assigned){
+        this.map.removeLayer(this.newMarker);
+      }
+      this.newMarker= L.marker(e.latlng ,  {icon: this._mapElementsService.getMapsIcon()} );
+      let buttonPop = '<button class="partenza">Seleziona Partenza</button><br><button class="arrivo">Seleziona Arrivo</button><br><button class="intermedio">Aggiungi Punto Intermedio</button>';
+      if(!this.isArrivoSet){
+         buttonPop = '<button class="arrivo">Seleziona Arrivo</button>'
+         this.newMarker.bindPopup(buttonPop)
+      .on("popupopen",  (b) => {
+        var popUp = b.target.getPopup()
+        popUp.getElement()
+        .querySelector(".arrivo  ")
+        .addEventListener("click", e => {this.selArrivo();}); });  
+      }else{
+        if(!this.isPartenzaSet){
+          buttonPop ='<button class="partenza">Seleziona Partenza</button>'
+          this.newMarker.bindPopup(buttonPop)
+      .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+        .querySelector(".partenza  ")
+        .addEventListener("click", e => {this.selPartenza();}); })
+        }else{
+          this.newMarker.bindPopup(buttonPop)
+      .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+        .querySelector(".partenza  ")
+        .addEventListener("click", e => {this.selPartenza();}); })
+      .on("popupopen",  (a) => {
+        var popUp = a.target.getPopup()
+        popUp.getElement()
+        .querySelector(".intermedio  ")
+        .addEventListener("click", e => {this.addPuntoIntermedio();}); })
+      .on("popupopen",  (b) => {
+        var popUp = b.target.getPopup()
+        popUp.getElement()
+        .querySelector(".arrivo  ")
+        .addEventListener("click", e => {this.selArrivo();}); });  
+        }
+      }
+      this.newMarker.addTo(this.map);
+      this.assigned = true;
+    });
+
   }
+  
+  selPartenza(){
+    console.log("partenza");
+    if(this.isPartenzaSet){
+      this.map.removeLayer(this.partenza);
+    }
+    console.log("arrivo");
+    this.isPartenzaSet = true;
+    this.partenza =new L.Marker(this.newMarker.getLatLng(),{icon: this.startIcon});
+    this.partenza.addTo(this.map);
+    this.partenzaPlaceholder = ("Finish at: "+ this.partenza.getLatLng());
+  }
+
+  selArrivo(){
+    if(this.isArrivoSet){
+      this.map.removeLayer(this.arrivo);
+    }
+    console.log("arrivo");
+    this.isArrivoSet = true;
+    this.arrivo =new L.Marker(this.newMarker.getLatLng(),{icon: this.endIcon});
+    this.arrivo.addTo(this.map);
+    this.arrivoPlaceholder = ("Start at: "+ this.arrivo.getLatLng());
+  }
+
+  addPuntoIntermedio(){
+    for (let index = 0; index < this.itinerario.length; index++) {
+      this.map.removeLayer(this.itinerario[index]);
+    }
+    this.itinerario = [];
+    console.log("punto intermedio")
+    let intermedio = new  L.Marker(this.newMarker.getLatLng(),{icon: this.intIcon});
+    this.puntiIntermediIds.push(this.count);
+    this.puntiIntermedi.push(intermedio);
+    this.placeholders.push("punto intermedio at: "+intermedio.getLatLng());
+    this.puntiIntermedi[this.count%1000].addTo(this.map);
+    this.numberPuntiIntermediSet = this.numberPuntiIntermediSet + 1;
+    this.count = this.count +1;
+  }
+
 
   submitSearch(form){
     let res = form.value;
@@ -205,14 +300,16 @@ getRoute(){
       let endLat = markers[j].getLatLng().lat;
       let endLon = markers[j].getLatLng().lng;
       this._itinerarymakerservice.getItinerario(startLon, startLat,endLon , endLat )
-      .subscribe(data => {
+      .subscribe((data:any) => {
         let itiner = data;
         let itinerJ= JSON.stringify(itiner);
+        this.features.push(data.features[0]);  
         console.log(itinerJ);
         this.itinerario.push(L.geoJSON(JSON.parse(itinerJ)));
         this.itinerario[this.itinerario.length-1].addTo(this.map);
       });
     this.isItinerarioPresente = true;
+    this.baseJson.features = this.features;
     }  
   }    
   }
