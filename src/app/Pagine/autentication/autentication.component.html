@@ -1,12 +1,26 @@
 <div class="container">
-  <div class="row">
 
-    <div class="col-md-6 col-md-offset-3">
+  <div class="card text-center" style="margin-bottom: 160px; margin-top: 60px;">
+    <div class="card-header">
+      <h2>Amministration Area</h2>
+    </div>
+    <div class="card-body">
+           
+
       <h1 *ngIf="authenticationService && authenticationService.userData | async">Hello
-        {{ (authenticationService.userData | async)?.email }}</h1>
-        <h1 *ngIf="authenticationService && authenticationService.userData | async">Hello
-          {{ authenticationService.userData  }}</h1>
-
+        {{ (authenticationService.userData | async)?.email }}
+      </h1>
+      <div *ngIf="authenticationService && authenticationService.userData | async">
+        <div  *ngIf="!showErr">
+        <h5 *ngIf="!isTokenGenerated">Devi generare un nuovo token</h5>
+        <button *ngIf="!isTokenGenerated"(click)="genToken()" class="btn btn-primary">GenToken</button>
+        <h4 *ngIf="isTokenGenerated">The Autentication Token is: {{token}}</h4>
+        </div>
+        <div *ngIf="showErr">
+          <h4 style="color: red;">{{errorMex}}</h4>
+        </div>
+      </div>
+  
           
       <div *ngIf="!(authenticationService.userData | async)">
         <div class="form-group">
@@ -18,10 +32,19 @@
           <input type="password" class="form-control" [(ngModel)]="password" id="pwd" placeholder="password">
         </div>
         <!--<button (click)="signUp()" class="btn btn-default">Sign Up</button>-->
-        <button (click)="signIn()" class="btn btn-default" style="margin-left:5px;">Login</button>
+        <button (click)="signIn()" class="btn btn-primary" style="margin-left:5px;">Login</button>
       </div>
-      <button (click)="signOut()" class="btn btn-primary" *ngIf="authenticationService.userData | async" style="margin-right: 10px;">Logout</button>
-      <button (click)="navToAdminPage()" class="btn btn-primary" *ngIf="authenticationService.userData | async">AdminPage</button>
+      
 
-      </div>
+
+      
     </div>
+    <div class="card-footer">
+      
+      <button  (click)="signOut()" class="btn btn-primary" *ngIf=" authenticationService.userData | async" style="margin-right: 10px;">Logout</button>
+      <button (click)="navToAdminPage()" class="btn btn-primary" *ngIf="isTokenGenerated && authenticationService.userData | async">AdminPage</button>
+    </div>
+  
+  </div>
+  <div style="margin-bottom: 100px;"> </div>
+  

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
 
 @Component({
@@ -11,12 +11,21 @@ import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-n
 })
 export class AdminPageComponent implements  OnInit {
 
-  constructor(private router: Router){}
+  private token: string;
+
+  constructor(private router: Router,
+    private route: ActivatedRoute){}
 
 
   ngOnInit() {
-  
+    this.route.queryParams
+      .subscribe(params =>{
+        console.log(params);
+        this.token = params.jwt;
+        console.log(this.token);
+      })
   }
+
 
   public onFloatClick () {
     // do your magic
