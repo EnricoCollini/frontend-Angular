@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import * as togpx from 'togpx';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ItineraryMakerService } from 'src/app/Services/itineraryMakerService/itinerary-maker.service';
 import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
 import { MapElementsService } from 'src/app/Services/mapElementsService/map-elements.service';
@@ -15,6 +17,8 @@ export class ItineraryMaker2Component implements OnInit {
   private isArrivoSet = false;
   private numberPuntiIntermediSet = 0;
   public itinerario = [];
+  private baseJson = {"type": "FeatureCollection", "features": []};
+  private features = [];
 
   public map: L.Map;
   public zoom: number;
@@ -35,7 +39,8 @@ export class ItineraryMaker2Component implements OnInit {
   private count = 1000;
 
   constructor( private _mapElementsService: MapElementsService,
-    private _itinerarymakerservice: ItineraryMakerService) { }
+    private _itinerarymakerservice: ItineraryMakerService,
+    private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
     this.map = L.map('map').setView([43, 12], 8);
@@ -166,15 +171,20 @@ getRoute(){
       let endLat = markers[j].getLatLng().lat;
       let endLon = markers[j].getLatLng().lng;
       this._itinerarymakerservice.getItinerario(startLon, startLat,endLon , endLat )
-        .subscribe(data => {
+        .subscribe((data:any) => {
           let itiner = data;
-          let itinerJ= JSON.stringify(itiner);
+          let itinerJ= JSON.stringify(itiner);  
+          this.features.push(data.features[0]);       
+          console.log(data.features[0]);
           this.itinerario.push(L.geoJSON(JSON.parse(itinerJ)));
           this.itinerario[this.itinerario.length-1].addTo(this.map);
         });
       this.isItinerarioPresente = true;
+      this.baseJson.features = this.features;
     }
   }else{
+    this.baseJson = {"type": "FeatureCollection", "features": []};
+    this.features = [];
     for (let index = 0; index < this.itinerario.length; index++) {
       this.map.removeLayer(this.itinerario[index]);  
     }
@@ -194,6 +204,7 @@ getRoute(){
       .subscribe(data => {
         let itiner = data;
         let itinerJ= JSON.stringify(itiner);
+        console.log(itinerJ);
         this.itinerario.push(L.geoJSON(JSON.parse(itinerJ)));
         this.itinerario[this.itinerario.length-1].addTo(this.map);
       });
@@ -201,5 +212,23 @@ getRoute(){
     }  
   }    
   }
+
+
+
+  sanitize(){
+    let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.baseJson));
+    let link = "data:'" + data;
+    return this.sanitizer.bypassSecurityTrustUrl(link);
+  }
+
+
+  sanitize2(){
+    let gpx = togpx(this.baseJson);
+    let data2 = "xml/gpx;charset=utf-8," + encodeURIComponent(gpx);
+    let link2 = "data:'" + data2;
+    return this.sanitizer.bypassSecurityTrustUrl(link2);
+  }
+
+
 
 }

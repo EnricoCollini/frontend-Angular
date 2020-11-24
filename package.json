@@ -9,6 +9,11 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "private": true,
   "dependencies": {
     "@agm/core": "^3.0.0-beta.0",
@@ -30,6 +35,7 @@
     "bootstrap": "^4.5.3",
     "core-js": "^2.5.4",
     "firebase": "^7.24.0",
+    "geojson-merge": "^0.3.0",
     "leaflet": "^1.7.1",
     "mapbox-gl": "^1.12.0",
     "mapbox-gl-leaflet": "0.0.13",
