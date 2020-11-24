@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, pipe, throwError } from 'rxjs';
 import {IStrutturaRicettiva} from './strutturaricettiva';
 import { catchError } from 'rxjs/operators';
@@ -23,18 +23,26 @@ export class StruttureRicettiveService {
     return this.http.get<IStrutturaRicettiva>('project/rest/strutturaricettiva/get/id/'+ id);
   }
 
-  deleteStruttura(id): Observable<any>{
+  deleteStruttura(id,jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
     const lid = id;
     const lurl = ('project/rest/strutturaricettiva/delete/id/' + lid);
     console.log(lurl);
-    return this.http.get(lurl)
+    return this.http.get(lurl, header)
     .pipe(catchError(this.errorHandler));
   }
 
 
-  postNewStrutturaRicettiva(data): Observable<any>{
+  postNewStrutturaRicettiva(data,jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
     const body = data;
-    return this.http.post('project/rest/strutturaricettiva/create',body)
+    return this.http.post('project/rest/strutturaricettiva/create',body, header)
     pipe(catchError(this.errorHandler));
   }
 

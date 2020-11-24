@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { StruttureRicettiveService } from 'src/app/Services/struttureRicettiveService/strutture-ricettive.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { StruttureRicettiveService } from 'src/app/Services/struttureRicettiveSe
   styleUrls: ['./strutture-ricettive-table.component.css']
 })
 export class StruttureRicettiveTableComponent implements OnInit {
+  @Input() 
+  private jwt: string;
 
   public strutture = [];
   constructor(private _struttureService: StruttureRicettiveService) { }
@@ -22,7 +24,7 @@ export class StruttureRicettiveTableComponent implements OnInit {
 
   public deleteStruttura(lid){
     console.log(lid);
-    this._struttureService.deleteStruttura(lid)
+    this._struttureService.deleteStruttura(lid, this.jwt)
     .subscribe(data => {
       console.log(data);
       this.getStrutture();

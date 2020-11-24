@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -24,18 +24,26 @@ export class RistoriService {
     return this.http.get<IRistoro>('project/rest/ristoro/get/id/'+id);
   }
 
-  deleteRistoro(id): Observable<any>{
+  deleteRistoro(id, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
     const lid = id;
     const lurl = ('project/rest/ristoro/delete/id/' + lid);
     console.log(lurl);
-    return this.http.get(lurl)
+    return this.http.get(lurl, header)
     .pipe(catchError(this.errorHandler));
   }
 
 
-  postNewRistoro(data): Observable<any>{
+  postNewRistoro(data, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
     const body = data;
-    return this.http.post('project/rest/ristoro/create', body)
+    return this.http.post('project/rest/ristoro/create', body, header)
     .pipe(catchError(this.errorHandler));
   }
 

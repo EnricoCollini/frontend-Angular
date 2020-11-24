@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.
   styleUrls: ['./itinerari-table.component.css']
 })
 export class ItinerariTableComponent implements OnInit {
+  @Input() 
+  private jwt: string;
 
   public itinerari = [];
   constructor(private _itinerariService: ItinerarioService) { }
@@ -22,7 +24,7 @@ export class ItinerariTableComponent implements OnInit {
 
   public deleteItinerario(lid){
     console.log(lid);
-    this._itinerariService.deleteItinerario(lid)
+    this._itinerariService.deleteItinerario(lid,this.jwt)
     .subscribe(data => {
       console.log(data);
       this.getItinerari();

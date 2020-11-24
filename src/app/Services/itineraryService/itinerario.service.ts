@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -22,17 +22,25 @@ export class ItinerarioService {
     return this.http.get<IItinerario>('project/rest/itinerario/get/id/'+id);
   }
 
-  deleteItinerario(id): Observable<any>{
+  deleteItinerario(id, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
     const lid = id;
     const lurl = ('project/rest/itinerario/delete/id/' + lid);
     console.log(lurl);
-    return this.http.get(lurl)
+    return this.http.get(lurl, header)
     .pipe(catchError(this.errorHandler));
   }
 
-  postNewItinerario(data): Observable<any>{
+  postNewItinerario(data,jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
     const body = data;
-    return this.http.post('project/rest/itinerario/create', body)
+    return this.http.post('project/rest/itinerario/create', body, header)
     .pipe(catchError(this.errorHandler));
   }
 

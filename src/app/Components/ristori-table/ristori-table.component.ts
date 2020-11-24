@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { RistoriService } from 'src/app/Services/ristoroService/ristori.service';
 
 @Component({
@@ -7,6 +8,8 @@ import { RistoriService } from 'src/app/Services/ristoroService/ristori.service'
   styleUrls: ['./ristori-table.component.css']
 })
 export class RistoriTableComponent implements OnInit {
+  @Input() 
+  private jwt: string;
 
   public ristori = [];
   constructor(private _ristoriService: RistoriService) { }
@@ -21,8 +24,9 @@ export class RistoriTableComponent implements OnInit {
   }
 
   public deleteRistoro(lid){
+    
     console.log(lid);
-    this._ristoriService.deleteRistoro(lid)
+    this._ristoriService.deleteRistoro(lid, this.jwt)
     .subscribe(data => {
       console.log(data);
       this.getRistori();
