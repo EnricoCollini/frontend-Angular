@@ -8,7 +8,7 @@
           <form #searchForm1="ngForm" style="margin: 2px;" (ngSubmit)="submitSearch(searchForm1.form);">
             <label>
               <div class="row">
-                <input placeholder="&#x2616; Via, Città, ..." type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
+                <input placeholder="{{partenzaPlaceholder}}" type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
                 <a class="button" style="margin-left: 3px; margin-top: 7px;"(click)="elimina(999, searchForm1)" role="button"><b>X</b></a>
               </div>
               </label>
@@ -28,7 +28,7 @@
         <form #searchForm2="ngForm" style="margin: 5px;" (ngSubmit)="submitSearch2(searchForm2.form);">
           <label>
             <div class="row">
-              <input placeholder="&#x2690; Via, Città, ..." type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
+              <input placeholder="{{arrivoPlaceholder}}" type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
               <a class="button" style="margin-left: 3px; margin-top: 7px;" (click)="elimina(2000, searchForm2)" role="button"><b>X</b></a>  
             </div>
           </label>

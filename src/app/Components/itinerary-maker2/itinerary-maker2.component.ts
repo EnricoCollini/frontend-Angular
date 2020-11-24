@@ -17,11 +17,14 @@ export class ItineraryMaker2Component implements OnInit {
   public intIcon: L.Icon;
   private partenza: L.Marker;
   private arrivo: L.Marker;
+  private partenzaPlaceholder = "SetStart: Via, Città, ..."
+  private arrivoPlaceholder = "SetFinish: Via, Città, ..."
 
   private puntiIntermediIds: number[] = [];
   private tmpMarker: L.Marker;
   private puntiIntermedi: L.Marker[] = [];
   private tmpPlaceholder = "Via, Città, ..."
+
   private placeholders: string[] = [];
   private count = 1000;
 
@@ -52,6 +55,8 @@ export class ItineraryMaker2Component implements OnInit {
         this.map.setView(<L.LatLngTuple>coord, 15);
         this.partenza =new L.Marker(new L.LatLng(coords[1], coords[0]),{icon: this.startIcon});
         this.partenza.addTo(this.map);
+        this.partenzaPlaceholder = res.search;
+        form.reset();
       }
     );
   }
@@ -67,6 +72,8 @@ export class ItineraryMaker2Component implements OnInit {
         this.map.setView(<L.LatLngTuple>coord, 15);
         this.arrivo =new L.Marker(new L.LatLng(coords[1], coords[0]),{icon: this.endIcon});
         this.arrivo.addTo(this.map);
+        this.arrivoPlaceholder = res.search;
+        form.reset();
       }
     );
   }
@@ -93,10 +100,12 @@ export class ItineraryMaker2Component implements OnInit {
   elimina(value, form){
     if(value == 999){ //partenza
       this.map.removeLayer(this.partenza);
+      this.partenzaPlaceholder =  "SetStart: Via, Città, ...";
       form.reset();
     }else{
       if(value == 2000){ //arrivo
         this.map.removeLayer(this.arrivo);
+        this.arrivoPlaceholder =  "SetFinish: Via, Città, ...";
         form.reset();
       }else{
         this.map.removeLayer(this.puntiIntermedi[value%1000]);
