@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
+import * as togpx from 'togpx';
 import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
 import { IAreaNaturale } from 'src/app/Services/areaNaturaleService/areanturale';
 import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
@@ -33,8 +34,11 @@ export class ItinerarioSchedaComponent implements OnInit {
   private  endlatitude: number;
   private  endlongitude: number;
   private data : string;
+  private data2: string;
   private link : string;
+  private link2: string;
   private sanitizedUrl;
+  private gpx;
 
   public map: L.Map;
   public zoom: number;
@@ -104,10 +108,16 @@ export class ItinerarioSchedaComponent implements OnInit {
         this.endlatitude = params.endlatitude;
         this.endlongitude = params.endlongitude;
         this.track = params.track;
-        console.log(this.name)
-        this.data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.track));
+        console.log(this.track);
+        this.gpx = togpx(JSON.parse(this.track));
+        console.log(this.gpx);
+
+        this.data = "text/json;charset=utf-8," + encodeURIComponent(this.track);
         this.link = "data:'" + this.data;
-        this.sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(this.link);
+
+        this.data2 = "xml/gpx;charset=utf-8," + encodeURIComponent(this.gpx);
+        this.link2 = "data:'" + this.data2;
+        
         this.center = new L.LatLng(this.endlatitude, this.endlongitude);
         this.map.setView([this.endlatitude,this.endlongitude], 16);
       })
@@ -280,5 +290,9 @@ export class ItinerarioSchedaComponent implements OnInit {
   sanitize(){
     return this.sanitizer.bypassSecurityTrustUrl(this.link);
 }
+sanitize2(){
+  return this.sanitizer.bypassSecurityTrustUrl(this.link2);
+}
 
 }
+

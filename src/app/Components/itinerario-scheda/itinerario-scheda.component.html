@@ -13,7 +13,10 @@
             <div class="card-body">
               <h2 class="card-title">Description:</h2>
               <p class="card-text scroll">{{description}}</p>
-              <a  class="btn btn-primary btn-lg" [href]="sanitize()"  role="button" download="itinerario.json">download Itinerario</a>
+              <br>
+              <a  class="btn btn-primary btn-lg" [href]="sanitize()"  role="button" download="itinerario.json" style="margin-top:20px;">download GeoJSON track</a>
+              <br>
+              <a  class="btn btn-primary btn-lg" [href]="sanitize2()"  role="button" download="itinerario.gpx"  style="margin-top:20px;">download GPX track</a>
             </div>
           </div>
         </div>
