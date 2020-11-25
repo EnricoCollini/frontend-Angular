@@ -1,38 +1,69 @@
 <div class="container">
-  <h1>Struttura Ricettiva</h1>
-  <form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
-    <label>Name: 
-        <input placeholder="..." type="text" class="form-control" name="Name" ngModel style="width: min-content;">
-    </label><br>
-    <label>Indirizzo: 
-      <input placeholder="..." type="text" class="form-control" name="Via" ngModel style="width: min-content;">
-  </label><br>
-  <label>City:
-    <input placeholder="..." type="text" class="form-control" name="City" ngModel style="width: min-content;">
-  </label><br>
-  <label>Province: 
-    <input placeholder="..." type="text" class="form-control" name="Province" ngModel style="width: min-content;">
-  </label><br>
-  <label>Latitude: 
-    <input placeholder="..." type="text" class="form-control" name="Latitude" ngModel style="width: min-content;">
-  </label><br>
-  <label>Longitude:
-    <input placeholder="..." type="text" class="form-control" name="Longitude" ngModel style="width: min-content;">
-  </label><br>
-  <label>Cap:
-    <input placeholder="..." type="text" class="form-control" name="Cap" ngModel style="width: min-content;">
-  </label><br>
-  <label>Indirizzo sito web:
-    <input placeholder="..." type="text" class="form-control" name="Fax" ngModel style="width: min-content;">
-  </label><br>
-  <label>Telefono:
-    <input placeholder="..." type="text" class="form-control" name="Telefono" ngModel style="width: min-content;">
-  </label><br>
-  <label>Tipologia Struttura Ricettiva:
-    <input placeholder="..." type="text" class="form-control" name="Tipologia" ngModel style="width: min-content;">
-  </label><br>
-    <button class="btn btn-primary" type="submit" >Submit</button>
-  </form>
-  </div>
 
-  <p style="margin-bottom: 280px;"></p>
+  <div class="card " style="margin-bottom: 160px; margin-top: 60px;">
+    <div class="card-header text-center">
+      <h2>Edit Struttura Ricettiva</h2>
+    </div>
+    <div class="card-body">
+           
+      <form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
+        <label>Name: 
+            <input class="form-control" placeholder="{{name}}" type="text" ngModel name="name" value="{{name}}" style="width: min-content;">
+        </label><br>
+       
+      <label>City:
+        <input list="cities" class="form-control" placeholder="{{city}}" type="text" ngModel name="city"  value="{{city}}" style="width: min-content;">
+      </label><br>
+      <label>Province
+        <input class="form-control" placeholder="{{province}}" type="text"  value ="{{province}}" ngModel name="province"  style="width: min-content;">
+      </label><br>
+      
+      <label>Latitude: 
+        <input class="form-control" placeholder="{{latitude}}" type="number" step="0.01" ngModel name="latitude"  value="{{latitude}}" style="width: min-content;">
+      </label><br>
+      <label>Longitude: 
+        <input class="form-control" placeholder="{{longitude}}" type="number" step="0.01" ngModel name="longitude"  value="{{longitude}}"  style="width: min-content;">
+      </label><br>
+
+      <label>Email
+        <input placeholder="{{email}}" type="text" class="form-control" name="email" ngModel style="width: min-content;">
+      </label><br>
+      <label>phonenumber
+        <input placeholder="{{phonenumber}}" type="text" class="form-control" name="phonenumber" ngModel style="width: min-content;">
+      </label><br>
+      <label>address
+        <input placeholder="{{address}}" type="text" class="form-control" name="address" ngModel style="width: min-content;">
+      </label><br>
+      
+      <label><br>Struttura Ricettiva Tipology:<br>
+      
+        <input [checked]="'AFFITTACAMERE'==defaultChoice" type="radio" id="AFFITTACAMERE" ngModel name="strutturaricettivatipology" value="AFFITTACAMERE">
+        <label>AFFITTACAMERE</label><br>
+
+        <input [checked]="'AGRITURISMO'==defaultChoice" type="radio" id="AGRITURISMO" ngModel name="strutturaricettivatipology" value="AGRITURISMO">
+        <label>AGRITURISMO</label><br>
+
+        <input [checked]="'ALBERGOHOTEL'==defaultChoice" type="radio" id="ALBERGOHOTEL" ngModel name="strutturaricettivatipology" value="ALBERGOHOTEL">
+        <label>ALBERGOHOTEL</label><br>
+
+        <input [checked]="'ALLOGGIOPRIVATO'==defaultChoice" type="radio" id="ALLOGGIOPRIVATO" ngModel name="strutturaricettivatipology" value="ALLOGGIOPRIVATO">
+        <label>ALLOGGIOPRIVATO</label><br>
+        
+      </label><br>
+        <button class="btn btn-primary" type="submit" >Submit</button>
+      </form>
+
+      
+    </div>
+    <div class="card-footer">
+      
+    </div>
+  
+  </div>
+  <div style="margin-bottom: 100px;"> </div>
+
+
+
+
+
+<p style="margin-bottom: 280px;"></p> 

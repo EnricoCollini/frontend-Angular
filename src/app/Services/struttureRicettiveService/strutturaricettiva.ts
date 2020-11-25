@@ -8,6 +8,6 @@ export interface IStrutturaRicettiva{
 	phonenumber: string,
 	latitude: number, 
 	longitude: number,
-	strutturaricettivatypology: string
+	strutturaricettivatipology: string
 
 }

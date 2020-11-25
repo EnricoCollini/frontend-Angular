@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StruttureRicettiveService } from 'src/app/Services/struttureRicettiveService/strutture-ricettive.service';
 
@@ -7,13 +7,14 @@ import { StruttureRicettiveService } from 'src/app/Services/struttureRicettiveSe
   templateUrl: './struttura-ricettiva-edit-page.component.html',
   styleUrls: ['./struttura-ricettiva-edit-page.component.css']
 })
-export class StrutturaRicettivaEditPageComponent implements OnInit {
+export class StrutturaRicettivaEditPageComponent implements OnInit, AfterContentInit {
 
   constructor(private route: ActivatedRoute,
     private _struttService: StruttureRicettiveService,
     private _router: Router) { }
 
   private id: number;
+  private jwt: string;
   private name: string;
   private address: string;
   private city: string;
@@ -23,9 +24,22 @@ export class StrutturaRicettivaEditPageComponent implements OnInit {
   private email: string;
   private phonenumber: string;
   private strutturaricettivatipology: string;
+  private defaultChoice: string;
+  private choices = ["AFFITTACAMERE",
+    "AGRITURISMO",
+    "ALBERGOHOTEL",
+    "ALLOGGIOPRIVATO"]
 
   ngOnInit() {
     this.route.queryParams
+      .subscribe(params =>{
+        this.jwt = params.jwt
+        this.id = params.thisstrutt;
+      });
+    }
+
+  ngAfterContentInit(){
+    this._struttService.getStrutturaWithId(this.id)
       .subscribe(params =>{
         console.log(params.name);
         this.id = params.id;
@@ -39,6 +53,7 @@ export class StrutturaRicettivaEditPageComponent implements OnInit {
         this.phonenumber = params.phonenumber;
         this.strutturaricettivatipology = params.strutturaricettivatipology;
         console.log(this.id)
+        this.defaultChoice = this.strutturaricettivatipology;
       })
   }
 
@@ -76,17 +91,17 @@ export class StrutturaRicettivaEditPageComponent implements OnInit {
 
     console.log(res)
     
-    this._struttService.deleteStruttura(this.id)
+    this._struttService.deleteStruttura(this.id, this.jwt)
     .subscribe(data => console.log(data));
 
     
-    this._struttService.postNewStrutturaRicettiva(res)
+    this._struttService.postNewStrutturaRicettiva(res,this.jwt)
     .subscribe(data => {
       if(data == null){
         window.alert("dati modificati correttamente");
       }else{
       window.alert(data);}
-      this._router.navigate(["admin"]);
+    
     });
   }
 

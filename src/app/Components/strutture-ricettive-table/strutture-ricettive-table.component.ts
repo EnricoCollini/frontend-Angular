@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { StruttureRicettiveService } from 'src/app/Services/struttureRicettiveService/strutture-ricettive.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class StruttureRicettiveTableComponent implements OnInit {
   private jwt: string;
 
   public strutture = [];
-  constructor(private _struttureService: StruttureRicettiveService) { }
+  constructor(private _struttureService: StruttureRicettiveService,
+    private router:Router) { }
 
   ngOnInit() {
     this.getStrutture();
@@ -30,6 +32,10 @@ export class StruttureRicettiveTableComponent implements OnInit {
       this.getStrutture();
     } 
     )
+  }
+
+  goEdit(strutt){
+    this.router.navigate(['/strutturaEdit/'+strutt.id] , { queryParams: { "jwt": this.jwt, "thisstrutt": strutt.id } });
   }
   
 

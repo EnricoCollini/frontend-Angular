@@ -18,6 +18,7 @@ export class ItinerarioAddPageComponent implements OnInit {
   submitForm(form){
     let res = form.value;
     console.log(res);
+    
     this._itinerarioService.postNewItinerario(res)
     .subscribe(data => {
       if(data == null){

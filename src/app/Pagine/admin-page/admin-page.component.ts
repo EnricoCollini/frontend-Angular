@@ -36,17 +36,17 @@ export class AdminPageComponent implements  OnInit {
   }
 
   public addRisto(){
-    this.router.navigate(['/ristoroAdd']);
+    this.router.navigate(['/ristoroAdd'], { queryParams: { "jwt": this.token}, queryParamsHandling: "merge" },);
 
   }
 
   public addStrutt(){
-    this.router.navigate(['/strutturaAdd']);
+    this.router.navigate(['/strutturaAdd'], { queryParams: { "jwt": this.token}, queryParamsHandling: "merge" },);
 
   }
 
   public addIti(){
-    this.router.navigate(['/itineraryAdd']);
+    this.router.navigate(['/itineraryAdd'], { queryParams: { "jwt": this.token}, queryParamsHandling: "merge" },);
 
   }
 

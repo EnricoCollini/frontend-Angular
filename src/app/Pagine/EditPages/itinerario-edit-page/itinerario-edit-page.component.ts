@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
 
@@ -7,13 +7,14 @@ import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.
   templateUrl: './itinerario-edit-page.component.html',
   styleUrls: ['./itinerario-edit-page.component.css']
 })
-export class ItinerarioEditPageComponent implements OnInit {
+export class ItinerarioEditPageComponent implements OnInit , AfterContentInit{
 
   constructor(private route: ActivatedRoute,
     private _itinService: ItinerarioService,
     private _router: Router) { }
 
   private id: number;
+  private jwt: string;
   private name: string;
   private description: string;
   private startcity: string;
@@ -29,6 +30,14 @@ export class ItinerarioEditPageComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams
+      .subscribe(params =>{
+        this.jwt = params.jwt
+        this.id = params.thisarea;
+      });
+    }
+
+  ngAfterContentInit(){
+    this._itinService.getItinerarioWithId(this.id)
       .subscribe(params =>{
         console.log(params.name);
         this.id = params.id;
@@ -87,16 +96,16 @@ export class ItinerarioEditPageComponent implements OnInit {
 
     console.log(res)
     
-    this._itinService.deleteItinerario(this.id)
+    this._itinService.deleteItinerario(this.id,this.jwt)
     .subscribe(data => console.log(data));
 
-    this._itinService.postNewItinerario(res)
+    this._itinService.postNewItinerario(res,this.jwt)
     .subscribe(data => {
       if(data == null){
         window.alert("dati modificati correttamente");
       }else{
       window.alert(data);}
-      this._router.navigate(["admin"]);
+     
     });
   }
 
