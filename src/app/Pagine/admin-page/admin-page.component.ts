@@ -32,7 +32,7 @@ export class AdminPageComponent implements  OnInit {
   }
 
   public addArea(){
-    this.router.navigate(['/areenaturaliAdd']);
+    this.router.navigate(['/areenaturaliAdd'], { queryParams: { "jwt": this.token}, queryParamsHandling: "merge" },);
   }
 
   public addRisto(){

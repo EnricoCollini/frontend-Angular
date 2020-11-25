@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RistoriService } from 'src/app/Services/ristoroService/ristori.service';
 
@@ -13,7 +13,10 @@ export class RistoroEditPageComponent implements OnInit {
     private _ristoService: RistoriService,
     private _router: Router) { }
 
+
+  private jwt: string;
   private id: number;
+  
   private name: string;
   private address: string;
   private city: string;
@@ -25,7 +28,15 @@ export class RistoroEditPageComponent implements OnInit {
   private ristorotypology: string;
 
   ngOnInit() {
+
     this.route.queryParams
+      .subscribe(params =>{
+        this.jwt = params.jwt
+        this.id = params.thisristo;
+      });
+
+
+    this._ristoService.getRistoroWithId(this.id)
       .subscribe(params =>{
         console.log(params.name);
         this.id = params.id;
@@ -76,10 +87,7 @@ export class RistoroEditPageComponent implements OnInit {
 
     console.log(res)
     
-    this._ristoService.deleteRistoro(this.id)
-    .subscribe(data => console.log(data));
-
-    this._ristoService.postNewRistoro(res)
+    this._ristoService.postNewRistoro(res, this.jwt)
     .subscribe(data => {
       if(data == null){
         window.alert("dati modificati correttamente");
@@ -87,6 +95,9 @@ export class RistoroEditPageComponent implements OnInit {
       window.alert(data);}
       this._router.navigate(["admin"]);
     });
+
+    this._ristoService.deleteRistoro(this.id, this.jwt)
+    .subscribe(data => console.log(data));
   }
 
 }

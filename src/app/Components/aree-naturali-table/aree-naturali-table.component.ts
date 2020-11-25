@@ -42,6 +42,6 @@ export class AreeNaturaliTableComponent implements OnInit {
 
   goEdit(area){
     this.router.navigate(['/areanaturaleEdit/'+area.id] , { queryParams: { "jwt": this.jwt, "thisarea": area.id } });
-  }order
+  }
 
 }

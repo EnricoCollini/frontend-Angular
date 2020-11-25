@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RistoriService } from 'src/app/Services/ristoroService/ristori.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class RistoriTableComponent implements OnInit {
   private jwt: string;
 
   public ristori = [];
-  constructor(private _ristoriService: RistoriService) { }
+  constructor(private _ristoriService: RistoriService,
+    private router: Router) { }
 
   ngOnInit() {
     this.getRistori();
@@ -32,6 +34,10 @@ export class RistoriTableComponent implements OnInit {
       this.getRistori();
     } 
     )
+  }
+
+  goEdit(risto){
+    this.router.navigate(['/ristoroEdit/'+risto.id] , { queryParams: { "jwt": this.jwt, "thisristo": risto.id } });
   }
 
 }
