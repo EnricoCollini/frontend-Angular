@@ -26,6 +26,15 @@ export class ItinerarioService {
     return this.http.get("project/rest/itinerario/associaAmministratore/" + itiid + "/" + adminid, header);
   }
 
+  associaArea(itiid, areaid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/itinerario/associaArea/" + itiid + "/" + areaid, header);
+  }
+
+
   getItinerarioWithId(id): Observable<IItinerario>{
     return this.http.get<IItinerario>('project/rest/itinerario/get/id/'+id);
   }

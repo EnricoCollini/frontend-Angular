@@ -44,6 +44,22 @@ export class RistoriService {
     return this.http.get("project/rest/ristoro/associaAmministratore/" + ristoid + "/" + adminid, header);
   }
 
+  associaArea(ristoid, areaid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/ristoro/associaArea/" + ristoid + "/" + areaid, header);
+  }
+
+  associaIti(ristoid, itiid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/ristoro/associaIti/" + ristoid + "/" + itiid, header);
+  }
+
 
   postNewRistoro(data, jwt): Observable<any>{
     var header = {

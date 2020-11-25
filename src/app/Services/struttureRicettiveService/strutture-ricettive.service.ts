@@ -27,6 +27,22 @@ export class StruttureRicettiveService {
     return this.http.get("project/rest/strutturaricettiva/associaAmministratore/" + strid + "/" + adminid, header);
   }
 
+  associaArea(strid, areaid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/strutturaricettiva/associaArea/" + strid + "/" + areaid, header);
+  }
+
+  associaIti(strid, itiid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/strutturaricettiva/associaIti/" + strid + "/" + itiid, header);
+  }
+
   getStrutturaWithId(id): Observable<IStrutturaRicettiva>{
     return this.http.get<IStrutturaRicettiva>('project/rest/strutturaricettiva/get/id/'+ id);
   }
