@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-naturale.service';
 
@@ -44,4 +44,6 @@ export class AreeNaturaliTableComponent implements OnInit {
     this.router.navigate(['/areanaturaleEdit/'+area.id] , { queryParams: { "jwt": this.jwt, "thisarea": area.id } });
   }
 
+
 }
+
