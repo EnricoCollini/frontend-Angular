@@ -34,7 +34,7 @@ export class RistoroEditPageComponent implements OnInit , AfterContentInit{
     this.route.queryParams
       .subscribe(params =>{
         this.jwt = params.jwt
-        this.id = params.thisarea;
+        this.id = params.thisristo;
       });
     }
 

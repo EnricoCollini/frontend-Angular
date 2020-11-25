@@ -13,7 +13,7 @@
       <tr *ngFor="let rist of ristori">
         <td>{{rist.name}}</td>
         <td>{{rist.city}}</td>
-        <td><button  (click)="goEdit(rist)"><img src="../../../assets/images/edit-24px.svg"></button></td>
+        <td><button  (click)="goEdit(rist)"class="btn default" ><img src="../../../assets/images/edit-24px.svg"></button></td>
       <td><button (click)="deleteRistoro(rist.id)" class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
       </tr>
     </tbody>
