@@ -31,6 +31,8 @@ export class AreaNaturaleAddPageComponent implements OnInit {
         this.email = params.email;
         console.log(this.email);
       });
+
+      
   }
 
   submitForm(form){
@@ -46,15 +48,13 @@ export class AreaNaturaleAddPageComponent implements OnInit {
       }else{
       window.alert(data);}
     });
-
-    this._areaNaturaleService.getAreeNaturaliFromDB()
-    .subscribe((data:any)=>{
-      this.areeNaturali = data;
-    });
-
   }
 
   associaAdmin(){
+    this._areaNaturaleService.getAreeNaturaliFromDB()
+      .subscribe((data:any)=>{
+        this.areeNaturali = data;
+      });
     for (let index = 0; index < this.areeNaturali.length; index++) {
       if(this.name == this.areeNaturali[index].name){
         this.theId = this.areeNaturali[index].id;

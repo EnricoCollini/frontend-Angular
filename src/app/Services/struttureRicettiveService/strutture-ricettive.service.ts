@@ -19,6 +19,14 @@ export class StruttureRicettiveService {
     .pipe(catchError(this.errorHandler));
   }
 
+  associaAdmin(strid, adminid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/strutturaricettiva/associaAmministratore/" + strid + "/" + adminid, header);
+  }
+
   getStrutturaWithId(id): Observable<IStrutturaRicettiva>{
     return this.http.get<IStrutturaRicettiva>('project/rest/strutturaricettiva/get/id/'+ id);
   }

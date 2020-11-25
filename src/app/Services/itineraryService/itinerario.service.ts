@@ -18,6 +18,14 @@ export class ItinerarioService {
     .pipe(catchError(this.errorHandler));
   }
 
+  associaAdmin(itiid, adminid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/itinerario/associaAmministratore/" + itiid + "/" + adminid, header);
+  }
+
   getItinerarioWithId(id): Observable<IItinerario>{
     return this.http.get<IItinerario>('project/rest/itinerario/get/id/'+id);
   }

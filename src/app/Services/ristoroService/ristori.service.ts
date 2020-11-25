@@ -36,6 +36,14 @@ export class RistoriService {
     .pipe(catchError(this.errorHandler));
   }
 
+  associaAdmin(ristoid, adminid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/ristoro/associaAmministratore/" + ristoid + "/" + adminid, header);
+  }
+
 
   postNewRistoro(data, jwt): Observable<any>{
     var header = {
