@@ -12,6 +12,7 @@ import { AreaNaturaleService } from 'src/app/Services/areaNaturaleService/area-n
 export class AdminPageComponent implements  OnInit {
 
   private token: string;
+  private email: string;
 
   constructor(private router: Router,
     private route: ActivatedRoute){}
@@ -22,7 +23,9 @@ export class AdminPageComponent implements  OnInit {
       .subscribe(params =>{
         console.log(params);
         this.token = params.jwt;
+        this.email = params.email;
         console.log(this.token);
+        console.log(this.email);
       })
   }
 
@@ -32,7 +35,7 @@ export class AdminPageComponent implements  OnInit {
   }
 
   public addArea(){
-    this.router.navigate(['/areenaturaliAdd'], { queryParams: { "jwt": this.token}, queryParamsHandling: "merge" },);
+    this.router.navigate(['/areenaturaliAdd'], { queryParams: { "jwt": this.token, "email": this.email}, queryParamsHandling: "merge" },);
   }
 
   public addRisto(){

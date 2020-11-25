@@ -69,7 +69,7 @@ export class AutenticationComponent implements OnInit {
     }
 
     navToAdminPage(){
-      this.router.navigate(['/admin'], {queryParams: {jwt: this.token}});
+      this.router.navigate(['/admin'], {queryParams: {jwt: this.token, email: this.currentemail}});
     }
 
 

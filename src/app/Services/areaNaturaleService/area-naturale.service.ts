@@ -70,6 +70,14 @@ export class AreaNaturaleService {
     return this.http.get(("project/rest/areanaturale/struttureAssociati/"+id));
   }
 
+  associaAdmin(areaid, adminid, jwt): Observable<any>{
+    var header = {
+      headers: new HttpHeaders()
+        .set('Authorization',  `Bearer ${jwt}`)
+    }
+    return this.http.get("project/rest/areanaturale/associaAmministratore/" + areaid + "/" + adminid, header);
+  }
+
   errorHandler(error: HttpErrorResponse){
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
