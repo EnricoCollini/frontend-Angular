@@ -395,7 +395,7 @@ export class ItineraryMaker2Component implements OnInit {
   }    
   }
   sanitize(){
-    let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.baseJson));
+    let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.baseJson).toString());
     let link = "data:'" + data;
     return this.sanitizer.bypassSecurityTrustUrl(link);
   }
