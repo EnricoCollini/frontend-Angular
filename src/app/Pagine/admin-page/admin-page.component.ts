@@ -14,11 +14,16 @@ export class AdminPageComponent implements  OnInit {
   private token: string;
   private email: string;
 
+  private name1: string;
+  private name2: string;
+
   constructor(private router: Router,
     private route: ActivatedRoute){}
 
 
   ngOnInit() {
+    
+    document.getElementById("but1").click();
     this.route.queryParams
       .subscribe(params =>{
         console.log(params);
@@ -73,6 +78,7 @@ export class AdminPageComponent implements  OnInit {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
 
 
 

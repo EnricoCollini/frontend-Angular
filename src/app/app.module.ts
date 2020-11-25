@@ -37,6 +37,7 @@ import { ItinerarioEditPageComponent } from './Pagine/EditPages/itinerario-edit-
 import { StrutturaRicettivaEditPageComponent } from './Pagine/EditPages/struttura-ricettiva-edit-page/struttura-ricettiva-edit-page.component';
 import { PuntoSchedaComponent } from './Components/punto-scheda/punto-scheda.component';
 import { ItineraryMaker2Component } from './Components/itinerary-maker2/itinerary-maker2.component';
+import { AssociaComponentComponent } from './Components/associa-component/associa-component.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQw6Ds-43zwoUPA3It_pnu6Ulk5eDkoh0",
@@ -78,6 +79,7 @@ const firebaseConfig = {
     StrutturaRicettivaEditPageComponent,
     PuntoSchedaComponent,
     ItineraryMaker2Component,
+    AssociaComponentComponent,
 
   ],
   imports: [

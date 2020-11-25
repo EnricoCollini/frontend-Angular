@@ -1,38 +1,58 @@
 <div class="container">
 
-<div class="tab" style="margin-top: 30px;">
-  <button class="tablinks" (click)="openCity(event, 'AreeNaturali')">Aree Naturali</button>
-  <button class="tablinks" (click)="openCity(event, 'StruttureRicettive')">Strutture Ricettive</button>
-  <button class="tablinks" (click)="openCity(event, 'Ristori')">Ristori</button>
-  <button class="tablinks" (click)="openCity(event, 'Itinerari')">Itinerari</button>
-</div>
+  <div class="card" style="margin-bottom: 160px; margin-top: 60px;">
+    <div class="card-header text-center">
+      <h2>Amministration Area</h2>
+    </div>
+    <div class="card-body">
+      <div class="row justify-content-center" style="margin-bottom: 30px;">
+        <div class="col-8">
+          <div class="tab" style="margin-top: 30px; ">
+            <button id="but1" class="tablinks" (click)="openCity(event, 'AreeNaturali')">Aree Naturali</button>
+            <button class="tablinks" (click)="openCity(event, 'StruttureRicettive')">Strutture Ricettive</button>
+            <button class="tablinks" (click)="openCity(event, 'Ristori')">Ristori</button>
+            <button class="tablinks" (click)="openCity(event, 'Itinerari')">Itinerari</button>
+          </div>
 
-<div id="AreeNaturali" class="tabcontent">
-  <app-aree-naturali-table jwt={{token}}></app-aree-naturali-table>
-</div>
+          <div id="AreeNaturali" class="tabcontent">
+            <app-aree-naturali-table jwt={{token}}></app-aree-naturali-table>
+          </div>
 
-<div id="StruttureRicettive" class="tabcontent">
-  <app-strutture-ricettive-table jwt={{token}}></app-strutture-ricettive-table>
-</div>
+          <div id="StruttureRicettive" class="tabcontent">
+            <app-strutture-ricettive-table jwt={{token}}></app-strutture-ricettive-table>
+          </div>
 
-<div id="Ristori" class="tabcontent">
-  <app-ristori-table jwt={{token}}></app-ristori-table>
-</div>
+          <div id="Ristori" class="tabcontent">
+            <app-ristori-table jwt={{token}}></app-ristori-table>
+          </div>
 
-<div id="Itinerari" class="tabcontent">
-  <app-itinerari-table jwt={{token}}></app-itinerari-table>
-</div>
+          <div id="Itinerari" class="tabcontent">
+            <app-itinerari-table jwt={{token}}></app-itinerari-table>
+          </div>
 
-<div class="float">
-<div class="dropup">
-    <button class="dropbtn">Add</button>
-    <div class="dropup-content">
-    <button type="button" class="btn btn-success" (click)="addArea()" style="width: 120px; margin:2px;">AreaNaturale</button><br>
-    <button type="button" class="btn btn-secondary"(click)="addStrutt()" style="margin:2px;">Struttura Ricettiva</button><br>
-    <button type="button" class="btn btn-warning"(click)="addRisto()" style="width: 120px; margin:2px;">Ristoro</button><br>
-    <button type="button" class="btn btn-primary"(click)="addIti()" style="width:120px; margin:2px; background-color: rgb(255, 136, 0);">Itinerario</button>
+        </div>
+        <div class="col-4">
+          <app-associa-component></app-associa-component>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="float">
+        <div class="dropup">
+          <button class="dropbtn">Add</button>
+          <div class="dropup-content">
+            <button type="button" class="btn btn-success" (click)="addArea()"
+              style="width: 120px; margin:2px;">AreaNaturale</button><br>
+            <button type="button" class="btn btn-secondary" (click)="addStrutt()" style="margin:2px;">Struttura
+              Ricettiva</button><br>
+            <button type="button" class="btn btn-warning" (click)="addRisto()"
+              style="width: 120px; margin:2px;">Ristoro</button><br>
+            <button type="button" class="btn btn-primary" (click)="addIti()"
+              style="width:120px; margin:2px; background-color: rgb(255, 136, 0);">Itinerario</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
-<p style="margin-bottom: 280px;"></p>
+  <p style="margin-bottom: 280px;"></p>

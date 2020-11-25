@@ -1,0 +1,18 @@
+<div class="card" style="margin-top: 30px;">
+  <div class="card-header text-center">
+    <h5>Associa Risorse</h5>
+  </div>
+  <div class="card-body">
+    <form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
+      <label>Name1: 
+          <input class="form-control" placeholder="Insert a resource name" type="text" ngModel name="name1" value="{{name1}}" style="width: min-content;">
+      </label><br>
+      <label>Name2: 
+        <input class="form-control" placeholder="Insert a resource name" type="text" ngModel name="name2" value="{{name2}}" style="width: min-content;">
+    </label><br>
+      <button class="btn btn-dark" type="submit" >Associa</button>
+    </form>
+    
+  </div>
+  
+</div>

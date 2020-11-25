@@ -4,55 +4,63 @@
   </div>
   <div class="card-body">
     <div class="row justify-content-center">
-        <div class="col-4">
-          <form #searchForm1="ngForm" style="margin: 2px;" (ngSubmit)="submitSearch(searchForm1.form);">
-            <label>
-              <div class="row">
-                <input placeholder="{{partenzaPlaceholder}}" type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
-                <a class="button" style="margin-left: 3px; margin-top: 7px;"(click)="elimina(999, searchForm1)" role="button"><b>X</b></a>
-              </div>
-              </label>
-            <!-- <button class="btn btn-primary" type="submit" >Submit</button> -->
-        </form>
-        <div *ngFor="let element of puntiIntermediIds; let i = index">
-        <form #i="ngForm" style="margin: 5px;" (ngSubmit)="submitSearch3(i.form, element);">
+      <div class="col-4">
+        <form #searchForm1="ngForm" style="margin: 2px;" (ngSubmit)="submitSearch(searchForm1.form);">
           <label>
             <div class="row">
-              <input placeholder="{{placeholders[element%1000]}}" type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
-              <a class="button" style="margin-left: 3px; margin-top: 7px;" (click)="elimina(element, i);" role="button"><b>X</b></a>  
+              <input placeholder="{{partenzaPlaceholder}}" type="text" class="form-control" name="search" ngModel
+                style="width: min-content; border-radius: 100px;">
+              <a class="button" style="margin-left: 3px; margin-top: 7px;" (click)="elimina(999, searchForm1)"
+                role="button"><b>X</b></a>
             </div>
           </label>
           <!-- <button class="btn btn-primary" type="submit" >Submit</button> -->
         </form>
-      </div>
+        <div *ngFor="let element of puntiIntermediIds; let i = index">
+          <form #i="ngForm" style="margin: 5px;" (ngSubmit)="submitSearch3(i.form, element);">
+            <label>
+              <div class="row">
+                <input placeholder="{{placeholders[element%1000]}}" type="text" class="form-control" name="search"
+                  ngModel style="width: min-content; border-radius: 100px;">
+                <a class="button" style="margin-left: 3px; margin-top: 7px;" (click)="elimina(element, i);"
+                  role="button"><b>X</b></a>
+              </div>
+            </label>
+            <!-- <button class="btn btn-primary" type="submit" >Submit</button> -->
+          </form>
+        </div>
         <form #searchForm2="ngForm" style="margin: 5px;" (ngSubmit)="submitSearch2(searchForm2.form);">
           <label>
             <div class="row">
-              <input placeholder="{{arrivoPlaceholder}}" type="text" class="form-control" name="search" ngModel style="width: min-content; border-radius: 100px;">
-              <a class="button" style="margin-left: 3px; margin-top: 7px;" (click)="elimina(2000, searchForm2)" role="button"><b>X</b></a>  
+              <input placeholder="{{arrivoPlaceholder}}" type="text" class="form-control" name="search" ngModel
+                style="width: min-content; border-radius: 100px;">
+              <a class="button" style="margin-left: 3px; margin-top: 7px;" (click)="elimina(2000, searchForm2)"
+                role="button"><b>X</b></a>
             </div>
           </label>
           <!-- <button class="btn btn-primary" type="submit" >Submit</button> -->
         </form>
-        
+
         <a type="button" class="btn btn-secondary" (click)="Aggiungi()" style="margin:3px;">Aggiungi </a>
 
       </div>
-        <div class="col-8">
-            <div class="map" #map id="map" style="width: 100%; height: 400.2px;"></div>
-        </div>
+      <div class="col-8">
+        <div class="map" #map id="map" style="width: 100%; height: 400.2px;"></div>
+      </div>
     </div>
-   
-    
+
+
   </div>
   <div class="card-footer">
-      <div class="row" *ngIf="(isPartenzaSet && isArrivoSet && (numberPuntiIntermediSet == puntiIntermediIds.length))">
-          <button type="button" (click)="getRoute()" style="margin: 3px;" class="btn btn-success">crea Itinerario</button> 
-          <div *ngIf="isItinerarioPresente">
-            <a  type="button" [href]="sanitize()"  class="btn btn-success" download="itinerario.json" style="margin:3px;">download GeoJSON track</a>
-            <a type="button" class="btn btn-success" [href]="sanitize2()"  download="itinerario.gpx"  style="margin:3px;">download GPX track</a>
-          </div>
-      </div>     
+    <div class="row" *ngIf="(isPartenzaSet && isArrivoSet && (numberPuntiIntermediSet == puntiIntermediIds.length))">
+      <button type="button" (click)="getRoute()" style="margin: 3px;" class="btn btn-success">crea Itinerario</button>
+      <div *ngIf="isItinerarioPresente">
+        <a type="button" [href]="sanitize()" class="btn btn-success" download="itinerario.json"
+          style="margin:3px;">download GeoJSON track</a>
+        <a type="button" class="btn btn-success" [href]="sanitize2()" download="itinerario.gpx"
+          style="margin:3px;">download GPX track</a>
+      </div>
+    </div>
   </div>
 </div>
 <div style="margin-bottom: 100px;"> </div>
