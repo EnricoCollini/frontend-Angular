@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ItinerarioService } from 'src/app/Services/itineraryService/itinerario.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class ItinerariTableComponent implements OnInit {
   private jwt: string;
 
   public itinerari = [];
-  constructor(private _itinerariService: ItinerarioService) { }
+  constructor(private _itinerariService: ItinerarioService,
+    private router: Router) { }
 
   ngOnInit() {
     this.getItinerari();
@@ -30,6 +32,11 @@ export class ItinerariTableComponent implements OnInit {
       this.getItinerari();
     } 
     )
+  }
+
+
+  goEdit(area){
+    this.router.navigate(['/itinerarioEdit/'+area.id] , { queryParams: { "jwt": this.jwt, "thisiti": area.id } });
   }
 
 }

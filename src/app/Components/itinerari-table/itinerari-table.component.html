@@ -13,7 +13,7 @@
       <tr *ngFor="let itin of itinerari">
         <td>{{itin.name}}</td>
         <td>{{itin.city}}</td>
-        <td><button  [routerLink]='["/itinerarioEdit/"+itin.id]'  [queryParams]="itin"  class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
+        <td><button  (click)="goEdit(itin)"  class="btn default"><img src="../../../assets/images/edit-24px.svg"></button></td>
       <td><button (click)="deleteItinerario(itin.id)" class="btn default"><img src="../../../assets/images/delete-24px.svg"></button></td>
       </tr>
     </tbody>
