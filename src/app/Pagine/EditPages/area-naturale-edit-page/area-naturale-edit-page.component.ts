@@ -95,7 +95,6 @@ export class AreaNaturaleEditPageComponent implements OnInit, AfterContentInit{
         window.alert("dati modificati correttamente");
       }else{
       window.alert(data);}
-      this._router.navigate(["admin"]);
     });
   }
 

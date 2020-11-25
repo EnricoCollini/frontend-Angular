@@ -32,7 +32,6 @@ export class AreaNaturaleAddPageComponent implements OnInit {
         window.alert("dati modificati correttamente");
       }else{
       window.alert(data);}
-      this._router.navigate(["admin"]);
     });
   }
 

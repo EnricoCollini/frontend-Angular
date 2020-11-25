@@ -1,38 +1,60 @@
 <div class="container">
-  <h1>Area Naturale</h1>
-<form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
-  <label>id: 
-    <input class="form-control" placeholder="{{id}}" type="text" ngModel name="id" value="{{id}}" style="width: min-content;">
-</label><br>
-  <label>Name: 
-      <input class="form-control" placeholder="{{name}}" type="text" ngModel name="name" value="{{name}}" style="width: min-content;">
-  </label><br>
-  <label>Description: 
-    <textarea class="form-control" placeholder="{{description}}" type="text" ngModel name="description" value="{{description}}" rows = "5" cols = "60"></textarea>
-</label><br>
-<label>City:
-  <input list="cities" class="form-control" placeholder="{{city}}" type="text" ngModel name="city"  value="{{city}}" style="width: min-content;">
-</label><br>
-<label>Province
-  <input class="form-control" placeholder="{{province}}" type="text"  value ="{{province}}" ngModel name="province"  style="width: min-content;">
-</label><br>
 
-<label>Latitude: 
-  <input class="form-control" placeholder="{{latitude}}" type="number" step="0.01" ngModel name="latitude"  value="{{latitude}}" style="width: min-content;">
-</label><br>
-<label>Longitude: 
-  <input class="form-control" placeholder="{{longitude}}" type="number" step="0.01" ngModel name="longitude"  value="{{longitude}}"  style="width: min-content;">
-</label><br>
+  <div class="card " style="margin-bottom: 160px; margin-top: 60px;">
+    <div class="card-header text-center">
+      <h2>Edit Area Naturale</h2>
+    </div>
+    <div class="card-body">
+           
+      <form #theForm="ngForm" style="margin: 2px;" (ngSubmit)="submitForm(theForm.form);">
+        <label>Name: 
+            <input class="form-control" placeholder="{{name}}" type="text" ngModel name="name" value="{{name}}" style="width: min-content;">
+        </label><br>
+        <label>Description: 
+          <textarea class="form-control" placeholder="{{description}}" type="text" ngModel name="description" value="{{description}}" rows = "5" cols = "60"></textarea>
+      </label><br>
+      <label>City:
+        <input list="cities" class="form-control" placeholder="{{city}}" type="text" ngModel name="city"  value="{{city}}" style="width: min-content;">
+      </label><br>
+      <label>Province
+        <input class="form-control" placeholder="{{province}}" type="text"  value ="{{province}}" ngModel name="province"  style="width: min-content;">
+      </label><br>
+      
+      <label>Latitude: 
+        <input class="form-control" placeholder="{{latitude}}" type="number" step="0.01" ngModel name="latitude"  value="{{latitude}}" style="width: min-content;">
+      </label><br>
+      <label>Longitude: 
+        <input class="form-control" placeholder="{{longitude}}" type="number" step="0.01" ngModel name="longitude"  value="{{longitude}}"  style="width: min-content;">
+      </label><br>
+      
+      <label><br>Area Naturale Tipology:<br>
+      
+        <input [checked]="'PARCONAZIONALE'==defaultChoice" type="radio" id="PARCONAZIONALE" ngModel name="areanaturaletypology" value="PARCONAZIONALE">
+        <label>PARCONAZIONALE</label><br>
+        
+        <input [checked]="'PARCOREGIONALE'==defaultChoice" type="radio" id="PARCOREGIONALE" ngModel name="areanaturaletypology" value="PARCOREGIONALE">
+        <label>PARCOREGIONALE</label><br>
+      
+        <input [checked]="'PARCOPROVINCIALE'==defaultChoice" type="radio" id="PARCOPROVINCIALE" ngModel name="areanaturaletypology" value="PARCOPROVINCIALE">
+        <label>PARCOPROVINCIALE</label><br>
+      
+        <input [checked]="'RISERVANATURALESTATALE'==defaultChoice" type="radio" id="RISERVANATURALESTATALE" ngModel name="areanaturaletypology" value="RISERVANATURALESTATALE">
+        <label>RISERVANATURALESTATALE</label><br>
+        
+        <input [checked]="'RISERVANATURALEPROVINCIALE'==defaultChoice" type="radio" id="RISERVANATURALEPROVINCIALE" ngModel name="areanaturaletypology" value="RISERVANATURALEPROVINCIALE">
+        <label>RISERVANATURALEPROVINCIALE</label><br>
+      
+        <input [checked]="'AREANATURALEPROTETTADIINTERESSELOCALE'==defaultChoice" type="radio" id="AREANATURALEPROTETTADIINTERESSELOCALE" ngModel name="areanaturaletypology" value="AREANATURALEPROTETTADIINTERESSELOCALE">
+        <label>AREANATURALEPROTETTADIINTERESSELOCALE</label><br>
+      </label><br>
+        <button class="btn btn-primary" type="submit" >Submit</button>
+      </form>
 
-<label>Area Naturale Tipology
-  <div *ngFor="let choice of choices">
-    <input [checked]="choice == defaultChoice"  type="radio" id="choice" ngModel name="areanaturaletypology" value="choice">
-    <label for="choice">{{choice}}</label><br>
+      
+    </div>
+    <div class="card-footer">
+      
+    </div>
+  
   </div>
-</label><br>
-  <button class="btn btn-primary" type="submit" >Submit</button>
-</form>
-</div>
-
-
-<p style="margin-bottom: 280px;"></p>
+  <div style="margin-bottom: 100px;"> </div>
