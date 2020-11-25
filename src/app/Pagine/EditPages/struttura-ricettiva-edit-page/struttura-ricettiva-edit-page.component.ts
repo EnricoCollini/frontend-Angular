@@ -79,6 +79,7 @@ export class StrutturaRicettivaEditPageComponent implements OnInit {
     this._struttService.deleteStruttura(this.id)
     .subscribe(data => console.log(data));
 
+    
     this._struttService.postNewStrutturaRicettiva(res)
     .subscribe(data => {
       if(data == null){

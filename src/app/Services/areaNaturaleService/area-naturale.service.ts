@@ -39,7 +39,7 @@ export class AreaNaturaleService {
         .set('Authorization',  `Bearer ${jwt}`)
     }
     const body = data;
-    return this.http.post('project/rest/areanaturale/create', body,header)
+    return this.http.post('project/rest/areanaturale/create',body, header)
     .pipe(catchError(this.errorHandler));
   }
 
