@@ -40,7 +40,8 @@ export class ItineraryMakerService {
 
   getItinerario(startLat: number, startLon: number, endLat: number, endLon: number){
     console.log(this._token);
-    let urlString = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=" +  this._token + "&start=" + startLat + "," + startLon + "&end=" + endLat + "," + endLon;
+    let urlString = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=" +
+      this._token + "&start=" + startLat + "," + startLon + "&end=" + endLat + "," + endLon;
     return this.http.get(urlString);
   }
 

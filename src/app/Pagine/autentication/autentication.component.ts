@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AmministratoreService } from 'src/app/Services/amministratoreService/amministratore.service';
 import { AuthService } from 'src/app/Services/auth/auth.service';
+import * as sha1 from 'sha1';
+
 
 @Component({
   selector: 'app-autentication',
@@ -54,7 +56,7 @@ export class AutenticationComponent implements OnInit {
     signIn() {
     this.authenticationService.SignIn(this.email, this.password);
     this.currentemail = this.email;
-    this.currentpsw = this.password;
+    this.currentpsw = sha1(this.password);
     this.email = '';
     this.password = '';
     }
